@@ -1,0 +1,269 @@
+/* btn */
+.bd-none{
+    border: none;
+    background: none;
+}
+
+.au-btn {
+    line-height: 45px;
+    padding: 0 35px;
+    text-transform: uppercase;
+    color: #fff;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.au-btn:hover {
+    color: #fff;
+    background: #3868cd;
+}
+
+.au-btn-icon i {
+    vertical-align: baseline;
+    margin-right: 5px;
+}
+
+.au-btn--block {
+    display: block;
+    width: 100%;
+}
+
+.au-btn--green {
+    background: #63c76a;
+}
+.au-btn--green:hover {
+    background: #59bd60;
+}
+
+.au-btn--blues{
+    background: rgb(55, 142, 241);
+}
+.au-btn--blues:hover{
+    background: rgb(5, 2, 167);
+}
+
+.au-btn--small {
+    padding: 0 20px;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+.au-btn-plus {
+    position: absolute;
+    height: 45px;
+    width: 45px;
+    background: #63c76a;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    bottom: -22.5px;
+    right: 45px;
+    z-index: 3;
+}
+
+.au-btn-plus i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.au-btn-plus:hover {
+    background: #59bd60;
+}
+
+.au-btn-load {
+    background: #808080;
+    padding: 0 40px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.au-btn-load:hover {
+    background: #767676;
+}
+.au-btn--blues{
+    background: rgb(16, 126, 252);
+}
+.au-btn--blues:hover{
+    background: rgb(5, 2, 167);
+}
+/* end */
+/*|-------------------------------------------------------| Modal Sty Image Preview |-------------------------------------------------------|*/
+.container .wrapper{
+    position: relative;
+    height: 180px;
+    width: 100%;
+    border-radius: 10px;
+    background: #fff;
+    border:2px dashed #c2cdda;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+	margin-bottom: 0;
+}
+.wrapper .active{
+    border: none;
+}
+.wrapper:hover{
+    border: 2px dashed #f50808;
+}
+.wrapper .image{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wrapper .image img{
+    height: 100%;
+    width: 100%;
+	background-repeat: no-repeat;
+    object-fit: cover;
+	background-attachment: fixed;  
+  	background-size: cover;
+}
+.wrapper .icon{
+    font-size: 70px;
+    color: #16e5ec;
+	text-align: center;
+}
+.wrapper .text{
+    font-size: 16px;
+    font-weight: 500;
+    color: #585878;
+	font-family: 'Charmonman', cursive;
+
+}
+input[type=text],select,select::after,option,label{ 
+	font-family: 'Charmonman', cursive;
+	color: #ef12f7;
+}
+.wrapper .btnCancle{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #f50808;
+    display: none;
+}
+.wrapper.active:hover .btnCancle{
+    display: block;
+}
+.wrapper.active .btnCancle:hover{
+    color: #4b06eb;
+}
+.wrapper .file-name{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    color: #fff;
+    padding: 8px 0;
+    font-size: 12px;
+	text-align: center;
+    display: none;
+    background: linear-gradient(135deg,#19f5b3 0%,#07c0d8 100%);
+}
+.wrapper.active:hover .file-name{
+    display: block;
+}
+.container .BtnCustom{
+    margin-top: 12px;
+    width: 100%;
+    height: 40px;
+    display: block;
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 17px;
+    padding-top: 6px;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 1px;
+    outline: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: linear-gradient(135deg,#19f5b3 0%,#07c0d8 100%);
+}
+/* End */
+
+.btnAddSubmit{
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 17px;
+    padding-top: 6px;
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: 1px;
+    outline: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: linear-gradient(135deg,#19e6f5 0%,#9607d8 100%);
+}
+/*|-------------------------------------------------------| End |-------------------------------------------------------|*/
+
+#photos {
+    /* Prevent vertical gaps */
+    line-height: 0;
+    -webkit-column-count: 3;
+    -webkit-column-gap:   10px;
+    -moz-column-count:    3;
+    -moz-column-gap:      10px;
+    column-count:         3;
+    column-gap:           10px;  
+  }
+  
+  #photos img {
+    /* Just in case there are inline attributes */
+    width: 100% !important;
+    height: auto !important;
+  }
+
+/* setup grid layout */
+  @media (max-width: 800px) {
+    #photos {
+    -moz-column-count:    2;
+    -webkit-column-count: 2;
+    column-count:         2;
+   }
+  }
+
+
+  @media (max-width: 400px) {
+    #photos {
+    -moz-column-count:    1;
+    -webkit-column-count: 1;
+    column-count:         1;
+   }
+  }
+
+  .img-not-replace{
+	background-repeat: no-repeat;
+    object-fit: cover;
+	background-attachment: fixed;  
+  	background-size: cover;
+  }

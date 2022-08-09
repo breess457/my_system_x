@@ -1,0 +1,57 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.3/css/mdb.min.css);
+
+.hm-gradient {
+    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+.darken-grey-text {
+    color: #2E2E2E;
+}
+.dropdown{
+    width:auto;
+    right: 10%;
+}
+.navbar .dropdown-menu{
+    border-radius:4px;
+    box-shadow:none;
+    margin-top:2px;
+    width:220px;
+    background-color: palegreen;
+    //margin-right: 110%;
+}
+.navbar .dropdown-menu:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 26px;
+    z-index: 10;
+}
+.navbar .dropdown-menu:after{
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 24px;
+    z-index: 9;
+}
+
+.navbar .dropdown-menu a:hover {
+    color: #616161 !important;
+}
+.darken-grey-text {
+    color: #2E2E2E;
+}
+.font-root-nanika{
+    font-family: 'monospace;
+  }
+  .font-thi{
+    font-family: 'Itim', cursive;
+  }
+  input[type='text'],textarea{
+    font-family: 'Itim', cursive;
+  }
