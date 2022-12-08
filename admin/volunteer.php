@@ -44,17 +44,10 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("Volunterr",$fullname,$profile)
+                navbarSize("เจ้าหน้าที่",$fullname,$profile)
             ?>
             <div class="container-fluid row">
-                <!-- <div class="ml-auto">
-                    <button class="bd-none au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" 
-                        data-target="#modalFormVolunteer"
-                    >
-                        <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลอาสาสมัค
-                    </button> 
-                </div>  -->
+              
                 <div class="col-md-12">
                     <div class="table-responsive table-responsive-data2">
                         <table class="table table-data2">
@@ -65,7 +58,6 @@ include_once("../function/link.php");
                                     <th>ชื่อ-นามสกุล</th>
                                     <th>อายุ</th>
                                     <th>เบอร์โทร</th>
-                                    <th>email</th>
                                     <th>เพศ</th>
                                 </tr>
                             </thead>

@@ -31,11 +31,19 @@ include_once("../function/link.php");
 	<title>Nusantara-Patani</title>
     <style>
         .bd-example-modal-xl .modal-dialog{
-                max-width: 1100px;
-                .modal-content{
-                    padding:1rem;
-                }
+            max-width: 900px;
+            .modal-content{
+                padding:1rem;
             }
+        }
+        .my-custom-scrollbar {
+            position: relative;
+            overflow: auto;
+        }
+        .table-wrapper-scroll-y {
+            display: block;
+            height: 480px;
+        }
     </style>
 </head>
 <body class="">
@@ -45,7 +53,7 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("ผู้เข้าร่วมโครงการ",$fullname,$profile)
+                navbarSize("จัดการข้อมูลผู้เข้าร่วมโครงการ",$fullname,$profile)
             ?>
             <div class="container-fluid row">
                 <div class="ml-auto">
@@ -54,7 +62,7 @@ include_once("../function/link.php");
                 <div class="col-md-12">
                     <p>ข้อมูลโครงการ</p>
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 mydataTablesetProject">
                             <thead>
                                 <tr>
                                     <th>รูป</th>
@@ -64,16 +72,15 @@ include_once("../function/link.php");
                                     <th>ไฟล์</th>
                                     <th>จัดการ</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody>
                                 <?php
-                                    $getDataproject = mysqli_query($conn,"SELECT * FROM project");
+                                    $getDataproject = mysqli_query($conn,"SELECT * FROM project LEFT JOIN fundation ON project.select_fundation_id = fundation.id_fundation ");
                                     foreach($getDataproject as $i => $res){
-
-                                        $responsiblePerson = join(array($res['title']," ",$res['f_name'],"   ",$res['l_name']));
-
-                                        tablelistSetproject(($i++),$res['project_name'],$res['title'],$res['f_name'],$res['l_name'],$res['operating_area'],$res['project_year'],
-                                            $res['start_date'],$res['end_date'], $res['id'],$res['project_id'],$res['img_project'], $res['detail_project'], $res['filename_project']);
+                                        tablelistSetproject(($i++),$res['project_name'],$res['title_fundation'],$res['firstname_fundation'],$res['lastname_fundation'],$res['operating_area'],$res['project_year'],
+                                            $res['start_date'],$res['end_date'], $res['id'],$res['img_project'], $res['detail_project'], $res['filename_project'],
+                                            $status
+                                        );
                                     }
 
                                 ?>
@@ -87,7 +94,13 @@ include_once("../function/link.php");
         <show-user-none></show-user-none>
     </div>
     <script src="../assets/scripts/setProject.js"></script>
-
+    <script>
+        $('.mydataTablesetProject').DataTable({
+            scrollY:400,
+            scrollX:false,
+            scrollCollapse:false
+        })
+    </script>
  
 </body>
 </html>

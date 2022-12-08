@@ -32,8 +32,30 @@
 
                     <div class="col-lg-6 mt-4">
                       <form action="backend/chk-contact-form.php" method="post" enctype="multipart/form-data">
-                        <h3 class="text-center">ร้องเรียน</h3>
+                        <h3 class="text-center">แจ้งข้อมูลเด็กกำพร้า</h3>
                         <div class="row">
+                          <div class="col-3"></div>
+                          <div class="col-6 mb-4">
+                            <div class="container">
+                                <div class="wrapper" id="btnWrapper">
+                                    <div class="image">
+                                       <img src="" alt="" class="my-image"> 
+                                    </div>
+                                    <div class="content">
+                                        <div class="icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <div class="text">แตะเพื่ออัปโหลด</div>
+                                    </div>
+                                    <div class="btnCancle">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                    <div class="file-name">File name hear</div>
+                                </div>
+                                <input type="file" name="img_orphan" class="EsetDefaultImgStd" hidden>
+                            </div>
+                          </div>
+                          <div class="col-3"></div>
                           <div class="col-3">
                             <div class="form-group">
                               <div class="form-group">
@@ -109,5 +131,38 @@
     </main>
   <script src="assets/scripts/index.u.js"></script>
   <script src="assets/scripts/index.u.js"></script>
+  <script>
+    let setwrapper = document.querySelector(".wrapper");
+      let setImgName = document.querySelector(".file-name");
+      let setBtncancle = document.querySelector(".btnCancle");
+      let typeImg = document.querySelector(".my-image");
+      let defaultInput = document.querySelector(".EsetDefaultImgStd");
+      let CustomButton = document.querySelector("#btnWrapper");
+      let setExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+  
+      CustomButton.onclick = function () {
+        defaultInput.click();
+      };
+      defaultInput.addEventListener("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            const result = reader.result;
+            typeImg.src = result;
+            setwrapper.classList.add("active");
+          };
+          setBtncancle.addEventListener("click", function () {
+            typeImg.src = "";
+            setwrapper.classList.remove("active");
+          });
+          reader.readAsDataURL(file);
+        }
+        if (this.value) {
+          let valueStore = this.value.match(setExp);
+          setImgName.textContent = valueStore;
+        }
+      });
+  </script>
 </body>
 </html>

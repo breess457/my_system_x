@@ -27,7 +27,6 @@ if(!isset($_SESSION['users'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/scss/style.root.scss">
     <link rel="stylesheet" href="../assets/scss/revenue.scss">
-    <link rel="stylesheet" href="../assets/scss/setProfile.scss">
     <title>Volunter Root</title>
     <style>
         body{
@@ -40,7 +39,7 @@ if(!isset($_SESSION['users'])){
                     padding:1rem;
                 }
             }
-    </style>
+    </style> 
 </head>
 <body>
     <?php navbarRoot($fullname, $profile); ?>
@@ -49,15 +48,15 @@ if(!isset($_SESSION['users'])){
     <div class="container-fluid mt-4">
                 <?php
                     //echo $_SESSION['users']['status_users'];
-                    $getQl = mysqli_query($conn,"SELECT * FROM personal_user WHERE get_userid=$userid");
+                    $getQl = mysqli_query($conn,"SELECT * FROM personal_user LEFT JOIN users ON users.id=personal_user.get_userid WHERE get_userid=$userid");
                     $fetch = mysqli_fetch_assoc($getQl);
                     cardProfileRoot($fetch['get_userid'],$fetch['title'],$fetch['first_name'],$fetch['last_name'],$fetch['email'],
-                        $fetch['idcard'],$fetch['tell'],$fetch['age'],$fetch['sex'], $fetch['photo_me'],$status,$fullname,$username);
+                        $fetch['idcard'],$fetch['tell'],$fetch['age'],$fetch['sex'], $fetch['photo_me'],$status,$fullname,$username,$fetch['passwd']);
                 ?>
                 <main-edit-profile formlink="backend/edit-profile.php" selected="disabled" right=" "></main-edit-profile>
     </div>
     <script src="../assets/scripts/profile.js"></script>
-</body>
+</body> 
 </html>
 <?php
 }

@@ -95,6 +95,30 @@ class AddImage extends HTMLElement {
     });
   };
 
+  function setNumber(number, getD){
+    let getIds = document.getElementById(getD).value;
+    let classID = document.getElementById(getD)
+    let parseintId = parseInt(getIds)
+      if(getIds.length === number){
+        classID.className = "form-control"
+      }else if(getIds.length < number){
+        classID.className = "form-control is-invalid"
+      }
+  }
+  function remakeSex(titleId,sexId){
+    let IdTitle = document.getElementById(titleId)
+      IdTitle.addEventListener('change',function handleChang(){
+        if(IdTitle.value == "นาย"){
+           //document.getElementById(sexId).value = "ชาย"
+           $("#"+sexId).val("ชาย")
+          //console.log(document.getElementById(sexId).value = "ชาย")
+        }else{
+           //document.getElementById(sexId).value = "หญิง"
+           $("#"+sexId).val("หญิง")
+        }
+      })
+  }
+
 class modalformcreateofficer extends HTMLElement{
     connectedCallback(){
         this.renderofficer()
@@ -117,8 +141,8 @@ class modalformcreateofficer extends HTMLElement{
                                 <div class="col-md-12 row">
                                     <div class="col-3">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="title">คำนำหน้า</label>
-                                          <select class="form-control" name="title" id="exampleFormControlSelect1">
+                                          <label class="mb-0 text-dark" for="Title">คำนำหน้า</label>
+                                          <select class="form-control" name="title" id="Title">
                                             <option selected disabled hidden>ระบุ..</option>
                                             <option value="นาย">นาย</option>
                                             <option value="นาง">นาง</option>
@@ -128,13 +152,13 @@ class modalformcreateofficer extends HTMLElement{
                                     </div>
                                     <div class="col-5">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="Ferstname">ชื่อเต็ม</label>
+                                          <label class="mb-0 text-dark" for="Ferstname">ชื่อเต็ม</label>
                                           <input type="text" class="form-control" name="ferst_name" id="Ferstname" placeholder="ชื่อเต็ม" required>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="Lasttname">นามสกุล</label>
+                                          <label class="mb-0 text-dark" for="Lasttname">นามสกุล</label>
                                           <input type="text" class="form-control" name="last_name" id="Lasttname" placeholder="นามสกุล" required>
                                         </div>
                                     </div>
@@ -142,9 +166,9 @@ class modalformcreateofficer extends HTMLElement{
                                 <div class="col-md-12 row">
                                   <div class="col-3">
                                     <div class="form-group mb-2">
-                                      <label class="mb-0 text-primary" for="title">สิทธ์การใช้งาน</label>
+                                      <label class="mb-0 text-dark" for="title">สิทธ์การใช้งาน</label>
                                       <select class="form-control" name="status_user" id="exampleFormControlSelect1">
-                                        <option selected disabled hidden>ระบุ..</option>
+                                        <option selected disabled hidden>ระบุ.</option>
                                         <option value="volunteer">เจ้าหน้าที่</option>
                                         <option value="officer">อาสาสมัค</option>
                                         <option value="chairman">ประธาน</option>
@@ -153,13 +177,13 @@ class modalformcreateofficer extends HTMLElement{
                                   </div>
                                   <div class="col-5">
                                     <div class="form-group mb-2 mt-0">
-                                      <label class="mb-0 text-primary" for="User">อีเมล</label>
+                                      <label class="mb-0 text-dark" for="User">อีเมล</label>
                                       <input type="text" class="form-control" name="user_name" id="User" placeholder="อีเมล" required>
                                     </div>
                                   </div>
                                   <div class="col-4">
                                     <div class="form-group mb-2 mt-0">
-                                      <label class="mb-0 text-primary" for="Pwd">รหัสผ่าน</label>
+                                      <label class="mb-0 text-dark" for="Pwd">รหัสผ่าน</label>
                                       <input type="password" class="form-control" name="password_user" id="Pwd" placeholder="รหัสผ่าน" required>
                                     </div>
                                   </div>
@@ -167,33 +191,26 @@ class modalformcreateofficer extends HTMLElement{
                                 <div class="col-md-12 row">
                                   <div class="col-2">
                                     <div class="form-group mb-2">
-                                      <label class="mb-0 text-primary" for="Sex">เพศ</label>
-                                      <select class="form-control" name="sex" id="Sex">
-                                        <option selected disabled hidden>ระบุ..</option>
-                                        <option value="ชาย">ชาย</option>
-                                        <option value="หญิง">หญิง</option>
-                                        <option value="เพศที่3">เพศที่3(LGBQ)</option>
-                                      </select>
+                                      <label class="mb-0 text-dark" for="Sex">เพศ</label>
+                                      <input type="text" class="form-control" name="sex" id="Sex">
                                     </div>
                                   </div>
-
-
                                   <div class="col-2">
                                     <div class="form-group mb-2">
-                                      <label class="mb-0 text-primary" for="Age">อายุ</label>
+                                      <label class="mb-0 text-dark" for="Age">อายุ</label>
                                       <input type="number" class="form-control" name="age" id="Age" placeholder="อายุ" required>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                   <div class="form-group mb-2">
-                                    <label class="mb-0 text-primary" for="Tell">เบอร์โทร</label>
-                                    <input type="number" class="form-control" name="tell" id="Tell" placeholder="เบอร์โทร" required>
+                                    <label class="mb-0 text-dark" for="Tell">เบอร์โทร</label>
+                                    <input type="text" class="form-control" name="tell" id="Tell" placeholder="เบอร์โทร" minlength="10" maxlength="10" onkeyup="setNumber(10,'Tell')" required>
                                   </div>
                               </div>
                               <div class="col-md-4">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="IdCard">เลขบัตรประชาชน</label>
-                                          <input type="number" class="form-control" name="id_card" id="IdCard" placeholder="เลขบัตรประชาชน" required>
+                                          <label class="mb-0 text-dark" for="IdCard">เลขบัตรประชาชน</label>
+                                          <input type="text" class="form-control" name="id_card" id="IdCard" placeholder="เลขบัตรประชาชน" minlength="13" maxlength="13" onkeyup="setNumber(13,'IdCard')" required>
                                         </div>
                                     </div> 
                                 
@@ -218,6 +235,7 @@ class modalformcreateofficer extends HTMLElement{
 customElements.define('main-add-officer', modalformcreateofficer)
 
 setImagePriviews(".officerImg",".setDefaultImgofficer","#setbtnCustom",".x-cancle i",".ximgname",".x-wrap");
+remakeSex("Title","Sex")
 
 class modalEditUsers extends HTMLElement{
   connectedCallback(){
@@ -242,7 +260,7 @@ class modalEditUsers extends HTMLElement{
                   <div class="col-md-12 row">
                       <div class="col-3">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="editTitle">คำนำหน้า</label>
+                            <label class="mb-0 text-dark" for="editTitle">คำนำหน้า</label>
                             <select class="form-control" name="edit_title" id="editTitle">
                               <option value="นาย">นาย</option>
                               <option value="นาง">นาง</option>
@@ -250,15 +268,16 @@ class modalEditUsers extends HTMLElement{
                             </select>
                           </div>
                       </div>
+                      
                       <div class="col-5">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="editFirstname">ชื่อเต็ม</label>
+                            <label class="mb-0 text-dark" for="editFirstname">ชื่อเต็ม</label>
                             <input type="text" class="form-control" name="edit_first_name" id="editFirstname" placeholder="ชื่อเต็ม" required>
                           </div>
                       </div>
                       <div class="col-4">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="editLastname">นามสกุล</label>
+                            <label class="mb-0 text-dark" for="editLastname">นามสกุล</label>
                             <input type="text" class="form-control" name="edit_last_name" id="editLastname" placeholder="นามสกุล" required>
                           </div>
                       </div>
@@ -266,7 +285,7 @@ class modalEditUsers extends HTMLElement{
                   <div class="col-md-12 row">
                     <div class="col-3">
                       <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="editStatus">สิทธ์การใช้งาน</label>
+                        <label class="mb-0 text-dark" for="editStatus">สิทธ์การใช้งาน</label>
                         <select class="form-control" name="edit_status_user" id="editStatus">
                           <option value="volunteer">เจ้าหน้าที่</option>
                           <option value="officer">อาสาสมัค</option>
@@ -276,13 +295,13 @@ class modalEditUsers extends HTMLElement{
                     </div>
                     <div class="col-5">
                       <div class="form-group mb-2 mt-0">
-                        <label class="mb-0 text-primary" for="editUsername">อีเมล</label>
+                        <label class="mb-0 text-dark" for="editUsername">อีเมล</label>
                         <input type="text" class="form-control" name="edit_username" id="editUsername" placeholder="อีเมล" required>
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group mb-2 mt-0">
-                        <label class="mb-0 text-primary" for="editPassword">รหัสผ่าน</label>
+                        <label class="mb-0 text-dark" for="editPassword">รหัสผ่าน</label>
                         <input type="password" class="form-control" name="edit_password_user" id="editPassword" placeholder="รหัสผ่าน" required>
                       </div>
                     </div>
@@ -290,32 +309,31 @@ class modalEditUsers extends HTMLElement{
                   <div class="col-md-12 row">
                     <div class="col-2">
                       <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="editSex">เพศ</label>
+                        <label class="mb-0 text-dark" for="editSex">เพศ</label>
                         <select class="form-control" name="edit_sex" id="editSex">
                           <option value="ชาย">ชาย</option>
                           <option value="หญิง">หญิง</option>
-                          <option value="เพศที่3">เพศที่3(LGBQ)</option>
                         </select>
                       </div>
                     </div>
-
+                     
 
                     <div class="col-2">
                       <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="editAge">อายุ</label>
+                        <label class="mb-0 text-dark" for="editAge">อายุ</label>
                         <input type="number" class="form-control" name="edit_age" id="editAge" placeholder="อายุ" required>
                       </div>
                     </div>
                     <div class="col-md-4">
                     <div class="form-group mb-2">
-                      <label class="mb-0 text-primary" for="editTell">เบอร์โทร</label>
-                      <input type="number" class="form-control" name="edit_tell" id="editTell" placeholder="เบอร์โทร" required>
+                      <label class="mb-0 text-dark" for="editTell">เบอร์โทร</label> 
+                      <input type="text" class="form-control" name="edit_tell" id="editTell" placeholder="เบอร์โทร" minlength="10" maxlength="10" onkeyup="setNumber(10,'editTell')" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="editCardId">เลขบัตรประชาชน</label>
-                            <input type="number" class="form-control" name="edit_cardid" id="editCardId" placeholder="เลขบัตรประชาชน" required>
+                            <label class="mb-0 text-dark" for="editCardId">เลขบัตรประชาชน</label>
+                            <input type="text" class="form-control" name="edit_cardid" id="editCardId" placeholder="เลขบัตรประชาชน" minlength="13" maxlength="13" onkeyup="setNumber(13,'editCardId')" required>
                           </div>
                       </div> 
                   
@@ -338,6 +356,7 @@ class modalEditUsers extends HTMLElement{
 }
 customElements.define('main-edit-users', modalEditUsers)
 setImagePriviews(".editUserImg",".setDefaultImgUser","#editbtnCustom",".edit-cancle i",".eimgname",".edix-wrap");
+remakeSex("editTitle","editSex")
 $(document).on("click","#btneditusers", function(e){
   let userId = $(this).data('id'),title=$(this).data('title'),firstname=$(this).data('firstname');
   let lastname=$(this).data('lastname'),username=$(this).data('username'),password=$(this).data('password');
@@ -384,19 +403,19 @@ class modalGetUsers extends HTMLElement{
                   <div class="col-md-12 row">
                       <div class="col-3">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="getTitle">คำนำหน้า</label>
+                            <label class="mb-0 text-dark" for="getTitle">คำนำหน้า</label>
                             <input type="text" class="form-control"  id="getTitle"  disabled>
                           </div>
                       </div>
                       <div class="col-5">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="getFirstname">ชื่อเต็ม</label>
+                            <label class="mb-0 text-dark" for="getFirstname">ชื่อเต็ม</label>
                             <input type="text" class="form-control"  id="getFirstname" disabled>
                           </div>
                       </div>
                       <div class="col-4">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="getLastname">นามสกุล</label>
+                            <label class="mb-0 text-dark" for="getLastname">นามสกุล</label>
                             <input type="text" class="form-control" name="" id="getLastname" disabled>
                           </div>
                       </div>
@@ -404,19 +423,19 @@ class modalGetUsers extends HTMLElement{
                   <div class="col-md-12 row">
                     <div class="col-3">
                       <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="getStatus">สิทธ์การใช้งาน</label>
+                        <label class="mb-0 text-dark" for="getStatus">สิทธ์การใช้งาน</label>
                         <input type="text" id="getStatus" class="form-control" disabled />
                       </div>
                     </div>
                     <div class="col-5">
                       <div class="form-group mb-2 mt-0">
-                        <label class="mb-0 text-primary" for="getUsername">อีเมล</label>
+                        <label class="mb-0 text-dark" for="getUsername">อีเมล</label>
                         <input type="text" class="form-control" name="edit_username" id="getUsername" disabled>
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group mb-2 mt-0">
-                        <label class="mb-0 text-primary" for="getPassword">รหัสผ่าน</label>
+                        <label class="mb-0 text-dark" for="getPassword">รหัสผ่าน</label>
                         <input type="password" class="form-control" name="edit_password_user" id="getPassword" disabled>
                       </div>
                     </div>
@@ -424,7 +443,7 @@ class modalGetUsers extends HTMLElement{
                   <div class="col-md-12 row">
                     <div class="col-2">
                       <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="getSex">เพศ</label>
+                        <label class="mb-0 text-dark" for="getSex">เพศ</label>
                         <input type="text" class="form-control" id="getSex" disabled/>
                       </div>
                     </div>
@@ -432,19 +451,19 @@ class modalGetUsers extends HTMLElement{
 
                     <div class="col-2">
                       <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="getAge">อายุ</label>
+                        <label class="mb-0 text-dark" for="getAge">อายุ</label>
                         <input type="number" class="form-control" name="edit_age" id="getAge" disabled>
                       </div>
                     </div>
                     <div class="col-md-4">
                     <div class="form-group mb-2">
-                      <label class="mb-0 text-primary" for="getTell">เบอร์โทร</label>
+                      <label class="mb-0 text-dark" for="getTell">เบอร์โทร</label>
                       <input type="number" class="form-control" name="edit_tell" id="getTell" disabled>
                     </div>
                 </div>
                 <div class="col-md-4">
                           <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="getCardId">เลขบัตรประชาชน</label>
+                            <label class="mb-0 text-dark" for="getCardId">เลขบัตรประชาชน</label>
                             <input type="number" class="form-control" name="edit_cardid" id="getCardId" disabled>
                           </div>
                       </div> 
@@ -466,9 +485,6 @@ class modalGetUsers extends HTMLElement{
                   </div>
               </div>
               </div>
-          </div>
-          <div class="col-md-12 row">
-            <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Close</button>
           </div>
       </form>
         </div>

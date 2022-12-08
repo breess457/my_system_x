@@ -101,7 +101,9 @@
                         $berd_day_father = $_POST['berd_day_father'];
                         $age_father = $_POST['age_father'];
                         $tell_father = $_POST['tell_father'];
-                        $status_father = $_POST['status_father']; //end father
+                        $status_father = $_POST['status_father']; 
+                        $cause_death_f = $_POST['cause_death_f']; //add
+                        //end father
                         $title_mather = $_POST['title_mather'];
                         $firstname_mather = $_POST['firstname_mather'];
                         $lastname_mather = $_POST['lastname_mather'];
@@ -112,19 +114,37 @@
                         $age_mather = $_POST['age_mather'];
                         $tell_mather = $_POST['tell_mather'];
                         $status_mather = $_POST['status_mather'];
+                        $cause_death_m = $_POST['cause_death_m']; //add
 
                         /* Form Group Four */
                         //$image_home = $_FILES['image_home']['name'];
                         $family_status = $_POST['family_status'];
                         $level_help = $_POST['level_help'];
-                        $estimate_help = $_POST['estimate_help'];
-                        $revenue_family = $_POST['revenue_family'];
-                        $deceased = $_POST['deceased'];
-                        $cause_death = $_POST['cause_death'];
-                        $death_day = $_POST['death_day'];
-                        $study_status = $_POST['study_status'];
-                        $year_study = $_POST['year_study'];
+
+                        //$estimate_help = $_POST['estimate_help']; ///non
+                        //$revenue_family = "; //non
+                        //$deceased = $_POST['deceased']; //no
+                        //$cause_death = $_POST['cause_death']; //no
+                        $death_day = date("Y-m-d"); //none
+                        //$death_day = $_POST['death_day']; //np
+                        //$year_study = $_POST['year_study']; //no
+
+                        $study_status = $_POST['study_status']; 
                         $cause_stop_study = $_POST['cause_stop_study'];
+                        $estimate_help1 = (isset($_POST['estimate_help1'])) ? $_POST['estimate_help1'] : '';
+                        $estimate_help2 = (isset($_POST['estimate_help2'])) ? $_POST['estimate_help2'] : '';
+                        $estimate_help3 = (isset($_POST['estimate_help3'])) ? $_POST['estimate_help3'] : '';
+                        $estimate_help4 = (isset($_POST['estimate_help4'])) ? $_POST['estimate_help4'] : '';
+
+                        echo $estimate_help1;
+                        echo "<br/>";
+                        echo $estimate_help4;
+                        
+
+                        $latitude = $_POST['latitude'];
+                        $logitude = $_POST['logitude'];
+                        //echo $latitude;
+                        //echo $logitude;
 
                          $insertform_true = "INSERT INTO formtrue_orphan_school SET home_id='$home_id', district_home='$district', amphoe_home='$amphoe',
                             province_home='$province', zipcode_home='$zipcode', school_name='$school_name', district_school='$district_school',
@@ -133,18 +153,21 @@
                             zipcode_school2='$zipcode_shool2', getid_jion_orphan='$insertID'
                          ";
                          $insertform_tree = "INSERT INTO formtree_parents_orphan SET join_id_orphan='$insertID', fullname_father='$join_fullname_father', occupation_father='$occupation_father', 
-                            income_father='$income_father', berd_day_father='$berd_day_father', age_father='$age_father', tell_father='$tell_father', status_father='$status_father',
+                            income_father='$income_father', berd_day_father='$berd_day_father', age_father='$age_father', tell_father='$tell_father', status_father='$status_father',cause_death_f='$cause_death_f',
                             fullname_mather='$join_fullname_mather', occupation_mather='$occupation_mather', income_mather='$income_mather', berd_day_mather='$berd_day_mather', age_mather='$age_mather',
-                            tell_mather='$tell_mather', status_mather='$status_mather'
+                            tell_mather='$tell_mather', status_mather='$status_mather',cause_death_m='$cause_death_m'
                          ";
                          $insertform_four = "INSERT INTO formfour_status_orphan SET id_join_orphan='$insertID', image_home='".setImgpath("image_home")."', family_status='$family_status', level_help='$level_help',
-                            estimate_help='$estimate_help', revenue_family='$revenue_family', deceased='$deceased', cause_death='$cause_death', death_day='$death_day', study_status='$study_status',
-                            year_study='$year_study', cause_stop_study='$cause_stop_study'
+                            estimate_help='$estimate_help1', deceased='$estimate_help2', cause_death='$estimate_help3', death_day='$death_day', study_status='$study_status',
+                            year_study='$estimate_help4', cause_stop_study='$cause_stop_study'
                          ";
+                         $insertGps_five = "INSERT INTO map_location_orphan SET latitude='$latitude',logitude='$logitude',get_orphan_id='$insertID'";
+                       
                             $query_true = mysqli_query($conn, $insertform_true);
                             $query_tree = mysqli_query($conn, $insertform_tree);
                             $query_four = mysqli_query($conn, $insertform_four);
-                                if($query_true & $query_tree & $query_four){
+                            $query_five = mysqli_query($conn,$insertGps_five);
+                                if($query_true & $query_tree & $query_four & $query_five){
                                     echo "<script type=\"text/javascript\">
                                             MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลเด็กกำพร้าเรียบร้อยแล้ว\")
                                         </script>";

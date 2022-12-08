@@ -44,7 +44,7 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("Officer",$fullname,$profile)
+                navbarSize("อาสาสมัคร",$fullname,$profile)
             ?>
             <div class="container-fluid row">
                 <!-- <div class="ml-auto">
@@ -65,7 +65,6 @@ include_once("../function/link.php");
                                     <th>ชื่อ-นามสกุล</th>
                                     <th>เพศ</th>
                                     <th>อายุ</th>
-                                    <th>email</th>
                                     <th>เบอร์โทรศัพท์</th>
                                 </tr>
                             </thead>

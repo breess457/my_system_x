@@ -59,10 +59,10 @@
                   if($editQt1){
                     if(!$_FILES['editphoto_user']['name']){
                         $edit_table2 = "UPDATE personal_user SET title='$edit_title', first_name='$edit_first_name', last_name='$edit_last_name',
-                        idcard='$edit_cardid',tell='$edit_tell' WHERE get_userid=$get_user_id";
+                        idcard='$edit_cardid',tell='$edit_tell',age='$edit_age',sex='$edit_sex' WHERE get_userid=$get_user_id";
                     }else{
                         $edit_table2 = "UPDATE personal_user SET title='$edit_title', first_name='$edit_first_name', last_name='$edit_last_name',
-                                idcard='$edit_cardid',tell='$edit_tell',photo_me='".setImgpath("editphoto_user")."' WHERE get_userid=$get_user_id";
+                                idcard='$edit_cardid',tell='$edit_tell',photo_me='".setImgpath("editphoto_user")."',age='$edit_age',sex='$edit_sex' WHERE get_userid=$get_user_id";
                                 unlink('../../root/backend/data-image/'.$get_img_name);
                     }
                         $queryT2 = mysqli_query($conn,$edit_table2);

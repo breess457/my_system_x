@@ -28,6 +28,7 @@ include_once("../function/link.php");
     <link rel="stylesheet" href="../assets/scss/navigationTrue-a-j.scss">
     <link rel="stylesheet" href="../assets/scss/revenue.scss">
     <script src="../assets/scripts/script-bash.js"></script>
+
 	<title>Nusantara-Patani</title>
 </head>
 <body class="">
@@ -37,23 +38,23 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("โครงการ/กิจกรรม",$fullname,$profile)
+                navbarSize("จัดการข้อมูลโครงการ",$fullname,$profile)
             ?>
-            <div class="container-fluid row">
+            <div class="container-fluid row"> 
                 <div class="ml-auto">
                     <?php if($status === "volunteer"){ ?>
                     <button class="bd-none au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" 
-                        data-target="#modalFormProject"
+                        data-target="#modalFormProject" id="btncreateproject"
                     >
                         <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลโครงการ
+                          เพิ่มข้อมูล
                     </button>
                     <?php } ?>
                 </div> 
                 <div class="col-md-12">
                     <p>ข้อมูลโครงการ</p>
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 mydataTableProject">
                             <thead>
                                 <tr>
                                     <th>รูป</th>
@@ -66,14 +67,13 @@ include_once("../function/link.php");
                             </thead>
                             <tbody>
                                 <?php
-                                    $getDataproject = mysqli_query($conn,"SELECT * FROM project");
+                                    $getDataproject = mysqli_query($conn,"SELECT * FROM project LEFT JOIN fundation ON project.select_fundation_id = fundation.id_fundation");
                                     foreach($getDataproject as $i => $res){
-
-                                        $responsiblePerson = join(array($res['title']," ",$res['f_name'],"   ",$res['l_name']));
-
-                                        tablelistproject(($i++),$res['project_name'],$res['title'],$res['f_name'],$res['l_name'],$res['operating_area'],$res['project_year'],
-                                            $res['start_date'],$res['end_date'], $res['id'],$res['project_id'],$res['img_project'], $res['detail_project'], $res['filename_project']);
-                                    }
+                                        tablelistproject(($i++),$res['project_name'],$res['operating_area'],$res['project_year'],
+                                            $res['start_date'],$res['end_date'], $res['id'],$res['img_project'], $res['detail_project'], $res['filename_project'],
+                                            $res['title_fundation'],$res['firstname_fundation'],$res['lastname_fundation'],$status
+                                        );
+                                    } 
 
                                 ?>
                             </tbody>
@@ -84,6 +84,7 @@ include_once("../function/link.php");
         </main>
         <main-from-project></main-from-project>
         <main-edit-project></main-edit-project>
+        <main-show-project></main-show-project>
     </div>
     <script src="../assets/scripts/project.js"></script>
     <script src="../assets/scripts/module/dist/bs-custom-file-input.js"></script>
@@ -91,8 +92,13 @@ include_once("../function/link.php");
         $(document).ready(function(){
             bsCustomFileInput.init()
         })
+        $('.mydataTableProject').DataTable({
+            scrollY:400,
+            scrollX:false,
+            scrollCollapse:false
+        })
     </script>
-</body>
+</body> 
 </html>
 <?php
  }

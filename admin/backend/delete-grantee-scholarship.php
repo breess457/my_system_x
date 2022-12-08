@@ -28,10 +28,12 @@
         if($_SERVER['REQUEST_METHOD'] === "GET"){
             $id_patron = $_GET['id_patron'];
             $idscholarship = $_GET['idscholarship_patron'];
+            $person_numbers = $_GET['person_number'];
+            $dates = $_GET['dates'];
             $delsql = mysqli_query($conn, "DELETE FROM patron_scholarship WHERE id_scholarship = $idscholarship")or die(mysqli_error());
                 if($delsql){
                     echo "<script type=\"text/javascript\">
-                              MySetSweetAlert(\"success\",\"delete to success\",\"dalete data orphan to success\",\"../getting_a_scholarship.php?id_patron=$id_patron\")
+                              MySetSweetAlert(\"success\",\"เรียบร้อย\",\"ลบข้อมูลเด็กที่ได้รับทุนเรียบร้อยแล้ว\",\"../getting_a_scholarship.php?patron_setid=$id_patron&person_numbers=$person_numbers&datemy=$dates\")
                           </script>";
                     
                 } else{
@@ -39,17 +41,19 @@
                 }
         }else if($_SERVER['REQUEST_METHOD'] === "POST"){
             $getidpatron = $_POST['getidpatron'];
+            $getpersonnumber = $_POST['getpersonnumber'];
+            $datemy = $_POST['dateme'];
             if(isset($_POST['checkedTrash'])){
                 if(!empty($_POST['checkedTrash'])){
                     foreach($_POST['checkedTrash'] as $deletecheckbox){
                         $sqlcheckedtrash = mysqli_query($conn,"DELETE FROM patron_scholarship WHERE id_scholarship=$deletecheckbox")or die(mysqli_error());
                         if($sqlcheckedtrash){
                             $slipt = "<script type=\"text/javascript\">
-                                        MySetSweetAlert(\"success\",\"delete to success\",\"dalete data orphan to success\",\"../getting_a_scholarship.php?id_patron=$getidpatron\")
+                                        MySetSweetAlert(\"success\",\"เรียบร้อย\",\"ลบข้อมูลตามที่เลือกเรียบร้อยแล้ว\",\"../getting_a_scholarship.php?patron_setid=$getidpatron&person_numbers=$getpersonnumber&datemy=$datemy\")
                                       </script>";
                         }else{
                             $slipt = "<script type=\"text/javascript\">
-                                        MySetSweetAlert(\"error\",\"delete to false\",\"dalete data orphan to error massege to admin now!\",\"../getting_a_scholarship.php?id_patron=$getidpatron\")
+                                        MySetSweetAlert(\"error\",\"ล้มเหลว\",\"ระบบมีข้อผิดพลาดไม่สามารถลบข้อมูลตามเลือกได้!\",\"../getting_a_scholarship.php?patron_setid=$getidpatron&person_numbers=$getpersonnumber&datemy=$datemy\")
                                       </script>";
                         }
                     }
@@ -60,7 +64,7 @@
                 echo $slipt;
             }else{
                 echo "<script type=\"text/javascript\">
-                      MySetSweetAlert(\"warning\",\"not data!\",\"ลบเหี้ยไรของมืงเนียะ ไม่มีเหี้ยอะไรให้ลบเลย!\",\"../getting_a_scholarship.php?id_patron=$getidpatron\")
+                      MySetSweetAlert(\"warning\",\"ลบไม่สำเร็จ!\",\"ไม่มีข้อมูลอะไรให้ลบเลย!\",\"../getting_a_scholarship.php?patron_setid=$getidpatron&person_numbers=$getpersonnumber&datemy=$datemy\")
                     </script>";
             }
         }else{

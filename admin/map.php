@@ -18,7 +18,7 @@ include_once("../function/link.php");
     $userid = $_SESSION['users']['id'];
     $status = $_SESSION['users']['status_users'];
 ?>
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,31 +27,28 @@ include_once("../function/link.php");
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
     <link rel="stylesheet" href="../assets/scss/navigationTrue-a-j.scss">
     <script src="../assets/scripts/script-bash.js"></script>
-    <link rel="stylesheet" href="../assets/scss/news.scss">
-    <title>Document admin</title>
-    <style>
-        .bd-example-modal-xl .modal-dialog{
-            max-width: 1100px;
-            .modal-content{
-                padding:1rem;
-            }
-        }
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="../assets/scripts/module/jquery-1.11.2.min.js" ></script>
+    <script language="JavaScript" src="../assets/scripts/gps.map.js"></script>
+    <title>map location orphans</title>
+    <style>     
     </style>
 </head>
-<body class="">
+<body onload="setupMap()">
     <div class="page-wrapper chiller-theme toggled">
         <?php
             navigationsbarTrue($fullname,$status);
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("gps",$fullname,$profile)
+                navbarSize("แผนที่",$fullname,$profile)
             ?>
             <div class="container-fluid row">
+                <div id="map_canvas" style="width:1150px;height:620px;"></div>
+                <!-- <div id="divShow"></div> -->
                 
             </div>
         </main>
-        <main-create-topnew></main-create-topnew>
     </div>
 </body>
 </html>
@@ -59,3 +56,4 @@ include_once("../function/link.php");
  }
 
 ?>
+

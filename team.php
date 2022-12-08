@@ -20,6 +20,21 @@
         color: #c8e90c;
         text-decoration: none;
       }
+/*       .profile-box img{
+       	height: 180px;
+	    display: block;
+        background-repeat: no-repeat;
+        object-fit: cover;
+        background-attachment: fixed;  
+        background-size: cover;
+       }
+       .profile-box button{
+       	font-size: 12px;
+       }
+       .profile-box p{
+       	font-size: 13px;
+       	line-height: 1;
+       } */
     </style>
 </head>
 <body>
@@ -28,13 +43,12 @@
         <?php sectionhead("บุคลากร") ?>
         <section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row clearfix">
                     <?php 
-                       $getdata = mysqli_query($conn,"SELECT * FROM users
-                                    LEFT JOIN personal_user ON users.id = personal_user.get_userid");
+                       $getdata = mysqli_query($conn,"SELECT * FROM board_users");
                         foreach($getdata as $num =>$res){
-                            $setFname = join(array($res['title'],$res['first_name']," ",$res['last_name']));
-                            fnOurTeam($setFname,$res['photo_me'],$res['username'],$res['sex'],$res['age'],$res['status_users'],$res['tell'],$res['id']);
+                            $setFname = join(array($res['titleboard'],$res['fullname_bord']," ",$res['lastname_board']));
+                            fnOurTeam($setFname,$res['board_image'],$res['position_bord'],$res['sex'],$res['board_age'],$res['occupation_board'],$res['board_status'],$res['bord_id']);
                         }
                         
                     ?>

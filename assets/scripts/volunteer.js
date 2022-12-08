@@ -46,7 +46,7 @@ class AddImage extends HTMLElement {
                       <div class="file-name ${this.filenames}">File name hear</div>
                   </div>
                   <input type="file" name="${this.count}" class="${this.defaultbtn}" hidden>
-                  <p class="BtnCustom" id="${this.custom}">Choose a file</p> 
+                  <p class="BtnCustom" id="${this.custom}">อัพโหลดไฟล์</p> 
               </div>
           `;
     }
@@ -117,13 +117,13 @@ class modalfromcreatevolunteer extends HTMLElement{
                                 <div class="col-md-12 row">
                                   <div class="col-6">
                                     <div class="form-group mb-2 mt-0">
-                                      <label class="mb-0 text-primary" for="User">user name</label>
+                                      <label class="mb-0 text-dark" for="User">user name</label>
                                       <input type="text" class="form-control" name="user_name" id="User" placeholder="User Name" required>
                                     </div>
                                   </div>
                                   <div class="col-6">
                                     <div class="form-group mb-2 mt-0">
-                                      <label class="mb-0 text-primary" for="Pwd">passwerd</label>
+                                      <label class="mb-0 text-dark" for="Pwd">passwerd</label>
                                       <input type="password" class="form-control" name="password_user" id="Pwd" placeholder="Password" required>
                                     </div>
                                   </div>
@@ -131,7 +131,7 @@ class modalfromcreatevolunteer extends HTMLElement{
                                 <div class="col-md-12 row">
                                     <div class="col-3">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="title">คำนำหน้า</label>
+                                          <label class="mb-0 text-dark" for="title">คำนำหน้า</label>
                                           <select class="form-control" name="title" id="exampleFormControlSelect1">
                                             <option selected disabled hidden>ระบุ..</option>
                                             <option value="นาย">นาย</option>
@@ -142,13 +142,13 @@ class modalfromcreatevolunteer extends HTMLElement{
                                     </div>
                                     <div class="col-5">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="Ferstname">ชื่อเต็ม</label>
+                                          <label class="mb-0 text-dark" for="Ferstname">ชื่อเต็ม</label>
                                           <input type="text" class="form-control" name="ferst_name" id="Ferstname" placeholder="Ferst Name" required>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="Lasttname">นามสกุล</label>
+                                          <label class="mb-0 text-dark" for="Lasttname">นามสกุล</label>
                                           <input type="text" class="form-control" name="last_name" id="Lasttname" placeholder="Last Name" required>
                                         </div>
                                     </div>
@@ -156,7 +156,7 @@ class modalfromcreatevolunteer extends HTMLElement{
                                 <div class="col-md-12 row">
                                   <div class="col-2">
                                     <div class="form-group mb-2">
-                                      <label class="mb-0 text-primary" for="Sex">เพศ</label>
+                                      <label class="mb-0 text-dark" for="Sex">เพศ</label>
                                       <select class="form-control" name="sex" id="Sex">
                                         <option selected disabled hidden>ระบุ..</option>
                                         <option value="ชาย">ชาย</option>
@@ -167,13 +167,13 @@ class modalfromcreatevolunteer extends HTMLElement{
                                   </div>
                                   <div class="col-2">
                                     <div class="form-group mb-2">
-                                      <label class="mb-0 text-primary" for="Age">เพศ</label>
+                                      <label class="mb-0 text-dark" for="Age">เพศ</label>
                                       <input type="number" class="form-control" name="age" id="Age" placeholder="อายุ" required>
                                     </div>
                                   </div>
                                   <div class="col-8">
                                     <div class="form-group mb-2">
-                                      <label class="mb-0 text-primary" for="Email">อีเมลล์</label>
+                                      <label class="mb-0 text-dark" for="Email">อีเมลล์</label>
                                       <input type="text" class="form-control" name="email" id="Email" placeholder="Email" required>
                                     </div>
                                   </div>
@@ -181,13 +181,13 @@ class modalfromcreatevolunteer extends HTMLElement{
                                 <div class="col-md-12 row">
                                     <div class="col-md-6">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="Tell">เบอร์โทร</label>
+                                          <label class="mb-0 text-dark" for="Tell">เบอร์โทร</label>
                                           <input type="number" class="form-control" name="tell" id="Tell" placeholder="เบอร์โทร" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="IdCard">เลขบัตรประชาชน</label>
+                                          <label class="mb-0 text-dark" for="IdCard">เลขบัตรประชาชน</label>
                                           <input type="number" class="form-control" name="id_card" id="IdCard" placeholder="เลขบัตรประชาชน" required>
                                         </div>
                                     </div> 

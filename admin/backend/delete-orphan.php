@@ -37,11 +37,11 @@ require_once('../../function/link.php');
                     $sqltrash = mysqli_query($conn,"DELETE FROM project_participant WHERE id_project_participant = $checkboxTrash")or die(mysqli_error());
                         if($sqltrash){
                             $slide = "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"success\",\"delete to success\",\"dalete data orphan to success\",\"../project_participants.php?idx_project=$getProjectId\")
+                                MySetSweetAlert(\"success\",\"ลบเรียบร้อย\",\"ลบข้อมูลเด็กกำพร้าตามที่เลือกเรียบร้อยแล้ว\",\"../project_participants.php?idx_project=$getProjectId\")
                             </script>";
                         }else{
                             $slide = "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"error\",\"dalete to error\",\"false to! not dalete data orphan\",\"../project_participants.php?idx_project=$getProjectId\")
+                                MySetSweetAlert(\"error\",\"ล้มเหลว\",\"มีข้อผิดพลาดในระบบโปรดติดต่อนักพัฒนาโดยด่วน\",\"../project_participants.php?idx_project=$getProjectId\")
                             </script>";
                         }
                 }
@@ -51,7 +51,7 @@ require_once('../../function/link.php');
             echo $slide;
         }else{
             $slide = "<script type=\"text/javascript\">
-                MySetSweetAlert(\"warning\",\"not trash!\",\"ลบเหี้ยไรของมืงเนียะ ไม่มีเหี้ยอะไรให้ลบเลย!\",\"../project_participants.php?idx_project=$getProjectId\")
+                MySetSweetAlert(\"warning\",\"ล้มเหลว\",\"เพราะคุณไม่ได้ลบใครเลย!\",\"../project_participants.php?idx_project=$getProjectId\")
             </script>";
             echo $slide;
         }
@@ -61,11 +61,11 @@ require_once('../../function/link.php');
             $deletesql = mysqli_query($conn,"DELETE FROM project_participant WHERE id_project_participant = $idparticipan_project")or die(mysqli_error());
                 if($deletesql){
                     echo  "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"success\",\"delete to success\",\"dalete data orphan to success\",\"../project_participants.php?idx_project=$projectgetid\")
+                                MySetSweetAlert(\"success\",\"เรียบร้อย\",\"ลบผู้เข้าร่วมโครงการตามที่เลือกแล้ว\",\"../project_participants.php?idx_project=$projectgetid\")
                             </script>";
                 }else{
                     echo "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"error\",\"dalete to error\",\"false to! not dalete data orphan\",\"../project_participants.php?idx_project=$projectgetid\")
+                                MySetSweetAlert(\"error\",\"ล้มเหลว\",\"เกิดข้อผิดพาลดบางอย่างในระบบโปรดติดต่อผู้พัฒนา\",\"../project_participants.php?idx_project=$projectgetid\")
                             </script>";
                 }
     }

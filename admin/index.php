@@ -44,16 +44,22 @@ include_once("../function/link.php");
                     <?php
                             $project = mysqli_query($conn,"SELECT id FROM project")or die(mysqli_error());
                             $setnumproject = mysqli_num_rows($project);
-                            setData("จำนวนโครงการ",$setnumproject,'fas fa-calendar');
+                            setData("โครงการ",$setnumproject,'fas fa-calendar');
                             $orphan = mysqli_query($conn,"SELECT id_orphan FROM formone_orphan_record")or die(mysqli_error());
                             $setnumorphan = mysqli_num_rows($orphan);
-                            setData("จำนวนเด็กกำพร้า",$setnumorphan,'fas fa-users');
+                            setData("เด็กกำพร้า",$setnumorphan,'fas fa-users');
                             $patron = mysqli_query($conn, "SELECT id FROM patron");
                             $setnumpatron = mysqli_num_rows($patron);
                             setData("ผู้อุปถัมภ์",$setnumpatron,'fas fa-user');
                             $news = mysqli_query($conn,"SELECT * FROM topnews");
                             $setnumnews = mysqli_num_rows($news);
                             setData("ข่าวสาร",$setnumnews,'fas fa-newspaper');
+                            $board = mysqli_query($conn,"SELECT bord_id FROM board_users");
+                            $setnumboard = mysqli_num_rows($board);
+                            setData("คณะกรรมการ",$setnumboard,'fas fa-users');
+                            $fundation = mysqli_query($conn,"SELECT id_fundation FROM fundation");
+                            $setnumfundation = mysqli_num_rows($board);
+                            setData("อาสาสมัค",$setnumfundation,'fas fa-users');
                     ?>
                 </div>
                 <div class="row">
@@ -74,34 +80,28 @@ include_once("../function/link.php");
         </main>
     </div>
     <?php
-        $Ys = DATE('Y');
-        $selectrevenueChart = "SELECT amount, SUM(amount) AS totol, years,DATE_FORMAT(date_y_m_d,'%M-%Y') AS date_y_m_d
-            FROM re_venue WHERE years='$Ys' GROUP BY DATE_FORMAT(date_y_m_d, '%m%') ORDER BY DATE_FORMAT(date_y_m_d,'%Y-%m-%d')";
-        $queryrevenueChart = mysqli_query($conn, $selectrevenueChart);
-        $setrevenueArr = array();
-        $settotolArr = array();
-        //$ty = array();
-          while($resOne = mysqli_fetch_array($queryrevenueChart)){
-              $setrevenueArr[] = "\"".$resOne['date_y_m_d']."\"";
-              //$ty[] = "\"".$resOne['date_y']."\"";
-              $settotolArr[] = "\"".$resOne['totol']."\"";
+        function setmonthrevenue($m,$conect){
+          $Ys = DATE('Y');
+          $settotolArr = array();
+          $sql = mysqli_query($conect,"SELECT date_y_m_d,SUM(amount) AS suntotal,years FROM re_venue WHERE year(date_y_m_d)=$Ys AND month(date_y_m_d)=$m");
+         // echo $sql;
+          while($res = mysqli_fetch_array($sql)){
+            echo $res['suntotal'];
           }
-          $setrevenueArr = implode(",", $setrevenueArr);
-          $settotolArr = implode(",", $settotolArr);
-          
-          $selectexpensesChart = "SELECT amount, SUM(amount) AS totolx,years,DATE_FORMAT(date_y_m_d,'%M-%Y') AS date_y
-            FROM expenses WHERE years='$Ys' GROUP BY DATE_FORMAT(date_y_m_d,'%m%') ORDER BY DATE_FORMAT(date_y_m_d,'%Y-%m-%d')";
-           $queryexpensesChart = mysqli_query($conn, $selectexpensesChart);
-           $setexpensesArr = array();
-           $setexpensesTotol = array();
-          //echo $ty;
-            while($resTrue = mysqli_fetch_array($queryexpensesChart)){
-                $setexpensesArr[] = "\"".$resTrue['date_y']."\"";
-                $setexpensesTotol[] = "\"".$resTrue['totolx']."\"";
-            }
-            $setexpensesArr = implode(",", $setexpensesArr);
-            $setexpensesTotol = implode(",", $setexpensesTotol);
+         
+        }
+        function setmonthexpenses($m,$conect){
+          $Ys = DATE('Y');
+          $settotolArr = array();
+          $sql = mysqli_query($conect,"SELECT date_y_m_d,SUM(amount) AS suntotal,years FROM expenses WHERE year(date_y_m_d)=$Ys AND month(date_y_m_d)=$m");
+         // echo $sql;
+          while($res = mysqli_fetch_array($sql)){
+            echo $res['suntotal'];
+          }
+         
+        }
         
+        $Ys = DATE('Y');  
         $selectrevenueYear = "SELECT amount, SUM(amount) AS totolRY,DATE_FORMAT(date_y_m_d, '%Y') AS date_y_m_d
             FROM re_venue GROUP BY DATE_FORMAT(date_y_m_d,'%Y%') ORDER BY DATE_FORMAT(date_y_m_d, '%Y')";
           $queryrevenueYear = mysqli_query($conn,$selectrevenueYear);
@@ -144,19 +144,21 @@ include_once("../function/link.php");
             const datarevenue = {
               labels: labels,
               datasets: [{
-                label: 'รายรับ',
+                label: 'รายรับปีนี้',
                 backgroundColor: 'rgb(0, 204, 0)',
                 borderColor: 'rgb(0, 204, 0)',
-                data: [<?php echo $settotolArr ?>],
+                data :[<?= setmonthrevenue('01',$conn)?>,<?=setmonthrevenue('02',$conn) ?>,<?=setmonthrevenue('03',$conn)?>,<?=setmonthrevenue('04',$conn)?>,<?=setmonthrevenue('05',$conn)?>,<?=setmonthrevenue('06',$conn)?>,
+                <?=setmonthrevenue('07',$conn)?>,<?=setmonthrevenue('08',$conn)?>,<?=setmonthrevenue('09',$conn)?>,<?=setmonthrevenue('10',$conn)?>,<?=setmonthrevenue('11',$conn)?>,<?=setmonthrevenue('12',$conn)?>]
               }]
             };
             const dataexpenses = {
                 labels: labels,
               datasets: [{
-                label: 'รายจ่าย',
+                label: 'รายจ่ายปีนี้',
                 backgroundColor: 'rgb(255, 102, 0)',
                 borderColor: 'rgb(255, 102, 0)',
-                data: [<?php echo $setexpensesTotol ?>],
+                data :[<?= setmonthexpenses('01',$conn)?>,<?=setmonthexpenses('02',$conn) ?>,<?=setmonthexpenses('03',$conn)?>,<?=setmonthexpenses('04',$conn)?>,<?=setmonthexpenses('05',$conn)?>,<?=setmonthexpenses('06',$conn)?>,
+                <?=setmonthexpenses('07',$conn)?>,<?=setmonthexpenses('08',$conn)?>,<?=setmonthexpenses('09',$conn)?>,<?=setmonthexpenses('10',$conn)?>,<?=setmonthexpenses('11',$conn)?>,<?=setmonthexpenses('12',$conn)?>]
               }]
             }
             const configOne = {
@@ -188,7 +190,9 @@ include_once("../function/link.php");
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
-                  'rgb(255, 205, 86)'
+                  'rgb(255, 205, 86)',
+                  'rgb(153, 51, 255)',
+                  'rgb(51, 204, 51)'
                 ],
                 hoverOffset: 4
               }]
@@ -211,7 +215,9 @@ include_once("../function/link.php");
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
-                  'rgb(255, 205, 86)'
+                  'rgb(255, 205, 86)',
+                  'rgb(153, 51, 255)',
+                  'rgb(51, 204, 51)'
                 ],
                 hoverOffset: 4
               }]

@@ -53,7 +53,7 @@
                 $checkRows = mysqli_num_rows($checkSql);
                 if($checkRows == 1){
                     echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"error\",\"username ซ้ำ\",\"มี username นี้อยู่แล้วโปรดสร้าง username ใหม่\")
+                            MySetSweetAlert(\"warning\",\"username ซ้ำ\",\"มี username นี้อยู่แล้วโปรดสร้าง username ใหม่\")
                         </script>";
                 }else{
                     $insertQl = "INSERT INTO users SET username='$user_name', passwd='$password_user',fullname='$fullname',photo='$photo',status_users='$status_user'";

@@ -62,19 +62,19 @@
     <div class="page-wrapper chiller-theme toggled">
         <?php   navigationOfiicer($status); ?>
         <main class="page-content mt-0">
-            <?php navbarOfficer("ข้อมูลอาศาสมัค(ทั่วไป)") ?>
+            <?php navbarOfficer("จัดการข้อมูลอาสาสมัคร(ทั่วไป)") ?>
             <div class="container-fluid row">
                 <div class="ml-auto">
                     <button class="bd-none au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" 
                         data-target="#modalFundationform"
                     >
                         <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลกรรมการมุลนิธิ
+                          เพิ่มข้อมูล
                     </button>
                 </div> 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 datatablefx">
                             <thead> 
                                 <tr>
                                     <th>ลำดับ</th>
@@ -105,8 +105,16 @@
             </div>
             <main-add-fundation></main-add-fundation>
             <main-edit-fundation></main-edit-fundation>
+            <main-show-fundation></main-show-fundation>
         </main>
     </div>
+    <script>
+         $('.datatablefx').DataTable({
+            scrollY:400,
+            scrollX:true,
+            scrollCollapse:true
+        })
+    </script>
     <script src="../assets/scripts/fundation.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.20/js/uikit.min.js"></script>

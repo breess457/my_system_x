@@ -90,9 +90,7 @@ include_once("../function/link.php");
         .account-item .image > img {
             width: 100%;
         }
-        .gedf-card{
-            margin-top:102px
-        }
+        
 
     </style>
 </head>
@@ -104,39 +102,8 @@ include_once("../function/link.php");
         <main class="page-content mt-0">
             <br><br><br>
             <div class="container-fluid d-flex">
-                <div class="col-md-3">
-                  <?php
-                    $select = mysqli_query($conn,"select * from patron where id='$id_patron'")or die(mysqli_error());
-                    $assoc = mysqli_fetch_assoc($select);
-                    $setfullname = join(array($assoc['title']," ",$assoc['f_name'],"  ",$assoc['l_name']));
-                    $setaddress = join(array($assoc['number_home']," ",$assoc['district_t'],"  ",$assoc['district_a']," ",$assoc['district_j']," ",$assoc['zip_code']));
-                    echo"<div class=\"card gedf-card\">";
-						echo"<div class=\"card-header\">";
-                            echo"<div class=\"d-flex justify-content-between align-items-center\">";
-                                echo "<div class=\"d-flex justify-content-between align-items-center\">";
-                                    echo "<div class=\"ml-2\">";
-                                        echo "<div class=\"h5 ml-5 \">ผู้อุปถัมท์</div>";
-                                        echo "<div class=\"h7 text-muted\">".$setfullname."</div>";
-                                    echo "</div>";
-                                echo "</div>";
-                            echo"</div>";
-						echo"</div>";
-                        echo "<div class=\"card-body\">";
-                            echo " <a class=\"card-link\" href=\"#\">";
-                                echo"<h5 class=\"card-title\"> <i class=\"fas fa-map-marker-alt\"></i> &nbsp;".$setaddress."</h5>";
-                            echo "</a>";
-                            echo "<p class=\"card-text\"><i class=\"fas fa-mobile\"></i> &nbsp;".$assoc['tell']."</p>";
-                            echo "<p class=\"card-text\"><i class=\"fas fa-briefcase\"></i> &nbsp;".$assoc['career']."</p>";
-                            echo "<p class=\"card-text\"><i class=\"fas fa-building\"></i> &nbsp;".$assoc['workplace']."</p>";
-                            echo "<p class=\"card-text\"><i class=\"fas fa-calendar\"></i>&nbsp; เริ่มให้ทุน".$assoc['new_date']."</p>";
-                            echo "<p class=\"card-text\"><i class=\"fas fa-calendar-times\"></i>&nbsp; สิ้นสุดให้ทุน".$assoc['end_date']."</p>";
-                            
-                            echo "<p class=\"card-text\"><i class=\"fas fa-dollar-sign\"></i> &nbsp;".$assoc['all_munny']."</p>";
-                        echo "</div>";
-					echo"</div>";
-                  ?>
-                </div>
-                <div class="col-md-9">
+                
+                <div class="col-md-12">
                     <div class="table-responsive">
                         <div class="table-wrapper">
                             <table class="table table-data2">
@@ -146,13 +113,14 @@ include_once("../function/link.php");
                                         <th>โปรไฟล์</th>
                                         <th>ชื่อผู้รับทุน</th>
                                         <th>อายุ</th>
+                                        <th>บัตรประชาชน</th>
                                         <th>ที่อยู่</th>
                                         <th>วันที่เข้าร่วม</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $selectQl = "SELECT * FROM patron_scholarship LEFT JOIN formone_orphan_record ON patron_scholarship.id_grantee = formone_orphan_record.id_orphan LEFT JOIN formtrue_orphan_school ON  formtrue_orphan_school.getid_jion_orphan = patron_scholarship.id_grantee WHERE id_patrons='$id_patron'";
+                                        $selectQl = "SELECT * FROM patron_scholarship LEFT JOIN formone_orphan_record ON patron_scholarship.id_grantee = formone_orphan_record.id_orphan LEFT JOIN formtrue_orphan_school ON formtrue_orphan_school.getid_jion_orphan = patron_scholarship.id_grantee WHERE id_patrons='$id_patron'";
                                         $querysql = mysqli_query($conn, $selectQl)or die(mysqli_error());
                                           foreach($querysql as $i => $res){
                                               $fullnames = join(array($res['title_me'],$res['first_name_me']," ",$res['last_name_me']));
@@ -167,9 +135,7 @@ include_once("../function/link.php");
                 </div> 
             </div>
         </main>
-        <main-edit-patron></main-edit-patron>
-        <main-add-orphan></main-add-orphan>
-    <script src="../assets/scripts/patron-scholarship.js"></script>
+
 </body>
 </html>
 <?php

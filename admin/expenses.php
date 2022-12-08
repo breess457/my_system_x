@@ -45,13 +45,13 @@ include_once("../function/link.php");
                     data-toggle="modal" data-target="#modalFormexpenses"
                     >
                         <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลรายจ่าย
+                          เพิ่มข้อมูล
                     </button>
                     <?php } ?>
                 </div> 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 datatableEx">
                             <thead>
                                 <tr>
                                     <th>ลำดับ</th>
@@ -68,7 +68,7 @@ include_once("../function/link.php");
                                 $getData = mysqli_query($conn,"SELECT * FROM expenses")or die(mysqli_error());
                                     foreach($getData as $num => $result){
                                         ListDataExpenses(($num + 1),$result['expenses_name'],$result['details'],
-                                                $result['amount'],$result['date_y_m_d'],$result['evidence_slip'], $result['expenses_id']);
+                                                $result['amount'],$result['date_y_m_d'],$result['evidence_slip'], $result['expenses_id'],$status);
                                     };
                             ?>
                             </tbody> 
@@ -81,6 +81,13 @@ include_once("../function/link.php");
         <main-form-expenses></main-form-expenses>
         <main-update-expenses></main-update-expenses>
     </div>
+    <script>
+         $('.datatableEx').DataTable({
+            scrollY:400,
+            scrollX:true,
+            scrollCollapse:true
+        })
+    </script>
     <script src="../assets/scripts/expenses.js"></script>
 </body>
 </html>

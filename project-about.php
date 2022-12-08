@@ -118,13 +118,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <?php 
-                        $selectdata = mysqli_query($conn,"SELECT * FROM project");
+                        $selectdata = mysqli_query($conn,"SELECT * FROM project LEFT JOIN fundation ON project.select_fundation_id = fundation.id_fundation");
                           foreach($selectdata as $i => $get){
                             $setID = $get['id'];
                             $setSpeseX = mysqli_query($conn,"SELECT getid_project FROM project_participant WHERE getid_project=$setID");
                             $num_row_spesex = mysqli_num_rows($setSpeseX);
-                            $setprojectadministater = join(array($get['title'],"",$get['f_name']," ",$get['l_name']));
-                                newsblogcard($get['id'],$get['project_id'],$get['project_name'],$get['detail_project'],$get['operating_area'],
+                            $setprojectadministater = join(array($get['title_fundation'],"",$get['firstname_fundation']," ",$get['lastname_fundation']));
+                                newsblogcard($get['id'],1,$get['project_name'],$get['detail_project'],$get['operating_area'],
                                 $get['img_project'],$get['start_date'],$get['end_date'],$setprojectadministater,$num_row_spesex);
                           }
                     ?>

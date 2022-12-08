@@ -43,81 +43,83 @@
         return $newImage;
     }
 
-    $check_status = $_POST['status'];
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+        if($_POST['status'] === "update"){
 
-    if($check_status === "update"){
-
-        $expensesId = $_POST['expensesId'];
-        $Expenses_name = $_POST['Expenses_name'];
-        $Edetail = $_POST['Edetail'];
-        $Eamount = $_POST['Eamount'];
-        $expensesSlip = $_POST['expensesSlip'];
-        if($_FILES['Eevidence_slip']['tmp_name'] == ""){
-            $edit = "UPDATE expenses SET expenses_name='$Expenses_name',details='$Edetail',amount='$Eamount'
-            WHERE expenses_id='$expensesId'";
-        }else{
-            $edit = "UPDATE expenses SET expenses_name='$Expenses_name',details='$Edetail',amount='$Eamount',
-            evidence_slip='".setImgpath("Eevidence_slip")."' WHERE expenses_id='$expensesId'";
-            $ulfiless = "data/expenses/".$expensesSlip;
-            unlink($ulfiless);
-        }
-        $query_edit = mysqli_query($conn, $edit);
-            if($query_edit){
+            $expensesId = $_POST['expensesId'];
+            $Expenses_name = $_POST['Expenses_name'];
+            $Edetail = $_POST['Edetail'];
+            $Eamount = $_POST['Eamount'];
+            $expensesSlip = $_POST['expensesSlip'];
+            if($_FILES['Eevidence_slip']['tmp_name'] == ""){
+                $edit = "UPDATE expenses SET expenses_name='$Expenses_name',details='$Edetail',amount='$Eamount'
+                WHERE expenses_id='$expensesId'";
+            }else{
+                $edit = "UPDATE expenses SET expenses_name='$Expenses_name',details='$Edetail',amount='$Eamount',
+                evidence_slip='".setImgpath("Eevidence_slip")."' WHERE expenses_id='$expensesId'";
+                $ulfiless = "data/expenses/".$expensesSlip;
+                unlink($ulfiless);
+            }
+            $query_edit = mysqli_query($conn, $edit);
+                if($query_edit){
+                    echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"success\",\"แก้ไขข้อมูลเรียบร้อย\",\"\")
+                    </script>";
+                }else{
+                    echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ติดต่อผู้พัฒนา\")
+                    </script>";
+                }
+    
+        }else if($_POST['status'] === "create"){
+            $revenue_name = $_POST['expenses_name'];
+            $detail = $_POST['detail'];
+            $amount = $_POST['amount'];
+            $date = date("Y-m-d");
+            $year = date('Y');
+            if(!$_FILES["evidence_slip"]["name"]){
                 echo "<script type=\"text/javascript\">
-                    MySetSweetAlert(\"success\",\"แก้ไขข้อมูลเรียบร้อย\",\"\")
+                    MySetSweetAlert(\"error\", \"ไม่มีหลักฐาน\",\"ไม่มี หลักฐาน สลิป กรุณาเพิ่ม สลิป เพื่อเป็นหลักฐานด้วย\");
                 </script>";
             }else{
-                echo "<script type=\"text/javascript\">
-                    MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ติดต่อผู้พัฒนา\")
-                </script>";
-            }
-
-    }else if(isset($_GET['status'])== "delete"){
-        $expens_id = $_GET['ex_id'];
-        $img_slip = $_GET['img_slip'];
-        echo $expens_id;
-
-        $trash = "DELETE FROM expenses WHERE expenses_id = $expens_id";
-        $query_del = mysqli_query($conn, $trash);
-         if($query_del){
-             $ulfile = "data/expenses/".$img_slip;
-             unlink($ulfile);
-
-             echo "<script type=\"text/javascript\">
-                    MySetSweetAlert(\"success\",\"ลบข้อมูลเรียบร้อย\",\"\")
-                </script>";
-         }else{
-             echo "<script type=\"text/javascript\">
-                    MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ติดต่อผู้พัฒนา\")
-                </script>";
-         }
-    }else if($check_status === "create"){
-        $revenue_name = $_POST['expenses_name'];
-        $detail = $_POST['detail'];
-        $amount = $_POST['amount'];
-        $date = date("Y-m-d");
-        $year = date('Y');
-        if(!$_FILES["evidence_slip"]["name"]){
-            echo "<script type=\"text/javascript\">
-                MySetSweetAlert(\"error\", \"ไม่มีหลักฐาน\",\"ไม่มี หลักฐาน สลิป กรุณาเพิ่ม สลิป เพื่อเป็นหลักฐานด้วย\");
-            </script>";
-        }else{
-            $insert = "INSERT INTO expenses(expenses_name,details,date_y_m_d,amount,evidence_slip,years)
-                VALUES('$revenue_name','$detail','$date','$amount','".setImgpath("evidence_slip")."','$year')";
-
-            $set_query = mysqli_query($conn, $insert)or die(mysqli_error());
-            if($set_query){
-                echo "<script type=\"text/javascript\">
-                    MySetSweetAlert(\"success\",\"เพิ่มข้อมูลเรียบร้อย\",\"\")
-                </script>";
-            }else{
-                echo "<script type=\"text/javascript\">
-                    MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ติดต่อผู้พัฒนา\")
-                </script>";
+                $insert = "INSERT INTO expenses(expenses_name,details,date_y_m_d,amount,evidence_slip,years)
+                    VALUES('$revenue_name','$detail','$date','$amount','".setImgpath("evidence_slip")."','$year')";
+    
+                $set_query = mysqli_query($conn, $insert)or die(mysqli_error());
+                if($set_query){
+                    echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"success\",\"เพิ่มข้อมูลเรียบร้อย\",\"\")
+                    </script>";
+                }else{
+                    echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ติดต่อผู้พัฒนา\")
+                    </script>";
+                }
             }
         }
-        //echo $revenue_name, "<br />", $detail, "<br />", $amount, "<br />", $date;
+    }else if($_SERVER['REQUEST_METHOD']==="GET"){
+         if(isset($_GET['status'])== "delete"){
+            $expens_id = $_GET['ex_id'];
+            $img_slip = $_GET['img_slip'];
+    
+            $trash = "DELETE FROM expenses WHERE expenses_id = $expens_id";
+            $query_del = mysqli_query($conn, $trash);
+             if($query_del){
+                 $ulfile = "data/expenses/".$img_slip;
+                 unlink($ulfile);
+    
+                 echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"success\",\"ลบข้อมูลเรียบร้อย\",\"\")
+                    </script>";
+             }else{
+                 echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ติดต่อผู้พัฒนา\")
+                    </script>";
+             }
+        }
     }
+
+
  ?>
 </body>
 </html>

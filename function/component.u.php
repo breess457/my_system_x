@@ -163,7 +163,7 @@ function iconbox($number, $city){
 
 function cardproject($dataID,$fullname,$age,$bloodgroup,$address,$photo){
   $card = "
-      <div class=\"col-md-3 ml-4 mr-4 mb-4\">
+      <div class=\"col-md-12 ml-4 mr-4 mb-4\">
         <div class=\"info-box row mb-0\">
           <div class=\"col-md-4 mb-0\">
             <img src=\"officer/backend/data/orphan-information/$photo\" width=\"100\" height=\"100\" class=\"image-avartar\" />
@@ -196,7 +196,6 @@ function newsblogcard($id,$projectnumber,$projectname,$details,$area_x,$imagepro
       <div class=\"square\">
         <div class=\"card-img\">
           <img src=\"admin/backend/data/project/$imageproject\" alt=\"\">
-          <span><h4>ID: $projectnumber</h4></span>
         </div>
         <div class=\"card-desc\">
             <div class=\"row ml-2 mb-1\">
@@ -247,25 +246,43 @@ function checkstatus_users($data){
   }
 }
 
-function fnOurTeam($fullnames, $image, $username, $sex, $age, $statususer, $call, $id){
+function fnOurTeam($fullnames, $image, $position_bordx, $sex, $age, $occupation_boardx, $board_status, $id){
   $listTeam = "
     <div class=\"team-area col-lg-3 col-md-6 col-sm-12\">
       <div class=\"inner-box\">
-          <small class=\"social-list\">".checkstatus_users($statususer)."</small>
           <ul class=\"social-icons\">
+              <li><a href=\"#\"><a></li>
+              <li><a href=\"#\"></a></li>
+              <li><a href=\"#\"></a></li>
+              <li><a href=\"#\"></a></li>
           </ul>
           <div class=\"image\">
-            <a href=\"#\"><img src=\"root/backend/data-image/$image\" alt=\"\"></a>
+              <a href=\"#\"><img src=\"admin/backend/data/board/$image\" alt=\"\"></a>
           </div>
           <div class=\"lower-content\">
-              <span>$fullnames</span>
-              <div class=\"designation\"><i class=\"fas fa-at\"></i>:$username</div>
-              
+              <h4>$fullnames</h4>
+              <div class=\"designation\">$position_bordx</div>
           </div>
       </div>
     </div>
   ";
   echo $listTeam;
+}
+
+function boardOurTeam($fullnamess, $b_image, $position_bord, $b_sex, $b_age, $occupation_board, $call, $b_id){
+  $board_list ="
+    <div class=\"col-md-2 col-8 profile-box border p-1 rounded text-center mr-4 mb-4 bg-light\">
+      <img src=\"admin/backend/data/board/$b_image\" class=\"w-100 mb-1\">
+      <h5 class=\"m-0\"><strong>$fullnamess</strong></h5>
+      <p class=\"mb-2\">$position_bord</p>
+      <div class=\"col-12 row ml-1\">
+        <small class=\"mr-auto ml-2\">อายุ: $b_age</small>
+        <small class=\"ml-auto mr-2\">เพศ: $b_sex</small>
+      </div>
+      <small>อาชีพ: $occupation_board</small>
+    </div>
+  ";
+  echo $board_list;
 }
 
 ?>

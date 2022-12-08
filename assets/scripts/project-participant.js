@@ -114,13 +114,13 @@ class ModalAddParticipant extends HTMLElement{
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body col-md-12">
-                          <form action="backend/add-orphan.php" method="post">
+                        <form action="backend/add-orphan.php" method="post">
+                          <div class="modal-body">
                             <input type="hidden" name="projectid" id="getProjectId" />
-                            <div class="table-responsive table-responsive-data2">
+                            <div class="table-responsive table-responsive-data2 table-wrapper-scroll-y my-custom-scrollbar">
                                 <table class="table table-data2">
                                   <thead>
-                                    <tr>
+                                    <tr> 
                                         <th>รูปภาพ</th>
                                         <th>ชื่อ-นามสกุล</th>
                                         <th>ตำบล</th>
@@ -134,9 +134,9 @@ class ModalAddParticipant extends HTMLElement{
                                     <tbody id="divIDdata"></tbody>
                                 </table>
                             </div>
-                            <button type="submit" class="btn btn-cyan btn-sm">เพิ่มข้อมูลที่เลื่อก</button>
-                          </form>
-                        </div>
+                            <button type="submit" class="btn btn-cyan"><i class="fas fa-user-plus"></i> เพิ่มข้อมูลที่เลื่อก</button>  
+                          </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -157,4 +157,6 @@ $(document).on('click','#btnAddParticipant', function(e){
 })
 
 getapiParticipant(geteventParticipant,getIDproject)
+
+
 

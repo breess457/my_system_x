@@ -22,7 +22,7 @@ class AddImage extends HTMLElement {
       return this.getAttribute("wrapper");
     }
     get cancle() {
-      return this.getAttribute("cancles");
+      return this.getAttribute("cancles"); 
     }
     connectedCallback() {
       this.renderImage();
@@ -106,7 +106,7 @@ class orphan_informetion extends HTMLElement{
     renderInformation(){
         this.innerHTML = `
         
-      <div class="modal fade " id="modalFormProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade modalOff" id="modalFormProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -119,46 +119,29 @@ class orphan_informetion extends HTMLElement{
             <input type="hidden" name="status" value="create" />
             <input type="hidden" class="form-control" name="project_id" id="Id Project" value="ถ้าลบ error แน่" required>
               <div class="modal-body row">
-
-                  <div class="col-md-12 mt-0">
+                  <div class="col-md-6 mt-0">
                         <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="Fullname">ชื่อโครงการ/กิจกรรม</label>
+                            <label class="mb-0 text-default" for="Fullname">ชื่อโครงการ/กิจกรรม</label>
                             <input type="text" class="form-control" name="project_name" id="Fullname" placeholder="ชื่อโครงการ/กิจกรรม" required>
                         </div>
                   </div> 
-                  <div class="col-md-12 row">
-                    <div class="col-12">
-                        <div class="form-group mb-0">
-                            <label class="mb-0 text-primary" for="title">ผู้รับผิดชอบโครงการ/กิจกรรม</label>
-                        </div>
-                    </div>
-                    <div class="col-3 mt-0">
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" name="title" id="title" placeholder="title" required>
-                        </div>
-                    </div>
-                    <div class="col-6 mt-0">
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" name="ferst_name" id="title" placeholder="ชื่อ" required>
-                        </div>
-                    </div>
-                    <div class="col-3 mt-0">
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" name="last_name" id="title" placeholder="นามสกุล" required>
-                        </div>
-                    </div>
+                  <div class="col-6 mt-0">
+                      <div class="form-group mb-2">
+                        <label class="mb-0 text-default" for="title">ผู้รับผิดชอบโครงการ/กิจกรรม</label>
+                        <select class="form-control vodiapicker" data-live-search="true" id="selectFundition" name="select_fundation_id"></select>
+                      </div>
                   </div>
                   
                   <div class="col-md-8 row mt-1">
                     <div class="col-md-12">
                       <div class="form-group mb-2">
-                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">รายละเอียด</label>
                           <textarea class="form-control" rows="3" name="detail_project" id="Detail" required></textarea>
                       </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">เริ่มโครงการ</label>
+                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">เริ่มโครงการ</label>
                             <div class="col-xs-5 date">
                                 <div class="input-group input-append date" id="datePicker">
                                     <input type="date" class="form-control" id="sdate" name="start_date" />
@@ -171,7 +154,7 @@ class orphan_informetion extends HTMLElement{
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-primary">สิ้นสุดโครงการ</label>
+                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">สิ้นสุดโครงการ</label>
                             <div class="col-xs-5 date">
                                 <div class="input-group input-append date" id="datePicker">
                                     <input type="date" class="form-control" id="edate" name="end_date" />
@@ -185,7 +168,7 @@ class orphan_informetion extends HTMLElement{
                   
                     <div class="col-md-12 mt-0">
                         <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="area">พื่นที่ดำเนินงาน</label>
+                            <label class="mb-0 text-default" for="area">พื่นที่ดำเนินงาน</label>
                             <input type="text" class="form-control" name="area_of_operation" id="area" placeholder="สถานที่ทำโครงการ" required />
                         </div>
                     </div>
@@ -215,6 +198,32 @@ class orphan_informetion extends HTMLElement{
 
 customElements.define('main-from-project', orphan_informetion)
 setImagePriviews(".projectImg",".setDefaultImgproject","#setbtnCustom",".x-cancle i",".imgname",".x-wrap")
+function createOptionsFundation(datatext) {
+  //console.log(datatext)
+  return datatext.map((resdata, indes)=>{
+      IdlistPatron = document.getElementById("selectFundition")
+      let Option = document.createElement("option")
+       //Option.setAttribute("data-thumbnail","https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/LetterA.svg/2000px-LetterA.svg.png")
+      IdlistPatron.appendChild(Option)
+
+      Option.innerHTML = "ชื่อ: "+resdata.title_fundation+" "+ resdata.firstname_fundation +"  "+resdata.lastname_fundation 
+      Option.value = resdata.id_fundation
+
+  })
+}
+$(document).on("click","#btncreateproject", function(e){
+  fetch(`backend/api/apiget-data-fundation.php?status=allApi`,{
+    method:"GET",
+    headers:{"Content-Type": "application/json; charset=UTF-8",}
+  }).then(res => res.json())
+    .then((getdata)=>createOptionsFundation(getdata))
+    .catch(err => console.log(err))
+  $(".modalOff").hide('hidden.bs.modal',function(){
+    $("#selectFundition").html("")
+    console.log("hide success")
+}) 
+  e.preventDefault()
+})
 
 function formatDate(date) {
   var d = new Date(date),
@@ -243,11 +252,11 @@ class modalUpdateProjectForm extends HTMLElement{
   renderEdit(){
     this.innerHTML = `
         
-      <div class="modal fade " id="modalFormprojectupdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade modalOff" id="modalFormprojectupdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">แก้ไข โครงการ</h5>
+              <h5 class="modal-title" id="exampleModalLongTitle">แก้ไขโครงการ</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -258,51 +267,28 @@ class modalUpdateProjectForm extends HTMLElement{
             <input type="hidden" name="photoname" id="imageProjectname" />
             <input type="hidden" name="filenames" id="getfileprojectname" />
               <div class="modal-body row">
-                  <div class="col-md-5 mt-0">
-                      <div class="form-group mb-2">
-                        <label class="mb-0 text-primary" for="Fullname">Id project</label>
-                        <input type="number" class="form-control" name="editproject_number" id="editIdProject" placeholder="Id Project" required>
-                      </div>
-                  </div>
-                  <div class="col-md-7 mt-0">
+                  <div class="col-md-6 mt-0">
                         <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="Fullname">project name</label>
+                            <label class="mb-0 text-default" for="Fullname">project name</label>
                             <input type="text" class="form-control" name="editproject_name" id="editProjectname" placeholder="Project Name" required>
                         </div>
                   </div>
-                  <div class="col-md-12 row">
-                    <div class="col-12">
-                        <div class="form-group mb-0">
-                            <label class="mb-0 text-primary" for="title">ผู้รับผิดชอบ โครงการ</label>
-                        </div>
-                    </div>
-                    <div class="col-3 mt-0">
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" name="edittitle" id="editpersenaltitle" placeholder="title" required>
-                        </div>
-                    </div>
-                    <div class="col-6 mt-0">
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" name="editferst_name" id="editpersenalname" placeholder="Ferst Name" required>
-                        </div>
-                    </div>
-                    <div class="col-3 mt-0">
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" name="editlast_name" id="editpersenallastname" placeholder="Last Name" required>
-                        </div>
+                  <div class="col-6 mb-2">
+                    <div class="form-group mb-2">
+                      <label class="mb-0 text-default" for="title">ผู้รับผิดชอบ โครงการ</label>
+                        <select class="form-control vodiapicker" data-live-search="true" id="selecteditFundition" name="select_editfundation_id"></select>
                     </div>
                   </div>
-                  
                   <div class="col-md-8 row mt-1">
                     <div class="col-md-12">
                       <div class="form-group mb-2">
-                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด(Detail)</label>
+                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด(Detail)</label>
                           <textarea class="form-control" rows="3" name="editdetail_project" id="editDetail" required></textarea>
                       </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">เริ่มโครงการ</label>
+                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">เริ่มโครงการ</label>
                             <div class="col-xs-5 date">
                                 <div class="input-group input-append date" id="datePicker">
                                     <input type="date" class="form-control" id="Usdate" name="editstart_date" required/>
@@ -315,7 +301,7 @@ class modalUpdateProjectForm extends HTMLElement{
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-primary">สิ้นสุดโครงการ</label>
+                          <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">สิ้นสุดโครงการ</label>
                             <div class="col-xs-5 date">
                                 <div class="input-group input-append date" id="datePicker">
                                     <input type="date" class="form-control" id="Uedate" name="editend_date" required/>
@@ -329,7 +315,7 @@ class modalUpdateProjectForm extends HTMLElement{
                   
                     <div class="col-md-12 mt-0">
                         <div class="form-group mb-2">
-                            <label class="mb-0 text-primary" for="area">พื่นที่ดำเนินงาน</label>
+                            <label class="mb-0 text-default" for="area">พื่นที่ดำเนินงาน</label>
                             <input type="text" class="form-control" name="editarea_of_operation" id="editarea" placeholder="สถานที่ทำโครงการ" required />
                         </div>
                     </div>
@@ -340,12 +326,12 @@ class modalUpdateProjectForm extends HTMLElement{
                     names="รูปโครงการ" custom="usetbtnCustom" setdefault="usetDefaultImgproject"></mian-add-image>
                   </div>
               </div>
-              <div class="container mb-4 row">
+              <div class="container mb-4 row"> 
                 <div class="custom-file col-9 ml-3">
                   <input type="file" name="edit_file_project" multiple class="custom-file-input">
                   <label class="custom-file-label" id="editFilename" for="inputGroupFile01">เพิ่มไฟล์โครงการ(PDF)</label>
                 </div>
-                  <button type="submit" class="btn btn-success ml-auto">บันทึกการแก้ไขข้อมูล</button>
+                  <button type="submit" class="btn btn-success ml-auto">บันทึกข้อมูล</button>
               </div>
             </form>
             
@@ -359,15 +345,30 @@ class modalUpdateProjectForm extends HTMLElement{
 customElements.define('main-edit-project', modalUpdateProjectForm)
 
 setImagePriviews(".uprojectImg",".usetDefaultImgproject","#usetbtnCustom",".ux-cancle i",".uimgname",".ux-wrap")
+function createOptionsEditFundation(datatext) {
+  //console.log(datatext)
+  return datatext.map((resdata, indes)=>{
+      IdlistPatron = document.getElementById("selecteditFundition")
+      let Option = document.createElement("option")
+       //Option.setAttribute("data-thumbnail","https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/LetterA.svg/2000px-LetterA.svg.png")
+      IdlistPatron.appendChild(Option)
+
+      Option.innerHTML = "ชื่อ: "+resdata.title_fundation+" "+ resdata.firstname_fundation +"  "+resdata.lastname_fundation 
+      Option.value = resdata.id_fundation
+
+  })
+}
+
 $(document).on("click","#btnUpdateProject", function(e){
-    let projectId = $(this).data('id'),projectnumber = $(this).data('projectnumber'),projectname = $(this).data('projectname');
+    let projectId = $(this).data('id'),projectname = $(this).data('projectname');
     let responsibleTitle = $(this).data('responsibletitle'),responsiblename = $(this).data('responsiblename'),responsiblelastname = $(this).data('responsiblelastname')
     let operationarea = $(this).data('operationarea'),yearproject = $(this).data('yearproject'), detail = $(this).data('detail');
     let startdate = $(this).data('startdate'),enddate = $(this).data('enddate'),projectimage = $(this).data('projectimage'), filenameproject=$(this).data('fileproject');
+    let titleFundation = $(this).data('titlefundation'),firstnameFundation = $(this).data('firstnamefundation'),lastnameFundation = $(this).data('lastnamefundation')
 
     $("#projectID").val(projectId)
-    $("#editIdProject").val(projectnumber);
     $("#editProjectname").val(projectname);
+    $("#selecteditFundition").val(`ชื่อ: ${titleFundation} ${firstnameFundation} &nbsp;&nbsp; ${lastnameFundation}`)
     $("#editpersenaltitle").val(responsibleTitle);
     $("#editpersenalname").val(responsiblename);
     $("#editpersenallastname").val(responsiblelastname);
@@ -382,6 +383,17 @@ $(document).on("click","#btnUpdateProject", function(e){
     $(".uprojectImg").attr('src', `backend/data/project/${projectimage}`)
     $(".ux-wrap").last().addClass("active")
     $(".uimgname").html(projectimage)
+
+    fetch(`backend/api/apiget-data-fundation.php?status=allApi`,{
+      method:"GET",
+      headers:{"Content-Type": "application/json; charset=UTF-8",}
+    }).then(res => res.json())
+      .then((getdata)=>createOptionsEditFundation(getdata))
+      .catch(err => console.log(err))
+    $(".modalOff").hide('hidden.bs.modal',function(){
+      $("#selecteditFundition").html("")
+      console.log("hide success")
+    })
     e.preventDefault()
 })
 
@@ -402,5 +414,149 @@ $(document).on("click","#confirmTrashProject", function(e){
     if (result.isConfirmed) {
       window.location = `backend/add-projects.php?ex_id=${idProject}&image_name=${imageProject}&files_name=${fileProject}&status=delete`
     }
+  })
+})
+
+class modalShowProject extends HTMLElement{
+  connectedCallback(){
+    this.renderShow()
+  }
+  renderShow(){
+    this.innerHTML = `
+        
+    <div class="modal fade " id="modalSowProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">แสดงโครงการ</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            <div class="modal-body row">
+                <div class="col-md-12 mt-0">
+                      <div class="form-group mb-2">
+                          <label class="mb-0 text-default" for="Fullname">project name</label>
+                          <input type="text" class="form-control" id="ShowProjectname" placeholder="Project Name" disabled>
+                      </div>
+                </div>
+                <div class="col-md-12 row">
+                  <div class="col-12">
+                      <div class="form-group mb-0">
+                          <label class="mb-0 text-default" for="title">ผู้รับผิดชอบ โครงการ</label>
+                      </div>
+                  </div>
+                  <div class="col-3 mt-0">
+                      <div class="form-group mb-2">
+                          <input type="text" class="form-control" id="Showpersenaltitle" placeholder="title" disabled>
+                      </div>
+                  </div>
+                  <div class="col-6 mt-0">
+                      <div class="form-group mb-2">
+                          <input type="text" class="form-control" id="Showpersenalname" placeholder="Ferst Name" disabled>
+                      </div>
+                  </div>
+                  <div class="col-3 mt-0">
+                      <div class="form-group mb-2">
+                          <input type="text" class="form-control" id="Showpersenallastname" placeholder="Last Name" disabled>
+                      </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-8 row mt-1">
+                  <div class="col-md-12">
+                    <div class="form-group mb-2">
+                        <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด(Detail)</label>
+                        <textarea class="form-control" rows="3" id="ShowDetail" disabled></textarea>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                      <div class="form-group">
+                        <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">เริ่มโครงการ</label>
+                          <div class="col-xs-5 date">
+                              <div class="input-group input-append date" id="datePicker">
+                                  <input type="date" class="form-control" id="Showstartdate" disabled/>
+                                  <span class="input-group-addon add-on">
+                                      <span class="glyphicon glyphicon-calendar"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-6">
+                      <div class="form-group">
+                        <label class="ml-1 mt-0 mb-0 font-weight-bold text-default">สิ้นสุดโครงการ</label>
+                          <div class="col-xs-5 date">
+                              <div class="input-group input-append date" id="datePicker">
+                                  <input type="date" class="form-control" id="Showenddate" disabled/>
+                                  <span class="input-group-addon add-on">
+                                      <span class="glyphicon glyphicon-calendar"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                
+                  <div class="col-md-12 mt-0">
+                      <div class="form-group mb-2">
+                          <label class="mb-0 text-default" for="area">พื่นที่ดำเนินงาน</label>
+                          <input type="text" class="form-control" id="Showarea" placeholder="สถานที่ทำโครงการ" disabled />
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mb-2" 
+                    style="
+                      position: absolute;
+                      height: 100%;
+                      width: 100%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;"
+                  >
+                    <img class="set-image-project" 
+                     style="height: 90%;
+                            width: 90%;
+                            background-repeat: no-repeat;
+                            object-fit: cover;
+                            background-attachment: fixed;  
+                            background-size: cover;"
+                    />
+                  </div>
+                </div>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+
+      `
+  }
+}
+customElements.define('main-show-project',modalShowProject)
+$(document).on("click","#ButtonShowProject", function(ev){
+  let projectId = $(this).data('id'),projectnumber = $(this).data('projectnumber'),projectname = $(this).data('projectname');
+    let operationarea = $(this).data('operationarea'),yearproject = $(this).data('yearproject'), detail = $(this).data('detail');
+    let startdate = $(this).data('startdate'),enddate = $(this).data('enddate'),projectimage = $(this).data('projectimage'), filenameproject=$(this).data('fileproject');
+    let titleFundation = $(this).data('titlefundation'),firstnameFundation = $(this).data('firstnamefundation'),lastnameFundation = $(this).data('lastnamefundation')
+
+    $("#ShowProjectname").val(projectname);
+    $("#Showpersenaltitle").val(titleFundation);
+    $("#Showpersenalname").val(firstnameFundation);
+    $("#Showpersenallastname").val(lastnameFundation);
+    $("#ShowDetail").val(detail);
+    $("#Showstartdate").val(startdate);
+    $("#Showenddate").val(enddate);
+    $("#Showarea").val(operationarea)
+    $(".set-image-project").attr("src",`backend/data/project/${projectimage}`)
+  ev.preventDefault()
+})
+
+$(document).on("click","#falseTrashBtnProject",function(){
+  Swal.fire({
+      icon: 'warning',
+      title: 'ไม่อนุญาต',
+      text: 'เนื่องจากเลยเวลาที่กำหนดสามารถจัดการลบได้แค่3วันหลังจากให้ทุนเท่านั้น',
+      showConfirmButton: false,
   })
 })

@@ -57,14 +57,14 @@ require_once('../../function/link.php');
            $menumber = $_POST['menumber'];
            $blood_group_me = $_POST['blood_group_me'];
            $my_image = $_POST['my_image'];
-            if($_FILES['meImage']['tmp_name'] == ""){
+            if($_FILES['me_photo']['tmp_name'] == ""){
                 $sqlOne = "UPDATE formone_orphan_record SET title_me='$title_me',first_name_me='$firstname',last_name_me='$lastname',
                     berd_day_me='$berd_day_me',age_me='$age',heigh_me='$heigh',weigth_me='$weigth',blood_group_me='$blood_group_me',
                     card_id='$cardid',call_me='$call',siblings_number='$sibingsnumber',me_number='$menumber' WHERE id_orphan='$orphan_id'";
             }else{
                 $sqlOne = "UPDATE formone_orphan_record SET title_me='$title_me',first_name_me='$firstname',last_name_me='$lastname',
                     berd_day_me='$berd_day_me',age_me='$age',heigh_me='$heigh',weigth_me='$weigth',blood_group_me='$blood_group_me',
-                    card_id='$cardid',call_me='$call',siblings_number='$sibingsnumber',me_number='$menumber',profile_orphan='".setImgpath("meImage")."'
+                    card_id='$cardid',call_me='$call',siblings_number='$sibingsnumber',me_number='$menumber',profile_orphan='".setImgpath("me_photo")."'
                     WHERE id_orphan='$orphan_id'";
                 if($my_image !=''){
                     unlink('data/orphan-information/'.$my_image);
@@ -174,17 +174,33 @@ require_once('../../function/link.php');
         }else if($_POST['formgroup'] == "sixformdata"){
             $formsixid = $_POST['formsixid'];
             $status_family = $_POST['status_family'];
-            $revenue_family = $_POST['revenue_family'];
             $level_holp = $_POST['level_holp'];
-            $estimate_help = $_POST['estimate_help'];
-            $deceased = $_POST['deceased'];
-            $cause_death = $_POST['cause_death'];
-            $death_day = $_POST['death_day'];
-            $year_study = $_POST['year_study'];
             $study_status = $_POST['study_status'];
             $cause_stop_study = $_POST['cause_stop_study'];
-                $editSqlSix = "UPDATE formfour_status_orphan SET family_status='$status_family',level_help='$level_holp',estimate_help='$estimate_help',revenue_family='$revenue_family',
-                    deceased='$deceased',cause_death='$cause_death',death_day='$death_day',study_status='$study_status',year_study='$year_study',cause_stop_study='$cause_stop_study'
+
+            $estimate_help1 = (isset($_POST['estimate_help1'])) ? $_POST['estimate_help1'] : '';
+            $estimate_help2 = (isset($_POST['estimate_help2'])) ? $_POST['estimate_help2'] : '';
+            $estimate_help3 = (isset($_POST['estimate_help3'])) ? $_POST['estimate_help3'] : '';
+            $estimate_help4 = (isset($_POST['estimate_help4'])) ? $_POST['estimate_help4'] : '';
+
+            echo $estimate_help1;
+            echo "<br/>2";
+            echo $estimate_help2;
+            echo "<br/>3";
+            echo $estimate_help3;
+            echo "<br/>4";
+            echo $estimate_help4;
+            echo "<br/>";
+
+            //$revenue_family = $_POST['revenue_family'];//non
+            
+            //$estimate_help = $_POST['estimate_help']; //
+            //$deceased = $_POST['deceased'];//
+            //$cause_death = $_POST['cause_death'];//
+            $death_day = date('Y-m-d'); //
+            //$year_study = $_POST['year_study'];
+                $editSqlSix = "UPDATE formfour_status_orphan SET family_status='$status_family',level_help='$level_holp',estimate_help='$estimate_help1',
+                    deceased='$estimate_help2',cause_death='$estimate_help3',death_day='$death_day',study_status='$study_status',year_study='$estimate_help4',cause_stop_study='$cause_stop_study'
                     WHERE id_join_orphan=$formsixid";
                      $querySix = mysqli_query($conn,$editSqlSix)or die(mysqli_error());
                        if($querySix){
@@ -237,11 +253,11 @@ require_once('../../function/link.php');
                     if($deleteT2 & $deleteT3 & $deleteT4){
                         unlink('data/orphan-information/'.$image_home);
                         echo "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"success\",\"delete 2 success\",\" delete ข้อมูลเรียบร้อย \",\"../orphan_information.php\")
+                                MySetSweetAlert(\"success\",\"เรียบร้อย\",\" ลบข้อมูลเรียบร้อย \",\"../orphan_information.php\")
                             </script>";
                     }else{
                         echo "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"error\",\"delete 2 ล้มเหลว\",\" แก้ข้อมูล ล้มเหลว มีข้อผิดพลาดบางอย่าง \",\"../orphan_information.php\")
+                                MySetSweetAlert(\"error\",\"ล้มเหลว\",\" ล้มเหลวในการลบข้อมูลมีข้อผิดพลาดบางอย่าง \",\"../orphan_information.php\")
                             </script>";
                     }
             }else{

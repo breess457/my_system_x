@@ -1,7 +1,7 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.4.3/css/mdb.min.css);
 
 .text-purper{
-    color: purple;
+    color: rgb(11, 10, 11);
 }
 .text-greenfer{
     color: rgb(11, 211, 167);
@@ -143,9 +143,9 @@
 /* my scrollbar */
 .my-custom-scrollbar {
     position: relative;
-    height: 600px;
     overflow: auto;
 }
 .table-wrapper-scroll-y {
     display: block;
+    height: 480px;
 }

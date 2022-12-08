@@ -50,12 +50,14 @@
                 $Edetail = $_POST['Edetail'];
                 $Eamount = $_POST['Eamount'];
                 $Eslip = $_POST['revenueSlip'];
+                $edit_user_id = $_POST['edit_user_id'];
+                $edit_funder = $_POST['edit_funder'];
                 if($_FILES['Eevidence_slip']['tmp_name'] == ""){
-                    $sql = "UPDATE re_venue SET revenue_name='$Erevenue_name',details='$Edetail',amount='$Eamount'
+                    $sql = "UPDATE re_venue SET revenue_name='$Erevenue_name',details='$Edetail',amount='$Eamount',id_user='$edit_user_id',funder='$edit_funder'
                      WHERE revenue_id='$ErevenueId'";
                 }else{
                     $sql = "UPDATE re_venue SET revenue_name='$Erevenue_name',details='$Edetail',amount='$Eamount',
-                     evidence_slip='".setImgpath("Eevidence_slip")."' WHERE revenue_id='$ErevenueId'";
+                     evidence_slip='".setImgpath("Eevidence_slip")."',id_user='$edit_user_id',funder='$edit_funder' WHERE revenue_id='$ErevenueId'";
                      if($Eslip != ''){
                          unlink("data/revenue/".$Eslip);
                      }
@@ -74,6 +76,8 @@
                 $revenue_name = $_POST['revenue_name'];
                 $detail = $_POST['detail'];
                 $amount = $_POST['amount'];
+                $getuser_id = $_POST['user_id'];
+                $funder = $_POST['funder'];
                 $date = date("Y-m-d");
                 $year = date('Y');
                 if(!$_FILES["evidence_slip"]["name"]){
@@ -81,8 +85,8 @@
                         MySetSweetAlert(\"error\", \"ไม่มีหลักฐาน\",\"ไม่มี หลักฐาน สลิป กรุณาเพิ่ม สลิป เพื่อเป็นหลักฐานด้วย\");
                     </script>";
                 }else{
-                    $insert = "INSERT INTO re_venue(revenue_name,details,date_y_m_d,amount,evidence_slip,years)
-                        VALUES('$revenue_name','$detail','$date','$amount','".setImgpath("evidence_slip")."','$year')";
+                    $insert = "INSERT INTO re_venue(revenue_name,details,date_y_m_d,amount,evidence_slip,years,id_user,funder)
+                        VALUES('$revenue_name','$detail','$date','$amount','".setImgpath("evidence_slip")."','$year','$getuser_id','$funder')";
 
                     $set_query = mysqli_query($conn, $insert)or die(mysqli_error());
                     if($set_query){
@@ -99,7 +103,7 @@
                 echo $_SERVER['REQUEST_METHOD'];
             }
         }else if($_SERVER['REQUEST_METHOD'] === "GET"){
-            if(isset($_GET['status'])=== "delete"){
+            if(isset($_GET['status'])== "delete"){
             
                 $revenue_id = $_GET['re_id'];
                 $img_slip = $_GET['img_slip'];

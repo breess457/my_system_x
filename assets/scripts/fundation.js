@@ -27,7 +27,6 @@ class AddImage extends HTMLElement {
       this.renderImage();
     }
     renderImage() {
-      console.log('test' + this.wrapper)
       this.innerHTML = `
               <div class="container mb-0">
                   <div class="wrapper ${this.wrapper}">
@@ -46,7 +45,7 @@ class AddImage extends HTMLElement {
                       <div class="file-name ${this.filenames}">File name hear</div>
                   </div>
                   <input type="file" name="${this.count}" class="${this.defaultbtn}" hidden>
-                  <p class="BtnCustom" id="${this.custom}">Choose a file</p> 
+                  <p class="BtnCustom" id="${this.custom}">อัพโหลดไฟล์</p> 
               </div>
           `;
     }
@@ -94,6 +93,28 @@ class AddImage extends HTMLElement {
     });
   };
 
+  function setNumber(number, getD){
+    let getIds = document.getElementById(getD).value;
+    let classID = document.getElementById(getD)
+    let parseintId = parseInt(getIds)
+      if(getIds.length === number){
+        classID.className = "form-control"
+      }else if(getIds.length < number){
+        classID.className = "form-control is-invalid"
+      }
+  }
+  function remakeSex(titleId,sexId){
+    let IdTitle = document.getElementById(titleId)
+      IdTitle.addEventListener('change',function handleChang(){
+        if(IdTitle.value == "นาย"){
+           document.getElementById(sexId).value = "ชาย"
+        }else{
+           document.getElementById(sexId).value = "หญิง"
+           
+        }
+      })
+  }
+
 class modalFundationAdd extends HTMLElement{
     connectedCallback(){
         this.renderFundation()
@@ -104,7 +125,7 @@ class modalFundationAdd extends HTMLElement{
                 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title font-nanika" id="exampleModalLongTitle">เพิ่มข้อมูล กรรมการมูลนิธิ</h5>
+                            <h5 class="modal-title font-nanika" id="exampleModalLongTitle">เพิ่มข้อมูลอาสาสมัคร</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -115,7 +136,7 @@ class modalFundationAdd extends HTMLElement{
                                 <div class="col-md-9 mb-0">
                                   <div class="row col-12 mb-3">
                                     <div class="form-group mb-0 mt-0 col-2">
-                                        <label class="mb-0 text-primary" for="titlefundation">คำนำหน้า</label>
+                                        <label class="mb-0 text-dark" for="titlefundation">คำนำหน้า</label>
                                         <select class="form-control" name="title_fundation" id="titlefundation">
                                             <option selected disabled hidden>ระบุ..</option>
                                             <option value="นาย">นาย</option>
@@ -124,48 +145,43 @@ class modalFundationAdd extends HTMLElement{
                                         </select>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-5">
-                                      <label class="mb-0 text-primary" for="firstnamefundation">ชื่อ</label>
+                                      <label class="mb-0 text-dark" for="firstnamefundation">ชื่อ</label>
                                       <input type="text" class="form-control" name="firstname_fundation" id="firstnamefundation" placeholder="ชื่อเต็ม" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-3">
-                                      <label class="mb-0 text-primary" for="lastname_fundation">นามสกุล</label>
+                                      <label class="mb-0 text-dark" for="lastname_fundation">นามสกุล</label>
                                       <input type="text" class="form-control" name="lastname_fundation" id="lastname_fundation" placeholder="นามสกุล" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-2">
-                                      <label class="mb-0 text-primary" for="age_fundation">อายุ</label>
+                                      <label class="mb-0 text-dark" for="age_fundation">อายุ</label>
                                       <input type="number" class="form-control" name="age_fundation" id="age_fundation" placeholder="อายุ" required>
                                     </div>
                                   </div>
                                   <div class="row col-12 mb-3">
                                     <div class="form-group mb-0 mt-0 col-2">
-                                        <label class="mb-0 text-primary" for="sexfundation">เพศ</label>
-                                        <select class="form-control" name="sex_fundation" id="sexfundation">
-                                            <option selected disabled hidden>ระบุ..</option>
-                                            <option value="ชาย">ชาย</option>
-                                            <option value="หญิง">หญิง</option>
-                                            <option value="เพศที่สาม(LGBQ)">เพศที่สาม(LGBQ)</option>
-                                        </select>
+                                        <label class="mb-0 text-dark" for="sexfundation">เพศ</label>
+                                        <input type="text" class="form-control" name="sex_fundation" id="sexfundation" >
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-6">
-                                      <label class="mb-0 text-primary" for="firstnamefundation">email</label>
+                                      <label class="mb-0 text-dark" for="firstnamefundation">email</label>
                                       <input type="email" class="form-control" name="email_fundation" id="emailfundation" placeholder="email@exsample.com" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="firstnamefundation">เบอร์โทร</label>
-                                      <input type="text" class="form-control" name="tell_fundation" id="tellfundation" placeholder="เบอร์โทร" required>
+                                      <label class="mb-0 text-dark" for="firstnamefundation">เบอร์โทร</label>
+                                      <input type="text" class="form-control" name="tell_fundation" id="tellfundation" placeholder="เบอร์โทร" minlength="10" maxlength="10" onkeyup="setNumber(10,'tellfundation')" required>
                                     </div>
                                   </div>
                                   <div class="col-12 row mb-0">
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="cardnumberfundation">เลขปัตรประชาชน</label>
-                                      <input type="number" class="form-control" name="cardnumber_fundation" id="cardnumberfundation" placeholder="เลขปัตรประชาชน" required>
+                                      <label class="mb-0 text-dark" for="cardnumberfundation">เลขบัตรประชาชน</label>
+                                      <input type="text" class="form-control" name="cardnumber_fundation" id="cardnumberfundation" placeholder="เลขบัตรประชาชน" minlength="13" maxlength="13" onkeyup="setNumber(13,'cardnumberfundation')" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="occupationfundation">อาชีพ</label>
+                                      <label class="mb-0 text-dark" for="occupationfundation">อาชีพ</label>
                                       <input type="text" class="form-control" name="occupation_fundation" id="occupationfundation" placeholder="อาชีพ" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="workplacefundation">สถานที่ทำงาน</label>
+                                      <label class="mb-0 text-dark" for="workplacefundation">สถานที่ทำงาน</label>
                                       <input type="text" class="form-control" name="workplace_fundation" id="workplacefundation" placeholder="อาชีพ" required>
                                     </div>
                                   </div>
@@ -173,14 +189,14 @@ class modalFundationAdd extends HTMLElement{
                                 </div>
                                 <div class="col-md-3 mb-0 mt-2">
                                     <mian-add-image-fundation id="fundationImg" count="photo_fundation" wrapper="x-wrap" filenames="ximgname" cancles="x-cancle"
-                                    names="รูปภาพ profile" custom="setbtnCustom" setdefault="setDefaultImgfundation"></mian-add-image-fundation>
+                                    names="รูปภาพ โปรไฟล์" custom="setbtnCustom" setdefault="setDefaultImgfundation"></mian-add-image-fundation>
                                 </div>
                               </div>
                               <div class="demo col-md-12 pl-3 mt-0" id="demo1" style="display:none;" autocomplete="off" uk-grid>
                                 <div class="row">
                                 <div class="col-4">
                                   <div class="form-group mb-2">
-                                    <label for="homeid" class="mb-0 text-danger">ที่อยู</label>
+                                    <label for="homeid" class="mb-0 text-dark">ที่อยู่</label>
                                     <input type="text" class="form-control" name="home_id" id="homeid" placeholder="" required />
                                   </div>
                                 </div>
@@ -210,9 +226,9 @@ class modalFundationAdd extends HTMLElement{
                                 </div>
                                 </div>
                               </div>
-                            <div class="container mb-4">
-                                <button type="submit" class="btnAddSubmit">บันทึก ข้อมูล</button>
-                            </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-success ml-auto mr-5">บันทึกข้อมูล</button>
+                              </div>
                         </form>
                     </div>
                 </div>
@@ -223,6 +239,7 @@ class modalFundationAdd extends HTMLElement{
 customElements.define('main-add-fundation', modalFundationAdd)
 
 setImagePriviews(".fundationImg",".setDefaultImgfundation","#setbtnCustom",".x-cancle i",".ximgname",".x-wrap")
+remakeSex("titlefundation","sexfundation")
 
 class modalFundationEdit extends HTMLElement{
     connectedCallback(){
@@ -234,7 +251,7 @@ class modalFundationEdit extends HTMLElement{
                 <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title font-nanika" id="exampleModalLongTitle">เพิ่มข้อมูล กรรมการมูลนิธิ</h5>
+                            <h5 class="modal-title font-nanika" id="exampleModalLongTitle">แก้ไขข้อมูลอาสาสมัคร</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -247,7 +264,7 @@ class modalFundationEdit extends HTMLElement{
                                 <div class="col-md-9">
                                   <div class="row col-12 mb-3">
                                     <div class="form-group mb-0 mt-0 col-2">
-                                        <label class="mb-0 text-primary" for="edittitlefundation">คำนำหน้า</label>
+                                        <label class="mb-0 text-dark" for="edittitlefundation">คำนำหน้า</label>
                                         <select class="form-control" name="edit_title_fundation" id="edittitlefundation">
                                             <option selected disabled hidden>ระบุ..</option>
                                             <option value="นาย">นาย</option>
@@ -256,48 +273,44 @@ class modalFundationEdit extends HTMLElement{
                                         </select>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-5">
-                                      <label class="mb-0 text-primary" for="editfirstnamefundation">ชื่อ</label>
+                                      <label class="mb-0 text-dark" for="editfirstnamefundation">ชื่อ</label>
                                       <input type="text" class="form-control" name="edit_firstname_fundation" id="editfirstnamefundation" placeholder="ชื่อเต็ม" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-3">
-                                      <label class="mb-0 text-primary" for="editlastnamefundation">นามสกุล</label>
+                                      <label class="mb-0 text-dark" for="editlastnamefundation">นามสกุล</label>
                                       <input type="text" class="form-control" name="edit_lastname_fundation" id="editlastnamefundation" placeholder="นามสกุล" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-2">
-                                      <label class="mb-0 text-primary" for="editagefundation">อายุ</label>
+                                      <label class="mb-0 text-dark" for="editagefundation">อายุ</label>
                                       <input type="number" class="form-control" name="edit_age_fundation" id="editagefundation" placeholder="อายุ" required>
                                     </div>
                                   </div>
                                   <div class="row col-12 mb-3">
                                     <div class="form-group mb-0 mt-0 col-2">
-                                        <label class="mb-0 text-primary" for="editsexfundation">เพศ</label>
-                                        <select class="form-control" name="edit_sex_fundation" id="editsexfundation">
-                                            <option selected disabled hidden>ระบุ..</option>
-                                            <option value="ชาย">ชาย</option>
-                                            <option value="หญิง">หญิง</option>
-                                            <option value="เพศที่สาม(LGBQ)">เพศที่สาม(LGBQ)</option>
-                                        </select>
+                                        <label class="mb-0 text-dark" for="editsexfundation">เพศ</label>
+                                        <input type="text" class="form-control" name="edit_sex_fundation" id="editsexfundation">
+                                        
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-6">
-                                      <label class="mb-0 text-primary" for="editemailfundation">email</label>
+                                      <label class="mb-0 text-dark" for="editemailfundation">email</label>
                                       <input type="email" class="form-control" name="edit_email_fundation" id="editemailfundation" placeholder="email@exsample.com" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="edittellfundation">เบอร์โทร</label>
-                                      <input type="text" class="form-control" name="edit_tell_fundation" id="edittellfundation" placeholder="เบอร์โทร" required>
+                                      <label class="mb-0 text-dark" for="edittellfundation">เบอร์โทร</label>
+                                      <input type="text" class="form-control" name="edit_tell_fundation" id="edittellfundation" placeholder="เบอร์โทร" minlength="10" maxlength="10" onkeyup="setNumber(10,'edittellfundation')" required>
                                     </div>
                                   </div>
                                   <div class="col-12 row mb-3">
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="editcardnumberfundation">เลขปัตรประชาชน</label>
-                                      <input type="number" class="form-control" name="edit_cardnumber_fundation" id="editcardnumberfundation" placeholder="เลขปัตรประชาชน" required>
+                                      <label class="mb-0 text-dark" for="editcardnumberfundation">เลขบัตรประชาชน</label>
+                                      <input type="text" class="form-control" name="edit_cardnumber_fundation" id="editcardnumberfundation" placeholder="เลขบัตรประชาชน" minlength="13" maxlength="13" onkeyup="setNumber(13,'editcardnumberfundation')" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="editoccupationfundation">อาชีพ</label>
+                                      <label class="mb-0 text-dark" for="editoccupationfundation">อาชีพ</label>
                                       <input type="text" class="form-control" name="edit_occupation_fundation" id="editoccupationfundation" placeholder="อาชีพ" required>
                                     </div>
                                     <div class="form-group mb-0 mt-0 col-4">
-                                      <label class="mb-0 text-primary" for="editworkplacefundation">สถานที่ทำงาน</label>
+                                      <label class="mb-0 text-dark" for="editworkplacefundation">สถานที่ทำงาน</label>
                                       <input type="text" class="form-control" name="edit_workplace_fundation" id="editworkplacefundation" placeholder="อาชีพ" required>
                                     </div>
                                   </div>
@@ -311,7 +324,7 @@ class modalFundationEdit extends HTMLElement{
                                 <div class="row">
                                 <div class="col-4">
                                   <div class="form-group mb-2">
-                                    <label for="Edit_homeid" class="mb-0 text-danger">ที่อยู</label>
+                                    <label for="Edit_homeid" class="mb-0 text-dark">ที่อยู่</label>
                                     <input type="text" class="form-control" name="edit_home_id" id="Edit_homeid" placeholder="" required />
                                   </div>
                                 </div>
@@ -341,25 +354,27 @@ class modalFundationEdit extends HTMLElement{
                                 </div>
                                 </div>
                               </div>
-                            <div class="container mb-4">
-                                <button type="submit" class="btnAddSubmit">บันทึก ข้อมูล</button>
-                            </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-success ml-auto mr-5">บันทึกข้อมูล</button>
+                              </div>
+                            
                         </form>
                     </div>
-                </div>
+                </div> 
             </div>
         `
     }
 }
 customElements.define('main-edit-fundation', modalFundationEdit)
 setImagePriviews(".fundationImgedit",".setDefaulteditImgfundation","#setbtnCustomEdit",".ex-cancle i",".eximgname",".ex-wrap")
+remakeSex("edittitlefundation","editsexfundation")
 
 const fundationEditApi = (getId, eventFundation)=>{
-    fetch(`backend/api/apiget-data-fundation.php?fundation_id=${getId}`,{
+    fetch(`http://localhost/my_system_x/officer/backend/api/apiget-data-fundation.php?fundation_id=${getId}`,{
         method:"GET",
         headers:{"Content-Type": "application/json; charset=UTF-8",}
     }).then(res => res.json())
-    .then(data => {
+    .then(data => { 
         console.log(data)
         eventFundation(data)
     })
@@ -397,4 +412,172 @@ const editFundationEvent = (setDatas)=>{
      $("#getImgname").val(fundationImage)
      fundationEditApi(fundationID, editFundationEvent)
     // e.preventDefault()
- })
+ }) 
+
+ class modalShowFundation extends HTMLElement{
+  connectedCallback(){
+    this.rederShowFundation()
+  }
+  rederShowFundation(){
+    this.innerHTML =`
+      <div class="modal fade bd-example-modal-xl" id="modalFundationShow" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title font-nanika" id="exampleModalLongTitle">แสดงข้อมูลอาสาสสมัคร</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <form action="backend/crud-fundation.php" method="post" enctype="multipart/form-data">
+                      <div class="modal-body row mb-0">
+                          <div class="col-md-9">
+                            <div class="row col-12 mb-3">
+                              <div class="form-group mb-0 mt-0 col-2">
+                                  <label class="mb-0 text-dark" for="Showtitlefundation">คำนำหน้า</label>
+                                  <input type="text" class="form-control" name="Show_title_fundation" id="Showtitlefundation" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-5">
+                                <label class="mb-0 text-dark" for="Showfirstnamefundation">ชื่อ</label>
+                                <input type="text" class="form-control" name="Show_firstname_fundation" id="Showfirstnamefundation" placeholder="ชื่อเต็ม" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-3">
+                                <label class="mb-0 text-dark" for="Showlastnamefundation">นามสกุล</label>
+                                <input type="text" class="form-control" name="Show_lastname_fundation" id="Showlastnamefundation" placeholder="นามสกุล" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-2">
+                                <label class="mb-0 text-dark" for="Showagefundation">อายุ</label>
+                                <input type="number" class="form-control" name="Show_age_fundation" id="Showagefundation" placeholder="อายุ" disabled>
+                              </div>
+                            </div>
+                            <div class="row col-12 mb-3">
+                              <div class="form-group mb-0 mt-0 col-2">
+                                  <label class="mb-0 text-dark" for="Showsexfundation">เพศ</label>
+                                  <input type="text" class="form-control" name="Show_lastname_fundation" id="Showsexfundation" placeholder="เพศ" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-6">
+                                <label class="mb-0 text-dark" for="Showemailfundation">อีเมล</label>
+                                <input type="email" class="form-control" name="Show_email_fundation" id="Showemailfundation" placeholder="email@exsample.com" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-4">
+                                <label class="mb-0 text-dark" for="Showtellfundation">เบอร์โทร</label>
+                                <input type="text" class="form-control" name="Show_tell_fundation" id="Showtellfundation" placeholder="เบอร์โทร" disabled>
+                              </div>
+                            </div>
+                            <div class="col-12 row mb-3">
+                              <div class="form-group mb-0 mt-0 col-4">
+                                <label class="mb-0 text-dark" for="Showcardnumberfundation">เลขบัตรประชาชน</label>
+                                <input type="number" class="form-control" name="Show_cardnumber_fundation" id="Showcardnumberfundation" placeholder="เลขบัตรประชาชน" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-4">
+                                <label class="mb-0 text-dark" for="Showoccupationfundation">อาชีพ</label>
+                                <input type="text" class="form-control" name="Show_occupation_fundation" id="Showoccupationfundation" placeholder="อาชีพ" disabled>
+                              </div>
+                              <div class="form-group mb-0 mt-0 col-4">
+                                <label class="mb-0 text-dark" for="Showworkplacefundation">สถานที่ทำงาน</label>
+                                <input type="text" class="form-control" name="Show_workplace_fundation" id="Showworkplacefundation" placeholder="อาชีพ" disabled>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="image w-100">
+                              <img class="set-img" width="200" height="210" />
+                            </div>
+                          </div>
+                      </div>
+                      <div class="col-md-12 pl-3 mt-0">
+                          <div class="row">
+                          <div class="col-4">
+                            <div class="form-group mb-2">
+                              <label for="Show_homeid" class="mb-0 text-dark">ที่อยู่</label>
+                              <input type="text" class="form-control" name="Show_home_id" id="Show_homeid" placeholder="" disabled />
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="form-group mb-2">
+                                <label class="mb-0">ตำบล</label>
+                                <input name="Show_district" class="form-control" id="ShowDistrict" type="text" disabled>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="form-group mb-2">
+                                <label class="mb-0">อำเภอ</label>
+                                <input name="Show_amphoe" class="form-control" id="ShowAmphoe" type="text" disabled>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="form-group mb-2">
+                              <label class="mb-0">จังหวัด</label>
+                              <input name="Show_province" class="form-control" id="ShowProvince" type="text" disabled>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="form-group mb-2">
+                                <label class="mb-0">รหัสไปรษณีย์</label>
+                                <input name="Show_zipcode" class="form-control" id="ShowZipcode" type="number" disabled>
+                            </div>
+                          </div>
+                          </div>
+                        </div>
+                        
+
+                  </form>
+              </div>
+          </div> 
+      </div>
+    `;
+  }
+ }
+ customElements.define('main-show-fundation',modalShowFundation)
+
+ const ShowFundationEvent = (setDatas)=>{
+  let selectEl = (el, datas)=> document.getElementById(el).innerHTML = datas
+  let inputEl = (el, datax)=> document.getElementById(el).value = datax
+
+  return setDatas.map(mapData =>{
+      inputEl('Showtitlefundation', mapData.title_fundation)
+      inputEl('Showfirstnamefundation', mapData.firstname_fundation)
+      inputEl('Showlastnamefundation', mapData.lastname_fundation)
+      inputEl('Showagefundation', mapData.age_fundation)
+      inputEl('Showsexfundation', mapData.sex_fundation)
+      inputEl('Showemailfundation', mapData.email)
+      inputEl('Showtellfundation', mapData.tell_fundation)
+      inputEl('Showcardnumberfundation', mapData.cardnumber)
+      inputEl('Showoccupationfundation', mapData.occupation)
+      inputEl('Showworkplacefundation', mapData.workplace)
+      inputEl('Show_homeid', mapData.homeadress)
+      inputEl('ShowDistrict', mapData.district)
+      inputEl('ShowAmphoe', mapData.amphoe)
+      inputEl('ShowProvince', mapData.province)
+      inputEl('ShowZipcode', mapData.zipcode)
+  })
+}
+
+$(document).on("click","#btnShowdataFundation",function(e){
+  let fundationID = $(this).data('id');
+  let fundationImage = $(this).data('image')
+
+  $("#fundationId").val(fundationID)
+  $('.set-img').attr('src',`http://localhost/my_system_x/officer/backend/data/fundation/${fundationImage}`)
+  fundationEditApi(fundationID, ShowFundationEvent)
+ // e.preventDefault()
+}) 
+
+$(document).on("click","#confirmTrashFundation", function(e){
+    let fundationId = $(this).data('id'),images = $(this).data('images')
+    Swal.fire({
+      title: 'คุณแน่ใจไหม ?',
+      text: "คุณจะไม่สามารถย้อนกลับได้!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'ยกเลิก',
+      confirmButtonText: 'ยืนยัน'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location = `backend/crud-fundation.php?id_fundation=${fundationId}&image_fundation=${images}&status=delete`
+      }
+    })
+    e.preventDefault()
+})

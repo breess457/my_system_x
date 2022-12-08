@@ -55,47 +55,57 @@
                 }
         }else if($_SERVER['REQUEST_METHOD'] === "POST"){
             $status_user = $_POST['status_user'];
-            $user_name = $_POST['user_name'];
+            $user_name = $_POST['user_name']; 
             $password_user = $_POST['password_user'];
             $fullname = join(array($_POST['ferst_name']," ",$_POST['last_name']));
             $photo = $_FILES['photo_officer']['name'];
+            
+            $id_card = $_POST['id_card'];
+
               $checkSql = mysqli_query($conn,"SELECT username FROM users WHERE username='$user_name'");
                 $checkRows = mysqli_num_rows($checkSql);
                 if($checkRows == 1){
                     echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"error\",\"username ซ้ำ\",\"มี username นี้อยู่แล้วโปรดสร้าง username ใหม่\")
+                            MySetSweetAlert(\"warning\",\"ข้อมูลซ้ำ\",\"มียูสเซอร์เนมนี้อยู่แล้วโปรดสร้างยูสเซอร์เนมใหม่\")
                         </script>";
                 }else{
-                    $insertQl = "INSERT INTO users SET username='$user_name', passwd='$password_user',fullname='$fullname',photo='$photo',status_users='$status_user'";
-                        $queryQl = mysqli_query($conn,$insertQl)or die(mysqli_error());
-                         if($queryQl){
-                             $insertId = mysqli_insert_id($conn);
-                             $title = $_POST['title'];
-                             $first_name = $_POST['ferst_name'];
-                             $last_name = $_POST['last_name'];
-                             $sex = $_POST['sex'];
-                             $age = $_POST['age'];
-                             $email = $_POST['email'];
-                             $tell = $_POST['tell'];
-                             $id_card = $_POST['id_card'];
-
-                              $newInsert = "INSERT INTO personal_user SET get_userid='$insertId', title='$title', first_name='$first_name',
-                               last_name='$last_name', idcard='$id_card', tell='$tell', email='$email', photo_me='".setImgpath("photo_officer")."', 
-                               age='$age', sex='$sex'";
-                                $newQuery = mysqli_query($conn,$newInsert)or die(mysqli_error());
-                                  if($newQuery){
-                                    echo "<script type=\"text/javascript\">
-                                            MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลเรียบร้อยแล้ว\")
-                                        </script>";
-                                  }else{
-                                    echo "insert error is not insert new table !";
-                                  }
-                                  
-                         }else{
-                            echo "<script type=\"text/javascript\">
-                                    MySetSweetAlert(\"error\",\"not insert\",\"เกิดข้อผิดพลาดบางอย่าง ไม่สามารถเพิ่มข้อมูลได้\")
-                                </script>";
-                         }
+                    $chkCardId = mysqli_query($conn,"SELECT * FROM personal_user WHERE idcard='$id_card'");
+                      $rowcard = mysqli_num_rows($chkCardId);
+                      echo $rowcard;
+                       if($rowcard > 0){
+                        echo "<script type=\"text/javascript\">
+                            MySetSweetAlert(\"warning\",\"ข้อมูลซ้ำ\",\"มีข้อมูลบัตรประชาชนนี้อยู่แล้วโปรดสร้างข้อมูลบัตรประชาชนใหม่\")
+                        </script>";
+                       }else{
+                         $insertQl = "INSERT INTO users SET username='$user_name', passwd='$password_user',fullname='$fullname',photo='$photo',status_users='$status_user'";
+                            $queryQl = mysqli_query($conn,$insertQl)or die(mysqli_error());
+                             if($queryQl){
+                                 $insertId = mysqli_insert_id($conn);
+                                 $title = $_POST['title'];
+                                 $first_name = $_POST['ferst_name'];
+                                 $last_name = $_POST['last_name'];
+                                 $sex = $_POST['sex'];
+                                 $age = $_POST['age'];
+                                 $email = $_POST['email'];
+                                 $tell = $_POST['tell'];
+                                
+                                $newInsert = "INSERT INTO personal_user SET get_userid='$insertId', title='$title', first_name='$first_name',
+                                  last_name='$last_name', idcard='$id_card', tell='$tell', email='$email', photo_me='".setImgpath("photo_officer")."', 
+                                  age='$age', sex='$sex'";
+                                   $newQuery = mysqli_query($conn,$newInsert)or die(mysqli_error());
+                                     if($newQuery){
+                                       echo "<script type=\"text/javascript\">
+                                               MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลเรียบร้อยแล้ว\")
+                                           </script>";
+                                     }else{
+                                       echo "insert error is not insert new table !";
+                                     }
+                            }else{
+                               echo "<script type=\"text/javascript\">
+                                       MySetSweetAlert(\"error\",\"not insert\",\"เกิดข้อผิดพลาดบางอย่าง ไม่สามารถเพิ่มข้อมูลได้\")
+                                   </script>";
+                            }
+                        }
                 }
         }
  ?>

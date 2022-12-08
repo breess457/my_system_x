@@ -58,6 +58,7 @@
         $call_me = $_POST['call_me'];
         $siblings_number = $_POST['siblings_number'];
         $me_number = $_POST['me_number'];
+
         
         $selectCard_id = mysqli_query($conn, "SELECT card_id FROM formone_orphan_record WHERE card_id='$card_id'");
           $num_rows = mysqli_num_rows($selectCard_id);
@@ -101,7 +102,11 @@
                         $berd_day_father = $_POST['berd_day_father'];
                         $age_father = $_POST['age_father'];
                         $tell_father = $_POST['tell_father'];
-                        $status_father = $_POST['status_father']; //end father
+                        $status_father = $_POST['status_father'];
+                        $cause_death_f = $_POST['cause_death_f']; //add
+                        
+                        //end father
+
                         $title_mather = $_POST['title_mather'];
                         $firstname_mather = $_POST['firstname_mather'];
                         $lastname_mather = $_POST['lastname_mather'];
@@ -112,19 +117,28 @@
                         $age_mather = $_POST['age_mather'];
                         $tell_mather = $_POST['tell_mather'];
                         $status_mather = $_POST['status_mather'];
+                        $cause_death_m = $_POST['cause_death_m']; //add
 
                         /* Form Group Four */
                         //$image_home = $_FILES['image_home']['name'];
                         $family_status = $_POST['family_status'];
                         $level_help = $_POST['level_help'];
-                        $estimate_help = $_POST['estimate_help'];
-                        $revenue_family = $_POST['revenue_family'];
-                        $deceased = $_POST['deceased'];
-                        $cause_death = $_POST['cause_death'];
-                        $death_day = $_POST['death_day'];
+
+                        //$estimate_help = $_POST['estimate_help']; //none x
+                        $revenue_family = "1"; //none
+                        //$deceased = $_POST['deceased']; //none x
+                        //$cause_death = $_POST['cause_death']; //none x
+                        $death_day = date("Y-m-d"); //none
+                        //$year_study = $_POST['year_study']; //none x
+
                         $study_status = $_POST['study_status'];
-                        $year_study = $_POST['year_study'];
                         $cause_stop_study = $_POST['cause_stop_study'];
+
+                        //add
+                        $estimate_help1 = $_POST['estimate_help1'];
+                        $estimate_help2 = $_POST['estimate_help2'];
+                        $estimate_help3 = $_POST['estimate_help3'];
+                        $estimate_help4 = $_POST['estimate_help4'];
 
                          $insertform_true = "INSERT INTO formtrue_orphan_school SET home_id='$home_id', district_home='$district', amphoe_home='$amphoe',
                             province_home='$province', zipcode_home='$zipcode', school_name='$school_name', district_school='$district_school',
@@ -138,8 +152,8 @@
                             tell_mather='$tell_mather', status_mather='$status_mather'
                          ";
                          $insertform_four = "INSERT INTO formfour_status_orphan SET id_join_orphan='$insertID', image_home='".setImgpath("image_home")."', family_status='$family_status', level_help='$level_help',
-                            estimate_help='$estimate_help', revenue_family='$revenue_family', deceased='$deceased', cause_death='$cause_death', death_day='$death_day', study_status='$study_status',
-                            year_study='$year_study', cause_stop_study='$cause_stop_study'
+                            estimate_help='$estimate_help1', revenue_family='$revenue_family', deceased='$estimate_help2', cause_death='$estimate_help3', death_day='$death_day', study_status='$study_status',
+                            year_study='$estimate_help4', cause_stop_study='$cause_stop_study'
                          ";
                             $query_true = mysqli_query($conn, $insertform_true);
                             $query_tree = mysqli_query($conn, $insertform_tree);

@@ -90,53 +90,96 @@ include_once("../function/link.php");
         .account-item .image > img {
             width: 100%;
         }
+        .tbody-style{
+            display: block;
+            overflow: auto;
+            height: 460px;
+            position: relative;
+        }
+        .thed-style, .tbody-style .trlist-style {
+            display:table;
+            width:100%;
+            table-layout:fixed;
+        }
+        .thed-style {
+            width: calc( 100% - 1em )
+        }
+        .popup-wrapper {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px #aaa;
+            overflow: hidden;
+        }
+        .popup-title {
+            padding: 10px 15px;
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .popup-title h3 {
+            margin: 0;
+            line-height: 1.5em;
+            color: #333;
+        }
+        .popup-body {
+            padding: 10px 15px;
+            color: #555;
+        }
+        .popup-close {
+            float: right;
+            margin-top: 2px;
+            padding: 0;
+            font-size: 24px;
+            line-height: 1;
+            border: 0;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+        }
+        .popup-close:hover {
+            color: #333;
+        }
     </style>
 </head>
 <body class="">
         <?php
-            navbarSizeTrue('patrons.php','ผู้ที่ได้รับทุน',$fullname,$profile);
-            $id_patron = $_GET['id_patron'];
+            navbarSizeTrue('setPatrons.php','ผู้ที่ได้รับทุน',$fullname,$profile);
+            $id_patron = $_GET['patron_setid'];
+            $person_number = $_GET['person_numbers'];
+            $datemy = $_GET['datemy'];
+            $newDatemy = date ("Y-m-d", strtotime("+09 day", strtotime($datemy)));
+            $d = date('Y-m-d');
+
+            $calculate =strtotime("$newDatemy") - strtotime($d);
+            $summary=floor($calculate / 86400); // 86400 มาจาก 24*360 (1วัน = 24 ชม.)
         ?>
         <main class="page-content mt-0">
             <br><br><br>
             <div class="container-fluid">
                 <div class="table-responsive">
                     <div class="table-wrapper">
-                        <div class="table-title">
-                            <div class="row">
-                                <div class="col-sm-9 row">
-					            	<?php
-                                        $select = mysqli_query($conn,"select * from patron where id='$id_patron'")or die(mysqli_error());
-                                        $assoc = mysqli_fetch_assoc($select);
-
-                                        $setfullname = join(array($assoc['title']," ",$assoc['f_name'],"  ",$assoc['l_name']));
-                                        echo "<h3 class=\"font-thi\"> ชื่อ: ". $setfullname .'</h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                        echo "<h3 class=\"font-thi text-salmon\"> เบอร์โทร: ". $assoc['tell'] ."</h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                                        echo "<h3 class=\"font-thi\"> อาชีพ: ". $assoc['career'] .'</h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                        echo "<h3 class=\"text-success font-thi\"> ทุนทั้งหมด: ". $assoc['all_munny'] .'</h3>';
-                                    ?>
-					            </div>
-					            <div class="col-sm-3">
-                                    <?php if($status !="chairman"){ ?>
-					            	<button type="button" data-target="#addEmployeeModal" id="getbtngentree" data-id="<?php echo $id_patron; ?>" class="btn btn-success btn-sm" data-toggle="modal">
-                                        <span>เพิ่มผู้รับทุน</span>
-                                    </button>
-                                    <?php }else{ ?>
-                                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                                            <span>เพิ่มผู้รับทุน</span>
-                                        </button>
-                                    <?php } ?>
-					            	<button type="button" data-target="#editEmployeeModal" id="editbtnpatron" data-id="<?php echo $id_patron; ?>" class="btn btn-yellow btn-sm" data-toggle="modal">
-                                        <span>รายละเอียด ผู้ให้ทุน</span>
-                                    </button>						
-					            </div>
-                            </div>
-                        </div>
+                        
                         <form action="backend/delete-grantee-scholarship.php" method="post">
                             <div class="col-md-12 row">
-                                <button type="submit" class="btn btn-red btn-sm ml-auto">ลบข้อมูลที่เลื่อกทั้งหมด</button>
+                                <?php 
+                                    if($status != "chairman"){ 
+                                        if(date('Y-m-d') >= $newDatemy){
+                                ?>
+                                    <h5 class="ml-auto text-dark">จัดการได้แค่10วัน และในขณะนี้ก็เกิน10วันแล้ว</h5>
+                                <?php 
+                                        }else{
+                                ?>
+                                    <h5 class="mr-auto">สามารถจัดการได้อีก <?php echo $summary ?> วัน</h5>
+                                    <button type="submit" class="btn btn-red btn-sm ml-auto">ลบข้อมูลที่เลื่อกทั้งหมด</button>
+                                    <button type="button" data-target="#addEmployeeModal" id="getbtngentree" data-dates="<?php echo $datemy ?>" data-id="<?php echo $id_patron; ?>" class="btn btn-success btn-sm" data-toggle="modal">
+                                        <span>เพิ่มผู้รับทุน</span>
+                                    </button>
+                                <?php
+                                        } 
+                                    }
+                                ?>
                             </div>
-                            <table class="table table-data2">
+                            <table class="table table-data2 setDataTable">
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
@@ -145,8 +188,10 @@ include_once("../function/link.php");
                                         <th>อายุ</th>
                                         <th>บัตรประชาชน</th>
                                         <th>วันที่เข้าร่วม</th>
+                                     <?php if($status != "chairman"){ ?>
                                         <th>เลือก</th>
                                         <th>ปุ่ม</th>
+                                     <?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -155,21 +200,30 @@ include_once("../function/link.php");
                                         $querysql = mysqli_query($conn, $selectQl)or die(mysqli_error());
                                           foreach($querysql as $i => $res){
                                               $fullnames = join(array($res['title_me'],$res['first_name_me']," ",$res['last_name_me']));
-                                            showDataScholarshipt(($i + 1),$res['id_scholarship'],$res['profile_orphan'],$fullnames,$res['age_me'],$res['card_id'],$res['entry_date'],$id_patron);
+                                            showDataScholarshipt(($i + 1),$res['id_scholarship'],$res['profile_orphan'],$fullnames,$res['age_me'],$res['card_id'],$res['entry_date'],$id_patron,$person_number,$status,$datemy);
                                           }
                                     ?>
                                 </tbody>
                             </table>
+                            <input type="hidden" name="dateme" value="<?php echo $datemy ?>">
                             <input type="hidden" name="getidpatron" value="<?php echo $id_patron ?>">
+                            <input type="hidden" name="getpersonnumber" value="<?php echo $person_number ?>"/>
                         </form>
                     </div>
                 </div>
                  
             </div>
         </main>
-        <main-edit-patron></main-edit-patron>
-        <main-add-orphan></main-add-orphan>
+        <main-add-orphan personnumber=<?php echo $person_number ?>></main-add-orphan>
     <script src="../assets/scripts/patron-scholarship.js"></script>
+    <script>
+        $('.setDataTable').DataTable({
+            scrollY:400,
+            scrollX:false,
+            scrollCollapse:true
+        })
+        
+    </script>
 </body>
 </html>
 <?php

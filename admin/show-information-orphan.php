@@ -16,6 +16,16 @@ include_once("../function/link.php");
     $profile = $_SESSION['users']['photo'];
     $userid = $_SESSION['users']['id'];
     $status = $_SESSION['users']['status_users'];
+    $get_id_orphan = $_GET['get_orphanId'];
+        
+    $select_data = mysqli_query($conn,"SELECT * FROM formone_orphan_record t1 LEFT JOIN formtrue_orphan_school t2 ON t1.id_orphan = t2.getid_jion_orphan 
+        LEFT JOIN formtree_parents_orphan t3 ON t3.join_id_orphan = t1.id_orphan LEFT JOIN formfour_status_orphan t4 ON t4.id_join_orphan = t1.id_orphan 
+        LEFT JOIN map_location_orphan t5 ON t5.get_orphan_id = t1.id_orphan WHERE id_orphan = $get_id_orphan");
+    $fetch = mysqli_fetch_assoc($select_data);
+    echo "<script language=\"JavaScript\">
+                var litidudeJs =".$fetch['latitude']."
+                var logintudeJs = ".$fetch['logitude']."
+            </script>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +37,28 @@ include_once("../function/link.php");
     <link rel="stylesheet" href="../assets/scss/show-data-orphan.scss">
     <link rel="stylesheet" href="../assets/scss/navbarsizeTrue.scss">
     <script src="../assets/scripts/script-bash.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="../assets/scripts/module/jquery-1.11.2.min.js" ></script>
     <title>SHOW DATA ORPHAN</title>
+    <script language="JavaScript">
+
+        function setupMap() {  
+            var myOptions = {
+              zoom: 14,
+              center: new google.maps.LatLng(litidudeJs, logintudeJs),
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById('map_canvas'),myOptions);
+            var marker = new google.maps.Marker({ 
+              map:map,
+              position: new google.maps.LatLng(litidudeJs,logintudeJs),
+              draggable: true
+            });
+        
+        }
+    </script>
 </head>
-<body>
+<body onload="setupMap()">
   <?php
         navbarSizeTrue('orphan_information.php','แสดงข้อมูลเด็กกำพร้า',$fullname,$profile)
   ?>
@@ -37,11 +66,12 @@ include_once("../function/link.php");
       <br><br><br>
       <div class="">
           <?php
-                $get_id_orphan = $_GET['get_orphanId'];
-                $select_data = mysqli_query($conn,"SELECT * FROM formone_orphan_record t1 LEFT JOIN formtrue_orphan_school t2 ON t1.id_orphan = t2.getid_jion_orphan 
-                    LEFT JOIN formtree_parents_orphan t3 ON t3.join_id_orphan = t1.id_orphan LEFT JOIN formfour_status_orphan t4 ON t4.id_join_orphan = t1.id_orphan 
-                    WHERE id_orphan = $get_id_orphan");
-                $fetch = mysqli_fetch_assoc($select_data);
+                
+
+                $number_project = mysqli_query($conn,"SELECT getid_participan,getid_project FROM project_participant WHERE getid_participan=$get_id_orphan");
+                
+                $selectCaptical = mysqli_query($conn,"SELECT * FROM patron_scholarship WHERE id_grantee=$get_id_orphan");
+                
                 showdataInformations(
                     /* table one */
                     $fetch['id_orphan'],$fetch['day_add_record'],$fetch['title_me'],$fetch['first_name_me'],$fetch['last_name_me'],$fetch['berd_day_me'],$fetch['age_me'],
@@ -54,9 +84,10 @@ include_once("../function/link.php");
                     $fetch['fullname_father'],$fetch['occupation_father'],$fetch['income_father'],$fetch['berd_day_father'],$fetch['age_father'],$fetch['tell_father'],$fetch['status_father'],
                     $fetch['fullname_mather'],$fetch['occupation_mather'],$fetch['income_mather'],$fetch['berd_day_mather'],$fetch['age_mather'],$fetch['tell_mather'],$fetch['status_mather'],
                     /* table four */
-                    $fetch['image_home'],$fetch['family_status'],$fetch['level_help'],$fetch['estimate_help'],$fetch['revenue_family'],$fetch['deceased'],$fetch['cause_death'],$fetch['death_day'],
-                    $fetch['study_status'],$fetch['year_study'],$fetch['cause_stop_study']
+                    $fetch['image_home'],$fetch['family_status'],$fetch['level_help'],$fetch['estimate_help'],1,$fetch['deceased'],$fetch['cause_death'],$fetch['death_day'],
+                    $fetch['study_status'],$fetch['year_study'],$fetch['cause_stop_study'],mysqli_num_rows($selectCaptical),mysqli_num_rows($number_project)
                 );
+                //echo mysqli_num_rows($selectCaptical);
           ?>
 
       </div>

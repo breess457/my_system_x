@@ -47,7 +47,7 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("profile",$fullname,$profile)
+                navbarSize("โปรไฟล์ส่วนตัว",$fullname,$profile)
             ?>
             <div class="container-fluid">
                 <?php

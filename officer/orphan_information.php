@@ -17,7 +17,7 @@
        $status = $_SESSION['users']['status_users'];
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -39,7 +39,13 @@
                 padding:1rem;
             }
         }
-
+        .modal-dialog{
+            overflow-y: initial !important
+        }
+        .modal-body{
+            height:550px;
+            overflow-y:auto;
+        }
     </style>
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -58,8 +64,9 @@
         });
         ga('Main.send', 'event', 'jquery.Thailand.js', 'GitHub', 'Visit');
     </script>
+
 </head>
-<body>
+<body onload="setupMap()">
     <div class="page-wrapper chiller-theme toggled">
         <?php   navigationOfiicer($status); ?>
         <main class="page-content mt-0">
@@ -70,12 +77,12 @@
                         data-target="#modalFormInformation"
                     >
                         <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลเด็กกำพร้า
+                          เพิ่มข้อมูล
                     </button>
                 </div> 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 mydataTablex" id="myTableData">
                             <thead>
                                 <tr>
                                     <th>ลำดับ</th>
@@ -86,7 +93,7 @@
                                     <th>วันที่เพิ่มข้อมูล</th>
                                     <th>จัดการ</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody>
                                 <?php
                                     $sql_orphan1 = "SELECT * FROM formone_orphan_record t1 LEFT JOIN formfour_status_orphan t4 ON t1.id_orphan =t4.id_join_orphan";
@@ -105,7 +112,18 @@
             <main-create-orphan></main-create-orphan>
         </main>
     </div>
+    <script> 
+         $('.mydataTablex').DataTable({
+            scrollY:400,
+            scrollX:true,
+            scrollCollapse:true
+        })
+    </script>
     <script src="../assets/scripts/orphan_information.js"></script>
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="../assets/scripts/module/jquery-1.11.2.min.js" ></script>
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.20/js/uikit.min.js"></script>
     <script type="text/javascript" src="../assets/scripts/module/jquery.Thailand.js/jquery.Thailand.js/dependencies/zip.js/zip.js"></script>
@@ -113,6 +131,7 @@
     <script type="text/javascript" src="../assets/scripts/module/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
     <script type="text/javascript" src="../assets/scripts/module/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
     <script type="text/javascript">
+
         /******************\
          *     DEMO 1     *
         \******************/ 
@@ -208,9 +227,9 @@
         $('#demo3 [name="zipcode_shool2"]').change(function(){
             console.log('รหัสไปรษณีย์', this.value);
         });
-
-
+            /* -------------- */
     </script>
+    
 </body>
 </html>
 <?php } ?>

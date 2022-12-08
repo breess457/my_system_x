@@ -35,6 +35,7 @@ require_once('../../function/link.php');
         echo $_SERVER['REQUEST_METHOD'];
 
     }else if($_SERVER['REQUEST_METHOD'] === "POST"){
+        $fales_projectid = $_POST['projectid'];
 
           if(isset($_POST['checkboxId'])){
              if(!empty($_POST['checkboxId'])){
@@ -49,11 +50,11 @@ require_once('../../function/link.php');
 
                         if($queryInsert){
                             $slide = "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"success\",\"insert to success\",\"insert data orphan to success\",\"../project_participants.php?idx_project=$project_id\")
+                                MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลเด็กกำพร้าตามที่เลือกเรียบร้อยแล้ว\",\"../project_participants.php?idx_project=$project_id\")
                             </script>";
                         }else{
                             $slide = "<script type=\"text/javascript\">
-                                MySetSweetAlert(\"error\",\"insert to error\",\"false to! not insert data orphan\",\"../project_participants.php?idx_project=$project_id\")
+                                MySetSweetAlert(\"error\",\"insert to error\",\"มีข้อผิดพลาดในระบบโปรดติดต่อนักพัฒนาโดยด่วน\",\"../project_participants.php?idx_project=$project_id\")
                             </script>";
                         }
                  }
@@ -65,7 +66,7 @@ require_once('../../function/link.php');
              echo $slide;
          }else{
             $slide = "<script type=\"text/javascript\">
-                MySetSweetAlert(\"warning\",\"not data!\",\"เพิ่มเหี้ยไรของมืงเนียะ ไม่มีเหี้ยอะไรเพิ่มเลย!\",\"../project_participants.php?idx_project=$project_id\")
+                MySetSweetAlert(\"warning\",\"ล้มเหลว\",\"เพราะคุณไม่ได้เพิ่มใครเลย\",\"../project_participants.php?idx_project=$fales_projectid\")
             </script>";
 
             echo $slide;

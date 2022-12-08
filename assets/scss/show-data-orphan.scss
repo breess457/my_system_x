@@ -11,14 +11,29 @@ body {
 .student-profile .card {
     border-radius: 10px;
 }
-
-.student-profile .card .card-header .profile_img {
+.student-profile .card .card-header .card-img-block{
+    overflow:hidden;
+}
+.student-profile .card .card-header .card-img-block .img-fluid{
+    object-fit: cover;
+    height: 150px;
+    width: 100%;
+}
+.student-profile .card .card-header .card-img-body{
+    position:relative;
+}
+.student-profile .card .card-header .card-img-body .profile_img {
     width: 150px;
     height: 150px;
     object-fit: cover;
     margin: 10px auto;
-    border: 10px solid #ccc;
+    border: 8px solid rgba(255, 255, 255, 1);
+    top: -82px;
+    left: 45%;
+    -webkit-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
     border-radius: 50%;
+    position: absolute;
 }
 .student-profile .card2 .card-header .img-home {
     width: 100%;
@@ -110,12 +125,12 @@ body {
     font-size: 16px;
     font-weight: 500;
     color: #585878;
-	font-family: 'Charmonman', cursive;
+	font-family: Arial, Helvetica, sans-serif;
 
 }
 input[type=text],select,select::after,option,label{ 
-	font-family: 'Charmonman', cursive;
-	color: #ef12f7;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #020102;
 } 
 .wrapper .btnCancle{
     position: absolute;

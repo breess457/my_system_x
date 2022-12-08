@@ -55,7 +55,7 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("Complaint",$fullname,$profile);
+                navbarSize("ข้อมูลการแจ้งข้อมูลเด็กกำพร้า",$fullname,$profile);
             ?>
             <div class="container-fluid row">
                 <div class="col-md-10">

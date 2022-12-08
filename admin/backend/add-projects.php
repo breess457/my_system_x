@@ -66,9 +66,8 @@
             $project_id = $_POST['project_id'];
             $project_name = $_POST['project_name'];
 
-            $title = $_POST['title'];
-            $ferst_name = $_POST['ferst_name'];
-            $last_name = $_POST['last_name'];
+            $select_fundation_id = $_POST['select_fundation_id'];
+            
 
             $detail_project = $_POST['detail_project'];
             $start_date = $_POST['start_date'];
@@ -76,14 +75,14 @@
             $area_of_operation = $_POST['area_of_operation'];
             $year = date('Y');
 
-            $sql = "INSERT INTO project(project_id,project_name,title,f_name,l_name,detail_project,operating_area,project_year,start_date,end_date,img_project,filename_project)
-                        VALUES('$project_id','$project_name','$title','$ferst_name','$last_name','$detail_project','$area_of_operation','$year','$start_date','$end_date','".setImgpath("photo_project")."','".setFilepath("file_project")."')";
-                echo $sql;
+            $sql = "INSERT INTO project(project_name,select_fundation_id,detail_project,operating_area,project_year,start_date,end_date,img_project,filename_project)
+                        VALUES('$project_name',$select_fundation_id,'$detail_project','$area_of_operation','$year','$start_date','$end_date','".setImgpath("photo_project")."','".setFilepath("file_project")."')";
+            
                 $queryInsert = mysqli_query($conn, $sql)or die(mysqli_error());
                   if($queryInsert){
                       $getID = mysqli_insert_id($conn);
                     echo "<script type=\"text/javascript\">
-                        MySetSweetAlert(\"success\",\"เพิ่มข้อมูลเรียบร้อย\",\"ขั้นต่อไปคือเพิ่มผู้เข้าร่วมโครงการ\",\"../project_participants.php?idx_project=".$getID." \")
+                        MySetSweetAlert(\"success\",\"เพิ่มข้อมูลเรียบร้อย\",\"ขั้นต่อไปคือเพิ่มผู้เข้าร่วมโครงการ\",\"../projects.php\")
                     </script>";
                   }else{
                     echo "<script type=\"text/javascript\">
@@ -94,12 +93,10 @@
 
         }else if($checkStatus === "edit"){
 
+            $select_editfundation_id = $_POST['select_editfundation_id'];
+
             $idproject = $_POST['idproject'];
-            $editproject_number = $_POST['editproject_number'];
             $editproject_name = $_POST['editproject_name'];
-            $edittitle = $_POST['edittitle'];
-            $editferst_name = $_POST['editferst_name'];
-            $editlast_name = $_POST['editlast_name'];
             $editdetail_project = $_POST['editdetail_project'];
             $editstart_date = $_POST['editstart_date'];
             $editend_date = $_POST['editend_date'];
@@ -107,24 +104,24 @@
             
                 if(!$_FILES['editphoto_project']['name']){
                     if(!$_FILES['edit_file_project']['name']){
-                        $editJQl = "UPDATE project SET project_id='$editproject_number',project_name='$editproject_name',title='$edittitle',f_name='$editferst_name',
-                            l_name='$editlast_name',detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
+                        $editJQl = "UPDATE project SET project_name='$editproject_name',select_fundation_id='$select_editfundation_id',
+                            detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
                             end_date='$editend_date' WHERE id='$idproject'";
                     }else{
-                        $editJQl = "UPDATE project SET project_id='$editproject_number',project_name='$editproject_name',title='$edittitle',f_name='$editferst_name',
-                            l_name='$editlast_name',detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
+                        $editJQl = "UPDATE project SET project_name='$editproject_name',select_fundation_id='$select_editfundation_id',
+                            detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
                             end_date='$editend_date',filename_project='".setFilepath("edit_file_project")."' WHERE id='$idproject'";
                         unlink("data/project/file/". $_POST['filenames']);
                     }
                 }else{
                     if(!$_FILES['edit_file_project']['name']){
-                        $editJQl = "UPDATE project SET project_id='$editproject_number',project_name='$editproject_name',title='$edittitle',f_name='$editferst_name',
-                            l_name='$editlast_name',detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
+                        $editJQl = "UPDATE project SET project_name='$editproject_name',select_fundation_id='$select_editfundation_id',
+                            detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
                             end_date='$editend_date',img_project='".setImgpath("editphoto_project")."' WHERE id='$idproject'";
                         unlink("data/project/".$_POST['photoname']);
                     }else{
-                        $editJQl = "UPDATE project SET project_id='$editproject_number',project_name='$editproject_name',title='$edittitle',f_name='$editferst_name',
-                            l_name='$editlast_name',detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
+                        $editJQl = "UPDATE project SET project_name='$editproject_name',select_fundation_id='$select_editfundation_id',
+                            detail_project='$editdetail_project',operating_area='$editarea_of_operation',start_date='$editstart_date',
                             end_date='$editend_date',img_project='".setImgpath("editphoto_project")."',filename_project='".setFilepath("edit_file_project")."' WHERE id='$idproject'";
                         unlink("data/project/".$_POST['photoname']);
                         unlink("data/project/file/".$_POST['filenames']);

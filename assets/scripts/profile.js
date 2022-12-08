@@ -93,6 +93,15 @@ class AddImage extends HTMLElement {
     });
   };
 
+  function setNumber(number, getD){
+    let getIds = document.getElementById(getD).value;
+    let classID = document.getElementById(getD)
+      if(getIds.length === number){
+        classID.className = "form-control"
+      }else if(getIds.length < number){
+        classID.className = "form-control is-invalid"
+      }
+  }
 
 class modalEditProfile extends HTMLElement{
     constructor(){
@@ -133,7 +142,7 @@ class modalEditProfile extends HTMLElement{
                             <div class="col-md-9 row">
                                 <div class="col-3">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="title">คำนำหน้า</label>
+                                        <label class="mb-0 text-dark" for="title">คำนำหน้า</label>
                                         <select class="form-control" name="edit_title" id="title">
                                             <option value="mr" ${this.right}>mr (เฉพาะผู้ดูแลระบบ)</option>
                                             <option value="นาย" ${this.selectedStatus}>นาย</option>
@@ -144,54 +153,53 @@ class modalEditProfile extends HTMLElement{
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="firstname">ชื่อเต็ม</label>
+                                        <label class="mb-0 text-dark" for="firstname">ชื่อเต็ม</label>
                                         <input type="text" class="form-control" name="edit_first_name" id="firstname" placeholder="ชื่อเต็ม" required>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="lastname">นามสกุล</label>
+                                        <label class="mb-0 text-dark" for="lastname">นามสกุล</label>
                                         <input type="text" class="form-control" name="edit_last_name" id="lastname" placeholder="นามสกุล" required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="username">อีเมล</label>
+                                        <label class="mb-0 text-dark" for="username">อีเมล</label>
                                         <input type="text" class="form-control" name="edit_username" id="username" placeholder="อีเมล" required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="cardid">เลขบัตรประชาชน</label>
-                                        <input type="text" class="form-control" name="edit_cardid" id="cardid" placeholder="นามสกุล" required>
+                                        <label class="mb-0 text-dark" for="cardid">เลขบัตรประชาชน</label>
+                                        <input type="text" class="form-control" name="edit_cardid" id="cardid" minlength="13" maxlength="13" onkeyup="setNumber(13,'cardid')"  required>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="tell">เบอร์โทร</label>
-                                        <input type="text" class="form-control" name="edit_tell" id="tell" placeholder="เบอร์โทร" required>
+                                        <label class="mb-0 text-dark" for="tell">เบอร์โทร</label>
+                                        <input type="text" class="form-control" name="edit_tell" id="tell" placeholder="เบอร์โทร" minlength="10" maxlength="10" onkeyup="setNumber(10,'tell')" required>
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="age">อายุ</label>
+                                        <label class="mb-0 text-dark" for="age">อายุ</label>
                                         <input type="text" class="form-control" name="edit_age" id="age" placeholder="อายุ" required>
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 text-primary" for="sex">เพศ</label>
+                                        <label class="mb-0 text-dark" for="sex">เพศ</label>
                                         <select class="form-control" name="edit_sex" id="sex">
                                             <option value="ชาย">ชาย</option>
                                             <option value="หญิง">หญิง</option>
-                                            <option value="เพศที่3">เพศที่3(LGBQ)</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="container row">
-                          <button type="submit" class="btn btn-primary ml-auto">update</button>
+                          <button type="submit" class="btn btn-success ml-auto">บันทึกข้อมูล</button>
                         </div>
                     </form>
                 </div>
@@ -236,17 +244,17 @@ $(document).on("click","#btnResetPass", function(ev){
   let dataID = $(this).data("id");
   let Password = $(this).data("password");
   Swal.fire({
-    title: "ป้อน รหัสผ่าน เดิม",
+    title: "ป้อนรหัสผ่านเดิม",
       html: `<input type="text" id="password" class="swal2-input" placeholder="รหัสผ่านเดิม">`,
       inputAttributes: {
         autocapitalize: "off",
       },
-      confirmButtonText: "Confirm",
+      confirmButtonText: "ยืนยัน",
       showLoaderOnConfirm: true,
       preConfirm: () => {
         const password = Swal.getPopup().querySelector("#password").value;
         if (!password) {
-          Swal.showValidationMessage(`กรุณาป้อน รหัสผ่านเดิม`);
+          Swal.showValidationMessage(`กรุณาป้อนรหัสผ่านเดิม`);
         }
         return { password: password };
       }, 
@@ -255,7 +263,7 @@ $(document).on("click","#btnResetPass", function(ev){
     if(newData.value.password === (Password).toString()){
      
       Swal.fire({
-        title: "ป้อน รหัสผ่าน ใหม่",
+        title: "ป้อนรหัสผ่านใหม่",
         html: `<input type="text" id="newpassword" class="swal2-input" placeholder="Password">`,
         inputAttributes: {
           autocapitalize: "off",
@@ -265,13 +273,13 @@ $(document).on("click","#btnResetPass", function(ev){
         preConfirm: () => {
           const newpassword = Swal.getPopup().querySelector("#newpassword").value;
           if (!newpassword) {
-            Swal.showValidationMessage(`กรุณาป้อน รหัสผ่านใหม่`);
+            Swal.showValidationMessage(`กรุณาป้อนรหัสผ่านใหม่`);
           }
           return { newpassword: newpassword };
         },
       }).then((newPassword)=>{
           let passwordNew = newPassword.value.newpassword;
-          fetch(`backend/api/api-reset-password.php?getId=${dataID}&newPasswords=${passwordNew}`,{
+          fetch(`http://localhost/my_system_x/admin/backend/api/api-reset-password.php?getId=${dataID}&newPasswords=${passwordNew}`,{
             method:"GET",
             headers: {
               "Content-Type": "application/json; charset=UTF-8",
@@ -284,16 +292,15 @@ $(document).on("click","#btnResetPass", function(ev){
               icon:setmethod.icons,
               text:setmethod.text,
               showConfirmButton: true,
+            }).then((resultx)=>{
+              location.reload()
             })
           }).catch((err) => console.log(err))
       })
     }else{
-      console.log(Password)
-      console.log(typeof Password)
-      console.log(typeof newData.value.password)
       Swal.fire({
         title: "รหัสผ่านไม่ถูกต้อง",
-        text:`รหัสผ่านไม่ถูกต้อง โปรดป้อนรหัสผ่านเดิม ${typeof Password} > ${Password} >${typeof (Password).toString()}`,
+        text:`รหัสผ่านไม่ถูกต้อง โปรดป้อนรหัสผ่านเดิม`,
         icon: "error",
         showConfirmButton: true,
       });

@@ -143,9 +143,9 @@ select.list-dt:focus {
 #progressbar li {
     list-style-type: none;
     font-size: 12px;
-    width: 25%;
+    width: 20%;
     float: left;
-    position: relative
+    position: relative;
 }
 
  #progressbar #account::before {
@@ -164,6 +164,10 @@ select.list-dt:focus {
 }
 
  #progressbar #status:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f015"
+} 
+#progressbar #status2:before {
     font-family: "Font Awesome 5 Free";
     content: "\f015"
 } 

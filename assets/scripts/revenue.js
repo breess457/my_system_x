@@ -97,6 +97,12 @@ class AddImage extends HTMLElement {
   };
   
   class ModalFormRevenue extends HTMLElement {
+    constructor(){
+      super()
+    }
+    get UserId(){
+      return this.getAttribute("userid");
+    }
     connectedCallback(){
         this.renderEvent()
     }
@@ -115,28 +121,37 @@ class AddImage extends HTMLElement {
                     </div>
                     <form action="backend/add-revenue.php" method="POST" enctype="multipart/form-data">
                       <input type="hidden" name="status" value="create" />
+                      <input type="hidden" name="user_id" value="${this.UserId}" />
                       <div class="modal-body row">
                           <div class="col-md-8 mt-0">
                               <div class="form-group mb-2">
-                                <label class="mb-0 text-primary" for="Fullname">หัวข้อ</label>
+                                <label class="mb-0 text-dark" for="Fullname">หัวข้อ</label>
                                 <input type="text" class="form-control" name="revenue_name" id="Fullname" placeholder="หัวข้อ" required>
                               </div>
                               <div class="form-group mb-2">
-                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด</label>
                                   <textarea class="form-control" rows="3" name="detail" id="Detail" required></textarea>
                               </div>
-                              <div class="form-group mb-2">
-                                <label for="Amount" class="mb-0 text-danger">จำนวนเงิน</label>
-                                <input type="number" class="form-control" name="amount" id="Amount" placeholder="จำนวนเงิน" required>
+                              <div class="form-group mb-2 row">
+                                <div class="col-5">
+                                  <label for="Amount" class="mb-0 text-dark">จำนวนเงิน</label>
+                                  <input type="number" class="form-control" name="amount" id="Amount" placeholder="จำนวนเงิน" required>
+                                </div>
+                                <div class="col-7">
+                                  <label for="Funder" class="mb-0 text-dark">ชื่อ สกุลผู้ให้</label>
+                                  <input type="text" class="form-control" name="funder" id="Funder" placeholder="ชื่อ สกุลผู้ให้" required>
+                                </div>
                               </div>
+                              
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-4 mb-0">
                               <mian-add-image id="stdImg" count="evidence_slip" wrapper="x-wrap" filenames="ximgname" cancles="x-cancle"
                                   names="สลิป หลักฐาน" custom="setbtnCustom" setdefault="setDefaultImgStd"></mian-add-image>
                           </div>
                       </div>
+                      
                       <div class="container mb-4 row">
-                          <button type="submit" class="ml-auto  btn btn-success">บันทึกข้อมูล</button>
+                          <button type="submit" class=" ml-auto  btn btn-success">บันทึกข้อมูล</button>
                       </div>
                     </form>
                     
@@ -192,7 +207,7 @@ class AddImage extends HTMLElement {
     renderImage() {
   
       this.innerHTML = `
-              <div class="container">
+              <div class="container mt-4">
                   <div class="wrapper ${this.wrapper}">
                       <div class="image">
                          <img src="" alt="" class="${this.id}"> 
@@ -217,6 +232,12 @@ class AddImage extends HTMLElement {
   customElements.define("mian-edit-image", updateImage);
   
   class modalFormrevenueUpdate extends HTMLElement{
+    constructor(){
+      super()
+    }
+    get Userid(){
+      return this.getAttribute("GetUserId")
+    }
     connectedCallback(){
       this.innerHTML = `
               <div class="modal fade " id="modalFormrevenueupdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -232,19 +253,26 @@ class AddImage extends HTMLElement {
                       <input type="hidden" name="revenueId" id="reId" />
                       <input type="hidden" name="status" value="update" />
                       <input type="hidden" name="revenueSlip" id="reSlip" />
+                      <input type="hidden" name="edit_user_id" id="edituserid"/>
                       <div class="modal-body row">
                           <div class="col-md-8 mt-0">
                               <div class="form-group mb-2">
-                                <label class="mb-0 text-primary" for="reName">หัวข้อ</label>
+                                <label class="mb-0 text-dark" for="reName">หัวข้อ</label>
                                 <input type="text" class="form-control" name="Erevenue_name" id="reName" placeholder="หัวข้อ" required>
                               </div>
                               <div class="form-group mb-2">
-                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด</label>
                                   <textarea class="form-control" rows="3" name="Edetail" id="reDetail" required></textarea>
                               </div>
-                              <div class="form-group mb-2">
-                                <label for="reAmount" class="mb-0 text-danger">จำนวนเงิน</label>
-                                <input type="number" class="form-control" name="Eamount" id="reAmount" placeholder="จำนวนเงิน" required>
+                              <div class="form-group mb-2 row">
+                                <div class="col-5">
+                                  <label for="reAmount" class="mb-0 text-dark">จำนวนเงิน</label>
+                                  <input type="number" class="form-control" name="Eamount" id="reAmount" placeholder="จำนวนเงิน" required>
+                                </div>
+                                <div class="col-7">
+                                  <label for="editfunder" class="mb-0 text-dark">ชื่อ สกุลผู้ให้</label>
+                                  <input type="text" class="form-control" name="edit_funder" id="editfunder" placeholder="ชื่อ สกุลผู้ให้" required>
+                                </div>
                               </div>
                           </div>
                           <div class="col-md-4">
@@ -252,7 +280,7 @@ class AddImage extends HTMLElement {
                                   names="สลิป หลักฐาน" custom="setbtnCustomE" setdefault="EsetDefaultImgStd"></mian-edit-image>
                           </div>
                       </div>
-                      <div class="container mb-4 row">
+                      <div class="container mt-4 row">
                           <button type="submit" class="ml-auto  btn btn-success">บันทึกข้อมูล</button>
                       </div>
                     </form>
@@ -300,7 +328,7 @@ class AddImage extends HTMLElement {
   
   $(document).on("click", "#btnUpdateRevence",function(evt){
     let revenueID = $(this).data('id'),revenueName = $(this).data('name'), revenueDetail = $(this).data('detail');
-    let revenueAmount = $(this).data('amount'), revenueSlip = $(this).data('slip');
+    let revenueAmount = $(this).data('amount'), revenueSlip = $(this).data('slip'),getuserId = $(this).data('userid'),funder=$(this).data('funder')
   
     $('#reName').val(revenueName)
     $("#reId").val(revenueID);
@@ -308,6 +336,8 @@ class AddImage extends HTMLElement {
     $("#reDetail").val(revenueDetail);
     $(".EstdImg").attr('src',`backend/data/revenue/${revenueSlip}`)
     $("#reSlip").val(revenueSlip);
+    $("#edituserid").val(getuserId)
+    $("#editfunder").val(funder)
   
     $(".e-wrapp").last().addClass("active")
     $(".eimgname").html(revenueSlip)
@@ -333,20 +363,32 @@ class modalShowRevenue extends HTMLElement{
           <div class="modal-body row">
               <div class="col-md-8 mt-0">
                   <div class="form-group mb-2">
-                    <label class="mb-0 text-primary" for="reName">หัวข้อ</label>
+                    <label class="mb-0 text-dark" for="reName">หัวข้อ</label>
                     <input type="text" class="form-control" name="Erevenue_name" id="showHeader" placeholder="หัวข้อ" disabled>
                   </div>
                   <div class="form-group mb-2">
-                      <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                      <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด</label>
                       <textarea class="form-control" rows="3" name="Edetail" id="showDetail" disabled></textarea>
                   </div>
                   <div class="form-group mb-2">
-                    <label for="reAmount" class="mb-0 text-danger">จำนวนเงิน</label>
+                    <label for="reAmount" class="mb-0 text-dark">จำนวนเงิน</label>
                     <input type="number" class="form-control" name="Eamount" id="showAmount" placeholder="จำนวนเงิน" disabled>
+                  </div>
+                  <div class="form-group mb-2 row">
+                    <div class="col-6">
+                      <label class="mb-0 text-dark" for="setFunder">ผู้ให้กองทุน</label>
+                      <input type="text" class="form-control" name="Erevenue_name" id="setFunder" disabled>
+                    </div>
+                    <div class="col-6">
+                      <label class="mb-0 text-dark" for="showUsername">ผู้รับกองทุน</label>
+                      <input type="text" class="form-control" name="Erevenue_name" id="showUsername" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group mb-2">
                   </div>
               </div>
               <div class="col-md-4">
-                <div class="image w-100">
+                <div class="image w-100 mt-4">
                   <img class="set-img " width="200" height="300" />
                 </div>
               </div>
@@ -362,11 +404,43 @@ class modalShowRevenue extends HTMLElement{
 
 customElements.define('main-show-revenue', modalShowRevenue);
 $(document).on("click","#btnShowRevenue", function(e){
-  let header=$(this).data('name'),detail=$(this).data('detail');
-  let amount=$(this).data('amount'),slip=$(this).data('slip')
+  let header=$(this).data('name'),detail=$(this).data('detail'),getUser=$(this).data('username');
+  let amount=$(this).data('amount'),slip=$(this).data('slip'),funder=$(this).data('funder')
 
   $('#showHeader').val(header)
   $('#showDetail').val(detail)
   $('#showAmount').val(amount)
+  $("#setFunder").val(funder)
+  $("#showUsername").val(getUser)
   $('.set-img').attr('src',`backend/data/revenue/${slip}`)
+})
+
+$(document).on('click','#SetconfirmTrash', function(e){
+  let getID=$(this).data('id'),getImg=$(this).data('image')
+  Swal.fire({
+    title: 'คุณแน่ใจไหม ?',
+    text: "คุณจะไม่สามารถย้อนกลับได้!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonText: 'ยืนยัน'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location = `backend/add-revenue.php?re_id=${getID}&status=$del&img_slip=${getImg}`
+    }
+  })
+  e.preventDefault()
+
+})
+$(document).on('click',".btnfalseDate",function(esen){
+  let datese = $(this).data('datese')
+  Swal.fire({
+    icon: 'warning',
+    title: 'ไม่อนุญาตจัดการข้อมูลได้',
+    text: 'เนื่องจากเลยเวลาที่กำหนด5วันแต่นี้เกิน' + datese +'วันแล้ว',
+    showConfirmButton: false,
+  })
+  esen.preventDefault()
 })

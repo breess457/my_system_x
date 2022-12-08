@@ -19,7 +19,7 @@
                icon:\"success\",
                title:\"เรียบร้อย\",
                text:'ออกจากระบบ เรียบร้อย',
-               confirmButtonText:\"OK 🏃‍♀️\"
+               confirmButtonText:\"OK\"
            }).then((result)=>{
                 window.location ='../index.php'
             

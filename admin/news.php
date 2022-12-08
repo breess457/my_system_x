@@ -50,11 +50,11 @@ include_once("../function/link.php");
             <div class="container-fluid row">
                 <div class="ml-auto">
                     <?php if($status != 'chairman'){ ?>
-                    <button class="bd-none au-btn au-btn-icon au-btn--blues au-btn--small" data-toggle="modal" 
+                    <button class="bd-none au-btn au-btn-icon au-btn--green au-btn--small" data-toggle="modal" 
                         data-target="#modalFormTopnews" data-user="<?php echo $userid ?>" id="btnCreatenews"
                     >
                         <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลข่าวสาร
+                          เพิ่มข้อมูล
                     </button> 
                     <?php } ?>
                 </div> 
@@ -76,7 +76,7 @@ include_once("../function/link.php");
     <script src="../assets/scripts/news.js"></script>
 </body>
 </html>
-<?php
+<?php 
  }
 
 ?>

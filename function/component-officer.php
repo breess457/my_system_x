@@ -1,11 +1,22 @@
 <?php
-
+  function statusOne($getStatus){
+    if($getStatus == "chairman"){
+     $l = "ประธาน";
+    }else if($getStatus == "volunteer"){
+      $l = "เจ้าหน้าที่";
+    }else if($getStatus == "officer"){
+       $l = "อาสาสมัคร";
+    }else{
+      $l = "xxx";
+    }
+    return $l;
+}
 function navigationOfiicer($status){
     $list = "
         <nav id=\"sidebar\" class=\"sidebar-wrapper\">
             <div class=\"sidebar-content\">
                 <div class=\"sidebar-brand\">
-                    <a href=\"#\" class=\"text-primary\">status $status</a>
+                    <a href=\"#\" class=\"text-primary\">สถานะ ".statusOne($status)."</a>
                     <div id=\"close-sidebar\">
                         <i class=\"fas fa-times\"></i>
                     </div>
@@ -40,19 +51,40 @@ function navigationOfiicer($status){
                         <li>
                           <a href=\"officers.php\">
                               <i class=\"fas fa-users\"></i>
-                              <span>ข้อมูลอาสาสมมัค(ทั่วไป)</span>
+                              <span>จัดการข้อมูลอาสาสมัคร</span>
                           </a>
                         </li>
                         <li>
                           <a href=\"orphan_information.php\">
                             <i class=\"fas fa-user\"></i>
-                              <span>ข้อมูลเด็กกำพร้า</span>
+                              <span>จัดการข้อมูลเด็กกำพร้า</span>
                           </a>
                         </li>
                         <li>
                           <a href=\"patrons.php\">
                             <i class=\"fas fa-user\"></i>
-                              <span>ข้อมูลผู้อุปถัมท์</span>
+                              <span>ข้อมูลการรับทุน</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href=\"setProject.php\">
+                          <i class=\"fas fa-list\"></i>
+                              <span>ข้อมูลโครงการ</span>
+                          </a>
+                        </li>
+                        <li class=\"header-menu\">
+                          <span>Extra</span>
+                        </li>
+                        <li>
+                          <a href=\"map.php\">
+                            <i class=\"fas fa-location-arrow\"></i>
+                              <span>แผนที่</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href=\"profile.php\">
+                            <i class=\"fas fa-user-circle\"></i>
+                              <span>โปรไฟล์</span>
                           </a>
                         </li>
                     </ul>
@@ -74,7 +106,7 @@ function navbarOfficer($logo){
               <div class=\"ml-auto\">
                   <a class=\"nav-link btn btn-outline-success\" href=\"logout.php\">
                     <i class=\"now-ui-icons ui-1_settings-gear-63\"></i>
-                    Logout
+                    ออกจากระบบ
                   </a>
               </div>
           </div>
@@ -104,7 +136,7 @@ function navbarSizeTrue($location,$logo, $fullname, $profile){
 
 function setData($titleText, $number, $icons){
     $listData = "
-      <div class=\"col-xl-3 col-md-6 mb-4\">
+      <div class=\"col-xl-2 col-md-6 mb-4\">
         <div class=\"card border-left-primary shadow h-100 py-2\">
             <div class=\"card-body\">
                 <div class=\"row no-gutters align-items-center\">
@@ -146,12 +178,9 @@ function setData($titleText, $number, $icons){
               <a href=\"show-information-orphan.php?get_orphanId=".$idOrphan."\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"show\">
                 <i class=\"fas fa-address-card\"></i>
               </a>
-              <a href=\"#print\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"print\">
-                <i class=\"fas fa-print\"></i>
-              </a>
-              <a href=\"backend/edit-show-information-orphan.php?getid_orphan=".$idOrphan."&img_orphan=".$photo."&image_home=".$homeImg."\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"print\">
-                <i class=\"fas fa-trash\"></i>
-              </a>
+              <button type=\"button\" id=\"confirmTrashOrphan\" data-id=\"$idOrphan\" data-images=\"$photo\" data-home=\"$homeImg\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Delete\">
+                    <i class=\"fas fa-trash\"></i>
+              </button>
           </div>
       </td>
     </div>
@@ -165,10 +194,10 @@ function setData($titleText, $number, $icons){
     $card_id,$call_me,$siblings_number,$me_number,$profile_orphan,/* end t1 */
     $home_id,$district_home,$amphoe_home,$province_home,$zipcode_home,$school_name,$district_school,$amphoe_school,$province_school,
     $zipcode_school,$school2_name,$district_school2,$amphoe_school2,$province_school2,$zipcode_school2, /* end t2 */
-    $fullname_father,$occupation_father,$income_father,$berd_day_father,$age_father,$tell_father,$status_father,
-    $fullname_mather,$occupation_mather,$income_mather,$berd_day_mather,$age_mather,$tell_mather,$status_mather,/* end t3 */
+    $fullname_father,$occupation_father,$income_father,$berd_day_father,$age_father,$tell_father,$status_father,$cause_death_f,
+    $fullname_mather,$occupation_mather,$income_mather,$berd_day_mather,$age_mather,$tell_mather,$status_mather,$cause_death_m,/* end t3 */
     $image_home,$family_status,$level_help,$estimate_help,$revenue_family,$deceased,$cause_death,$death_day,$study_status,
-    $year_study,$cause_stop_study
+    $year_study,$cause_stop_study,$latitudes,$logitudes
   ){
     $data = "
       <div class=\"student-profile py-4\">
@@ -184,19 +213,25 @@ function setData($titleText, $number, $icons){
                        data-weigth=\"$weigth_me\" data-bloodgroup=\"$blood_group_me\" data-berdday=\"$berd_day_me\" data-age=\"$age_me\"
                             data-sibingsnumber=\"$siblings_number\" data-menumber=\"$me_number\"
                   >
-                      <i class=\"fas fa-edit\"></i>edit
+                      <i class=\"fas fa-edit\"></i>แก้ไข
                     </button>
                 </div>
                 <div class=\"card-header bg-transparent text-center\">
-                  <img class=\"profile_img\" src=\"backend/data/orphan-information/$profile_orphan\" alt=\"student dp\">
-                  <h3>$title_me $first_name_me &nbsp; $last_name_me</h3>
-                </div>
-                <div class=\"card-body\">
-                  <p class=\"mb-0\"><strong class=\"pr-1\">ปัตร ประชาชน:</strong>$card_id</p>
+                  <div class=\"card-img-block\">
+                    <img class=\"img-fluid\" src=\"backend/data/orphan-information/$image_home\" alt=\"Card image cap\">
+                  </div>
+                  <div class=\"card-img-body\">
+                    <img class=\"profile_img\" src=\"backend/data/orphan-information/$profile_orphan\" alt=\"student dp\">
+                  </div>
+                  
+                </div> 
+                <div class=\"card-body mt-5\">
+                  <h3 class=\"text-center\">$title_me $first_name_me &nbsp; $last_name_me</h3>
+                  <p class=\"mb-0\"><strong class=\"pr-1\">บัตร ประชาชน:</strong>$card_id</p>
                   <p class=\"mb-0\"><strong class=\"pr-1\">เบอร์โทร:</strong>$call_me</p>
                   <p class=\"mb-0\"><strong class=\"pr-1\">ส่วนสูง:</strong>$heigh_me</p>
                   <p class=\"mb-0\"><strong class=\"pr-1\">น้ำหนัก:</strong>$weigth_me</p>
-                  <p class=\"mb-0\"><strong class=\"pr-1\">กรุปเลือด:</strong>$blood_group_me</p>
+                  <p class=\"mb-0\"><strong class=\"pr-1\">กรุ๊ปเลือด:</strong>$blood_group_me</p>
                   <p class=\"mb-0\"><strong class=\"pr-1\">วันเกิด:</strong>$berd_day_me</p>
                   <p class=\"mb-0\"><strong class=\"pr-1\">อายุ:</strong>$age_me</p>
                   <p class=\"mb-0\"><strong class=\"pr-1\">จำนวนพี่น้อง:</strong>$siblings_number คน</p>
@@ -206,18 +241,17 @@ function setData($titleText, $number, $icons){
                   </div>
                 </div>
               </div>
-              <div class=\"card card2 shadow-sm mt-4\">
+              
+              <div class=\"card shadow-sm mt-2 col-lg-12\">
                 <div class=\"card-header bg-transparent border-0 row\">
-                  <h3 class=\"mb-0 ml-1\"><i class=\"fas fa-images pr-1\"></i>รูปบ้าน</h3>
-                  <button type=\"button\" class=\"ml-auto btn-item\" data-toggle=\"modal\" data-target=\"#modaleditSeven\" id=\"editsevenbtn\"
-                    data-id=\"$id_orphan\" data-homeimage=\"$image_home\"
+                  <h3 class=\"mb-0\"><i class=\"fas fa-location-arrow\"></i>แผนที่บ้าน</h3>
+                  <button type=\"button\" class=\"ml-auto btn-item\" data-toggle=\"modal\" data-target=\"#modaleditMap\" id=\"editmmapbtn\"
+                    data-id=\"$id_orphan\" data-latitude=\"$latitudes\" data-logitude=\"$logitudes\"
                   >
-                    <i class=\"fas fa-edit\"></i>edit
+                    <i class=\"fas fa-edit\"></i>แก้ไข
                   </button>
                 </div>
-                <div class=\"card-header bg-transparent text-center\">
-                  <img class=\"img-home\" src=\"backend/data/orphan-information/$image_home\" alt=\"student dp\">
-                </div>
+                <div id=\"map_canvas\" style=\"width:100%;height:320px;\" class='mb-3'></div>
               </div>
             </div>
             <div class=\"col-lg-9\">
@@ -229,7 +263,7 @@ function setData($titleText, $number, $icons){
                       data-id=\"$id_orphan\" data-homeid=\"$home_id\" data-districthome=\"$district_home\" data-amphoehome=\"$amphoe_home\"
                       data-provincehome=\"$province_home\" data-zipcodehome=\"$zipcode_home\"
                     >
-                      <i class=\"fas fa-edit\"></i>edit
+                      <i class=\"fas fa-edit\"></i>แก้ไข
                     </button>
                   </div>
                   <div class=\"card-body pt-0\">
@@ -269,7 +303,7 @@ function setData($titleText, $number, $icons){
                       data-id=\"$id_orphan\" data-schoolname=\"$school2_name\" data-districtschool=\"$district_school2\" 
                       data-amphoeschool=\"$amphoe_school2\" data-provinceschool=\"$province_school2\" data-zipcodeschool=\"$zipcode_school2\"
                     >
-                      <i class=\"fas fa-edit\"></i>edit
+                      <i class=\"fas fa-edit\"></i>แก้ไข
                     </button>
                   </div>
                   <div class=\"card-body pt-0\">
@@ -309,7 +343,7 @@ function setData($titleText, $number, $icons){
                       data-id=\"$id_orphan\" data-school2=\"$school_name\" data-schooldistrict=\"$district_school\" 
                       data-schoolamphoe=\"$amphoe_school\" data-schoolprovince=\"$province_school\" data-schoolzipcode=\"$zipcode_school\"
                     >
-                      <i class=\"fas fa-edit\"></i>edit
+                      <i class=\"fas fa-edit\"></i>แก้ไข
                     </button>
                   </div>
                   <div class=\"table-responsive table-responsive-data2\">
@@ -335,7 +369,7 @@ function setData($titleText, $number, $icons){
                       data-mathername=\"$fullname_mather\" data-occupationmather=\"$occupation_mather\" data-incomemather=\"$income_mather\"
                       data-berddaymather=\"$berd_day_mather\" data-agemather=\"$age_mather\" data-tellmather=\"$tell_mather\" data-statusmather=\"$status_mather\"
                     >
-                      <i class=\"fas fa-edit\"></i>edit
+                      <i class=\"fas fa-edit\"></i>แก้ไข
                     </button>
                   </div>
                   <div class=\"table-responsive table-responsive-data2\">
@@ -349,6 +383,7 @@ function setData($titleText, $number, $icons){
                             <th>อายุ</th>
                             <th>เบอร์โทร</th>
                             <th>สถานภาพ</th>
+                            <th>สาเหตุที่เสียชีวิต</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -360,6 +395,7 @@ function setData($titleText, $number, $icons){
                           <td data-abc=\"true\">$age_father</td>
                           <td data-abc=\"true\">$tell_father</td>
                           <td data-abc=\"true\">$status_father</td>
+                          <td data-abc=\"true\">$cause_death_f</td>
                         </tr>
                         <tr class=\"tr-shadow\">
                           <td width=\"22%\" data-abc=\"true\">$fullname_mather</td>
@@ -369,6 +405,7 @@ function setData($titleText, $number, $icons){
                           <td data-abc=\"true\">$age_mather</td>
                           <td data-abc=\"true\">$tell_mather</td>
                           <td data-abc=\"true\">$status_mather</td>
+                          <td data-abc=\"true\">$cause_death_m</td>
                         </tr>
                       </tbody>
                     </table>
@@ -381,70 +418,56 @@ function setData($titleText, $number, $icons){
                     <button type=\"button\" class=\"ml-auto btn-item\" data-toggle=\"modal\" data-target=\"#modaleditSix\" id=\"editsixbtn\"
                       data-id=\"$id_orphan\" data-familystatus=\"$family_status\" data-levelhelp=\"$level_help\" data-estimatehelp=\"$estimate_help\"
                       data-revenuefamily=\"$revenue_family\" data-deceased=\"$deceased\" data-causedeath=\"$cause_death\" data-deathday=\"$death_day\"
-                      data-studystatus=\"$study_status\" data-yearstudy=\"$year_study\" data-causestopstudy=\"$cause_stop_study\"
+                      data-studystatus=\"$study_status\" data-yearstudy=\"$year_study\" data-causestopstudy=\"$cause_stop_study\" data-imageshomes=\"$image_home\"
                     >
-                      <i class=\"fas fa-edit\"></i>edit
+                      <i class=\"fas fa-edit\"></i>แก้ไข
                     </button>
                   </div>
                   <div class=\"card-body row pt-0\">
                       <table class=\"table border-primary table-bordered col-lg-4\">
                         <tr>
-                          <th width=\"33%\">สถานะครอบครัว</th>
-                          <td width=\"1%\">:</td>
-                          <td width=\"33%\">$family_status</td>
+                            <th width=\"33%\">สถานภาพครอบครัว</th>
+                            <td width=\"1%\">:</td>
+                            <td width=\"33%\">$family_status</td>
                         </tr>
+                      </table>
+                      <table class=\"table border-primary table-bordered col-lg-4\">
                         <tr>
                           <th width=\"33%\">ระดับความช่วยเหลือ</th>
                           <td width=\"1%\">:</td>
-                          <td>$level_help</td>
+                          <td width=\"33%\">$level_help</td>
                         </tr>
-                        <tr>
-                          <th width=\"33%\">ต้องการความช่วยเหลือ</th>
-                          <td width=\"1%\">:</td>
-                          <td width=\"33%\">$estimate_help</td>
-                        </tr>
-                        
                       </table>
-                      <table class=\"table table-bordered border-success col-lg-4\">
-                        <tr>
-                          <th width=\"33%\">รายได้ครอบครัว</th>
-                          <td width=\"1%\">:</td>
-                          <td width=\"33%\">$revenue_family</td>
-                        </tr>
-                        <tr>
-                          <th width=\"33%\">ผู้เสียชีวิต</th>
-                          <td width=\"1%\">:</td>
-                          <td>$deceased</td>
-                        </tr>
-                        <tr>
-                          <th width=\"33%\">สาเหตุที่เสียชีวิต</th>
-                          <td width=\"1%\">:</td>
-                          <td width=\"33%\">$cause_death</td>
-                        </tr>
-                        
-                      </table>
-                      <table class=\"table table-bordered border-info col-lg-4\">
-                        <tr>
-                          <th width=\"33%\">วันที่เสียชีวิต</th>
-                          <td width=\"1%\">:</td>
-                          <td width=\"33%\">$death_day</td>
-                        </tr>
+                      <table class=\"table border-primary table-bordered col-lg-4\">
                         <tr>
                           <th width=\"33%\">สถานะการเรียน</th>
                           <td width=\"1%\">:</td>
-                          <td>$study_status</td>
+                          <td width=\"33%\">$study_status</td
                         </tr>
-                        <tr>
-                          <th width=\"33%\">ปีการศึกษา</th>
-                          <td width=\"1%\">:</td>
-                          <td width=\"33%\">$year_study</td>
-                        </tr>
-                        
                       </table>
-                      <div class=\"form-group col-lg-12\">
-                        <label for=\"exampleFormControlTextarea1\">สาเหตุที่หยุดเรียน</label>
-                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" readonly>$cause_stop_study</textarea>
-                      </div>
+                      <table class=\"table border-primary table-bordered col-lg-12\">
+                        <tr>
+                          <th width=\"7%\">สาเหตุที่หยุดเรียน</th>
+                          <td width=\"1%\">:</td>
+                          <td width=\"39%\">$cause_stop_study</td>
+                        </tr>
+                      </table>
+                      <table class=\"table border-primary table-bordered col-lg-12\">
+                        <tr>
+                          <th width=\"20%\">ต้องการความช่วยเหลือ</th>
+                          <td width=\"1%\">:1</td>
+                          <td width=\"20%\">$estimate_help</td>
+                          <td width=\"1%\">:2</td>
+                          <td width=\"20%\">$deceased</td>
+                          <td width=\"1%\">:3</td>
+                          <td width=\"20%\">$cause_death</td>
+                          <td width=\"1%\">:4</td>
+                          <td width=\"20%\">$year_study</td>
+                        </tr>
+                      </table>
+                      <br/>
+
+                      
                   </div>
                 </div>
               </div>
@@ -456,14 +479,10 @@ function setData($titleText, $number, $icons){
     echo $data;
   }
 
-  function tablelistPatrons ($Pnum, $idpatron, $fullname, $cardID, $address, $tell, $carer, $workplace, $newdate, $enddate, $munny, $allmunny, $imageSlipt){
+  function tablelistPatrons ($Pnum, $idpatron, $fullname, $date_capital, $address, $total_money, $patron_day, $person_number, $imageSlipt,$setidpatron){
     $listPatron = "
       <tr>
-        <td>$Pnum</td>
-        <td>$fullname</td>
-        <td>$address</td>
-        <td>$tell</td>
-        <td>$carer</td>
+      <td>$Pnum</td>
         <td>
             <div class=\"account-item account-item--style2 clearfix js-item-menu\">
                 <div class=\"image\">
@@ -471,9 +490,13 @@ function setData($titleText, $number, $icons){
                 </div>
             </div>
         </td>
+        <td>$fullname</td>
+        <td>$total_money</td>
+        <td>$person_number</td>
+        <td>$patron_day</td>
         <td>
             <div class=\"table-data-feature\" >
-              <a class=\"item\" data-toggle=\"tootip\" data-placement=\"top\" title=\"Add Data\" href=\"getting_a_scholarship.php?id_patron=".$idpatron." \">
+              <a class=\"item\" data-toggle=\"tootip\" data-placement=\"top\" title=\"Add Data\" href=\"getting_a_scholarship.php?id_patron=".$setidpatron." \">
                 <i class=\"fas fa-list-alt\"></i>
               </a>
             </div>
@@ -483,7 +506,7 @@ function setData($titleText, $number, $icons){
     echo $listPatron;
   }
 
-  function showDataScholarshipt($numbar, $idscholarshipt, $photo, $namegrantee, $age, $cardId, $entrydate, $fullAdress){
+  function showDataScholarshipt($numbar, $idscholarshipt, $photo, $namegrantee, $age, $cardId, $entrydate,$fullAddr){
     $showScholarshipt = "
       <tr class=\"classDataList tr-shadow\">
         <td>$numbar</td>
@@ -496,7 +519,8 @@ function setData($titleText, $number, $icons){
         </td>
         <td>$namegrantee</td>
         <td>$age</td>
-        <td>$fullAdress</td>
+        <td>$cardId</td>
+        <td id=\"getNumber\">$fullAddr</td>
         <td>$entrydate</td>
         
       </tr>
@@ -524,20 +548,123 @@ function setData($titleText, $number, $icons){
             <td>$fundationTell</td>
             <td>
               <div class=\"table-data-feature\" >
+                  <button class=\"item\" type=\"button\" id=\"btnShowdataFundation\" data-toggle=\"modal\" data-target=\"#modalFundationShow\" 
+                    data-toggle=\"tooltip\" data-placement=\"edit\" data-id=\"$fundationId\" data-image=\"$fundationImg\"
+                  >
+                      <i class=\"fas fa-list-alt\"></i>
+                  </button>
                   <button class=\"item\" type=\"button\" id=\"btndataFundation\" data-toggle=\"modal\" data-target=\"#modalFundationedit\" 
                     data-toggle=\"tooltip\" data-placement=\"edit\" data-id=\"$fundationId\" data-image=\"$fundationImg\"
                   >
                       <i class=\"fas fa-pencil-alt\"></i>
                   </button>
-                  <a href=\"backend/crud-fundation.php?id_fundation=$fundationId & image_fundation=$fundationImg & status=delete\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Delete\">
-                      <i class=\"fas fa-trash-alt\"></i>
-                  </a>
+                  <button type=\"button\" id=\"confirmTrashFundation\" data-id=\"$fundationId\" data-images=\"$fundationImg\" class=\"item\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Delete\">
+                    <i class=\"fas fa-trash-alt\"></i>
+                  </button>
               </div>
           </td>
         </tr>
       ";
       echo $fundation;
     }
+    function officerslistSetproject($i, $projectname, $responsibleTitle,$responsiblename,$responsiblelastname, $operationArea, $yearproject, $startdate, $enddate, $id, $projectImg, $detail, $fileproject,$set_sta_tus){
+  
+      $listProject = "
+        <tr class=\"tr-shadow\">
+          <td>
+            <div class=\"account-item account-item--style2 clearfix js-item-menu\">
+              <div class=\"image\">
+                <img src=\"../admin/backend/data/project/$projectImg \" alt=\"John Doe\" />
+              </div>
+            </div>
+          </td>
+          <td>$projectname</td>
+          <td>$responsibleTitle $responsiblename  $responsiblelastname</td>
+          <td>$operationArea</td>
+          <td><a href=\"../admin/backend/data/project/file/$fileproject\">เปิดไฟล์</a></td>
+          <td>
+              <div class=\"table-data-feature\" >
+                  <button type=\"button\" class=\"item\" id=\"showDetailProject\" data-id=\"$id\" data-projectname=\"$projectname\" data-year=\"$yearproject\"
+                    data-responsibletitle=\"$responsibleTitle\" data-responsiblename=\"$responsiblename\" data-responsiblelastname=\"$responsiblelastname\"
+                    data-operationarea=\"$operationArea\" data-startdate=\"$startdate\" data-enddate=\"$enddate\" data-projectimg=\"$projectImg\"
+                    data-detail=\"$detail\"
+                    data-toggle=\"modal\" data-target=\"#modalDetailProject\"
+                  >
+                      <i class=\"fas fa-list\"></i>
+                  </button>
+                  <button type=\"button\" class=\"item\" id=\"btnShowUseradd\" data-id=\"$id\" data-toggle=\"modal\" data-target=\"#modalShowuserAdd\">
+                      <i class=\"fas fa-user-plus\"></i>
+                  </button>
+                  <button type=\"button\" id=\"btnShowusernone\" class=\"item\" data-id=\"$id\" data-toggle=\"modal\" data-target=\"#modalShowuserNone\">
+                      <i class=\"far fa-user\"></i>
+                  </button>
+              </div>
+          </td>
+        </tr>
+      ";
+      echo $listProject;
+    
+    }
+
+    function cardProfile($id, $title,$firstname, $lastname, $Email, $cardNumbers, $tell, $age, $sex, $photo, $statusx,$fullnames,$username,$passwd){
+      $listProfile = "
+      <div class=\"container rounded bg-white mt-5\">
+          <div class=\"row\">
+              <div class=\"col-md-4 border-right\">
+                  <div class=\"d-flex flex-column align-items-center text-center p-3 py-5\">
+                    <img class=\"mt-3\" src=\"../root/backend/data-image/$photo\" width=\"190\">
+                    <span class=\"font-weight-bold\">$fullnames</span>
+                    <span class=\"text-black-50\">$username</span>
+                    <span>สถานะ: ".statusOne($statusx)."</span>
+                  </div> 
+              </div>
+              <div class=\"col-md-8\">
+                  <div class=\"p-3 py-5\">
+                    
+                      <div class=\"row mt-2\">
+                          <div class=\"col-md-5\">
+                            <label>:ชื่อ</label>
+                            <p class=\"form-control\">$title $firstname</p>
+                          </div>
+                          <div class=\"col-md-3\">
+                            <label>นามสกุล</label>
+                            <p class=\"form-control\">$lastname</p>
+                          </div>
+                          <div class=\"col-md-2\">
+                            <label>อายุ</label>
+                            <p class=\"form-control\">$age</p>
+                          </div>
+                          <div class=\"col-md-2\">
+                            <label>เพศ</label>
+                            <p class=\"form-control\">$sex</p>
+                          </div>
+                      </div>
+                      <div class=\"row mt-1\">
+                          <div class=\"col-md-12\">
+                            <label>เลขบัตรประชาชน</label>
+                            <p class=\"form-control\">$cardNumbers</p>
+                          </div>
+                          <div class=\"col-md-12\">
+                            <label>เบอร์</label>
+                            <p class=\"form-control\">$tell</p>
+                          </div>
+                      </div>
+                      
+                      <div class=\"mt-5 text-right\">
+                        <button type=\"button\" id=\"btnResetPass\" data-id=\"$id\" data-password=\"$passwd\" class=\"text-primary mr-2\">เปลียนรหัสผ่าน <i class=\"fas fa-key\"></i></button>
+                        <button class=\"btn btn-sm btn-warning ml-3\" type=\"button\" data-toggle=\"modal\" data-target=\"#modalEditProfile\"
+                          id=\"btnEditProfile\" data-id=\"$id\" data-title=\"$title\" data-firstname=\"$firstname\" data-lastname=\"$lastname\"
+                          data-age=\"$age\" data-sex=\"$sex\" data-username=\"$username\" data-cardid=$cardNumbers data-photo=$photo
+                          data-tell=$tell data-stete=\"volunter\"
+                        >เเก้ไขโปรไฟล์</button>
+                      </div>
+                  </div>
+              </div>
+          </div> 
+      </div>
+      ";
+      echo $listProfile;
+  }
   
 
 ?>

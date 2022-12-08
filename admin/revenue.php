@@ -45,13 +45,14 @@ include_once("../function/link.php");
                         data-target="#modalFormrevenue"
                     >
                         <i class="fas fa-plus"></i>
-                          เพิ่มข้อมูลรายรับ
+                          เพิ่มข้อมูล
                     </button> 
                     <?php } ?>
                 </div> 
-                <div class="col-md-12">
+                <div class="col-md-12 mt-4">
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <div class="table-wrapper">
+                        <table class="table table-data2 datatableXr">
                             <thead>
                                 <tr>
                                     <th>ลำดับ</th>
@@ -68,22 +69,32 @@ include_once("../function/link.php");
                                 $getData = mysqli_query($conn,"SELECT * FROM re_venue")or die(mysqli_error());
                                     foreach($getData as $num => $result){
                                         ListDataRevenue(($num + 1),$result['revenue_name'],$result['details'],
-                                                $result['amount'],$result['date_y_m_d'],$result['evidence_slip'], $result['revenue_id']);
+                                                $result['amount'],$result['date_y_m_d'],$result['evidence_slip'], $result['revenue_id'],
+                                                $result['id_user'],$result['funder'],$status
+                                            );
                                     };
                             ?>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div> 
             </div>
         </main>
         
-        <main-form-revenue></main-form-revenue>
-        <main-update-revence></main-update-revence>
+        <main-form-revenue userid="<?= $fullname ?>"></main-form-revenue>
+        <main-update-revence GetUserId="<?= $fullname ?>"></main-update-revence>
         <main-show-revenue></main-show-revenue>
 
     </div>
-<script src="../assets/scripts/revenue.js"></script>
+    <script>
+         $('.datatableXr').DataTable({
+            scrollY:400,
+            scrollX:false,
+            scrollCollapse:true
+        })
+    </script>
+    <script src="../assets/scripts/revenue.js"></script>
 
 </body>
 </html>

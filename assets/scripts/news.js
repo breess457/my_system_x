@@ -114,22 +114,23 @@ class modalformTopnews extends HTMLElement{
                             <div class="modal-body row">
                                 <div class="col-md-9 mt-0">
                                     <div class="form-group mb-2">
-                                        <label class="mb-0 mt-0 text-primary" for="User">หัวข้อข่าวสาร</label>
+                                        <label class="mb-0 mt-0 text-dark" for="User">หัวข้อข่าวสาร</label>
                                         <input type="text" class="form-control" name="header_news" id="headerNews" placeholder="หัวข้อข่าวสาร" required>
                                     </div>
                                     <div class="form-group mb-2">
-                                        <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">เนื่อหาข่าวสาร</label>
+                                        <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">เนื่อหาข่าวสาร</label>
                                         <textarea class="form-control" rows="8" name="detail_news" id="reDetail" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="col-12">
                                         <div class="form-group mb-2">
-                                          <label class="mb-0 text-primary" for="title">ประเภทข่าว</label>
+                                          <label class="mb-0 text-dark" for="title">ประเภทข่าว</label>
                                           <select class="form-control" name="type_news" id="exampleFormControlSelect1">
                                             <option selected disabled hidden>ระบุ..</option>
                                             <option value="กิจกรรม">กิจกรรม</option>
                                             <option value="โครงการ">โครงการ</option>
+                                            <option value="ข่าวสารทั่วไป">ข่าวสารทั่วไป</option>
                                           </select>
                                         </div>
                                     </div>
@@ -171,7 +172,7 @@ class modalEditNews extends HTMLElement{
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">เพิ่มข้อมูล ข่าวสาร</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">แก้ไขข้อมูล ข่าวสาร</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -182,22 +183,23 @@ class modalEditNews extends HTMLElement{
                     <div class="modal-body row">
                         <div class="col-md-9 mt-0">
                             <div class="form-group mb-2">
-                                <label class="mb-0 mt-0 text-primary" for="User">หัวข้อข่าวสาร</label>
+                                <label class="mb-0 mt-0 text-dark" for="User">หัวข้อข่าวสาร</label>
                                 <input type="text" class="form-control" name="edit_header_news" id="editHeaderNews" placeholder="หัวข้อข่าวสาร" required>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">เนื่อหาข่าวสาร</label>
+                                <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">เนื่อหาข่าวสาร</label>
                                 <textarea class="form-control" rows="8" name="edit_detail_news" id="editDetailNew" required></textarea>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="col-12">
                                 <div class="form-group mb-2">
-                                  <label class="mb-0 text-primary" for="editTypeNews">ประเภทข่าว</label>
-                                  <select class="form-control" name=" " id="editTypeNews">
+                                  <label class="mb-0 text-dark" for="editTypeNews">ประเภทข่าว</label>
+                                  <select class="form-control" name="edit_type_news" id="editTypeNews">
                                     <option selected disabled hidden>ระบุ..</option>
                                     <option value="กิจกรรม">กิจกรรม</option>
                                     <option value="โครงการ">โครงการ</option>
+                                    <option value="ข่าวสารทั่วไป">ข่าวสารทั่วไป</option>
                                   </select>
                                 </div>
                             </div>

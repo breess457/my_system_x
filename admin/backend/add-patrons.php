@@ -20,7 +20,7 @@
           text:Texts,
           confirmButtonText:"OK"
       }).then((result)=>{
-           window.location = '../patrons.php'
+        window.history.back()
       })
   }
 </script>
@@ -42,6 +42,8 @@
           }
 
         if($_SERVER['REQUEST_METHOD'] === "POST"){
+          if($_POST['status'] === "CREATE"){
+
             $title = $_POST['title'];
             $ferst_name = $_POST['ferst_name'];
             $last_name = $_POST['last_name'];
@@ -54,18 +56,19 @@
             $distric_e = $_POST['distric_e'];
             $career = $_POST['career'];
             $workplace = $_POST['workplace'];
-            $new_date = $_POST['new_date'];
-            $end_date = $_POST['end_date'];
-            $num_x = $_POST['num_x'];
-            $all_manny = $_POST['all_manny'];
 
-            $img = $_FILES['photo_officer']['name'];
+            $chk_patron = mysqli_query($conn,"SELECT id_card FROM patron WHERE id_card=$card_id");
+             $num_rows = mysqli_num_rows($chk_patron);
+             if($num_rows > 0){
+                echo "<script type=\"text/javascript\">
+                         MySetSweetAlert(\"warning\",\"ข้อมูลซ้ำ\",\"มี เลขบัตรประชาชน นี้อยู่แล้วโปรดสร้างเลขบัตรประชาชนใหม่\")
+                    </script>";
+             }else{
+                $newsql = "INSERT INTO patron SET title='$title', f_name='$ferst_name', l_name='$last_name', id_card='$card_id',
+                  number_home='$id_home', district_t='$distric_a', district_a='$distric_b', district_j='$distric_c', zip_code='$distric_e',
+                  tell='$tell', career='$career', workplace='$workplace', img_slip_patron='".setImgpath("photo_patron")."' ";
 
-            $newsql = "INSERT INTO patron SET title='$title', f_name='$ferst_name', l_name='$last_name', id_card='$card_id',
-                number_home='$id_home', district_t='$distric_a', district_a='$distric_b', district_j='$distric_c', zip_code='$distric_e',
-                tell='$tell', career='$career', workplace='$workplace', new_date='$new_date', end_date='$end_date', munny='$num_x', all_munny='$all_manny', img_slip_patron='".setImgpath("photo_officer")."' ";
-
-                $queryInsert = mysqli_query($conn, $newsql)or die(mysqli_error());
+                  $queryInsert = mysqli_query($conn, $newsql)or die(mysqli_error());
                     if($queryInsert){
                         echo "<script type=\"text/javascript\">
                             MySetSweetAlert(\"success\",\"เพิ่มข้อมูลเรียบร้อย\",\"\")
@@ -75,8 +78,58 @@
                             MySetSweetAlert(\"error\",\"เกิดข้อผิดพลาด\",\"เกิดข้อผิดพลาด มีบางอย่างขัดข้อง ทำให้ไม่สามารถลบข้อมูลได้ ติดต่อผู้พัฒนา\")
                         </script>";
                     }
+             }
 
-           
+            
+
+          }else if($_POST['status']==="UPDATE"){
+            $editIdpatron = $_POST['editIdpatron'];
+
+            $edit_title = $_POST['edit_title'];
+            $edit_ferst_name = $_POST['edit_ferst_name'];
+            $edit_last_name = $_POST['edit_last_name'];
+            $edit_card_id = $_POST['edit_card_id'];
+            $edit_tell = $_POST['edit_tell'];
+            $edit_id_home = $_POST['edit_id_home'];
+            $edit_distric_a = $_POST['edit_distric_a'];
+            $edit_distric_b = $_POST['edit_distric_b'];
+            $edit_distric_c = $_POST['edit_distric_c'];
+            $edit_distric_e = $_POST['edit_distric_e'];
+            $edit_career = $_POST['edit_career'];
+            $edit_workplace = $_POST['edit_workplace'];
+             $chk_edit_patron = mysqli_query($conn,"SELECT id_card FROM patron WHERE id_card=$edit_card_id");
+               $setnum_row = mysqli_num_rows($chk_edit_patron);
+                if($setnum_row == 2){
+                    echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"warning\",\"ข้อมูลซ้ำ\",\"มี เลขบัตรประชาชน นี้อยู่แล้วโปรดสร้างเลขบัตรประชาชนใหม่\")
+                    </script>";
+                }else{
+                     if(!$_FILES['edit_photo_patron']['name']){
+                       $editQl = "UPDATE patron SET title='$edit_title',f_name='$edit_ferst_name',l_name='$edit_last_name',id_card='$edit_card_id',
+                           number_home='$edit_id_home',district_t='$edit_distric_a',district_a='$edit_distric_b',district_j='$edit_distric_c',zip_code='$edit_distric_e',
+                           tell='$edit_tell',career='$edit_career',workplace='$edit_workplace' WHERE id=$editIdpatron
+                       ";
+                     }else{
+                       $editQl = "UPDATE patron SET title='$edit_title',f_name='$edit_ferst_name',l_name='$edit_last_name',id_card='$edit_card_id',
+                           number_home='$edit_id_home',district_t='$edit_distric_a',district_a='$edit_distric_b',district_j='$edit_distric_c',zip_code='$edit_distric_e',
+                           tell='$edit_tell',career='$edit_career',workplace='$edit_workplace',img_slip_patron='".setImgpath("edit_photo_patron")."' WHERE id=$editIdpatron
+                       ";
+                           unlink("data/patrons/".$_POST['editimagenname']);
+                     }
+                       $edit_patron_query = mysqli_query($conn,$editQl);
+                        if($edit_patron_query){
+                           echo "<script type=\"text/javascript\">
+                                   MySetSweetAlert(\"success\",\"เรียบร้อย\",\"แก้ไขข้อมูลเรียบร้อย\")
+                               </script>";
+                        }else{
+                           echo "<script type=\"text/javascript\">
+                               MySetSweetAlert(\"error\",\"ล้มเหลว\",\"ไม่สามารถแก้ไขข้อมูลดังกล่าวได้ ติดต่อเจ้าหน้าที่\")
+                           </script>";
+                        }
+                }
+          }else{
+            echo $_POST['status'];
+          }
 
         }else if ($_SERVER['REQUEST_METHOD'] === "GET"){
             if($_GET['status']==="delete"){
@@ -95,6 +148,7 @@
                                       }
                                 }
                             }
+                        
                         echo "<script type=\"text/javascript\">
                             MySetSweetAlert(\"success\",\"ลบข้อมูลเรียบร้อย\",\" \")
                         </script>";

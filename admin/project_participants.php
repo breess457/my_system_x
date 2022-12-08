@@ -57,7 +57,7 @@ include_once("../function/link.php");
         <div class="container">
            
             <div class="col-md-12">
-                <div class="table-responsive table-responsive-data2 table-wrapper-scroll-y my-custom-scrollbar">
+                <div class="table-responsive table-responsive-data2">
                   <form action="backend/delete-orphan.php" method="post">
                     <div class="col-md-12 row">
                         <button type="submit" class="btn btn-red btn-sm ml-auto">ลบข้อมูลที่เลื่อกทั้งหมด</button>
@@ -65,7 +65,7 @@ include_once("../function/link.php");
                              data-target="#modaAddParticipant"
                         >เพิ่มผู้เข้าร่วมโครงการ</button>
                     </div>
-                    <table class="table table-data2">
+                    <table class="table table-data2 settabledata">
                         <thead class="">
                             <tr>
                                 <th>ลำดับ</th>
@@ -98,6 +98,13 @@ include_once("../function/link.php");
     </main>
     <main-add-participant></main-add-participant>
     <script src="../assets/scripts/project-participant.js"></script>
+    <script>
+        $('.settabledata').DataTable({
+            scrollY:400,
+            scrollX:false,
+            scrollCollapse:true
+        })
+    </script>
 </body>
 </html>
 <?php

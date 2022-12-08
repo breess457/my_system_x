@@ -27,9 +27,8 @@ function navbarRoot($name, $profile){
                         <img src=\"backend/data-image/$profile\" alt=\"logo\" class=\"img-fluid rounded-circle\" style=\"height: 39px; width: 39px;\"> &nbsp;$name
                     </a>
                     <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdownMenuLink-5\">
-                        <a class=\"dropdown-item font-root-nanika\" href=\"profile.root.php\"><i class=\"fas fa-user-circle\"></i> profile</a>
-                        <a class=\"dropdown-item font-root-nanika\" href=\"logout.root.php\"><i class=\"fas fa-sign-out-alt\"></i> logout</a>
-                        <a class=\"dropdown-item font-root-nanika\" href=\"#\"><i class=\"fas fa-cogs\"></i> setting</a>
+                        <a class=\"dropdown-item font-root-nanika\" href=\"profile.root.php\"><i class=\"fas fa-user-circle\"></i> โปรไฟล</a>
+                        <a class=\"dropdown-item font-root-nanika\" href=\"logout.root.php\"><i class=\"fas fa-sign-out-alt\"></i> ออกจากระบบ</a>
                     </div>
                 </li>
             </ul>
@@ -140,7 +139,7 @@ function statusOnex($getStatus){
     }
     return $l;
 }
-function cardProfileRoot($id, $title,$firstname, $lastname, $Email, $cardNumbers, $tell, $age, $sex, $photo, $statusx,$fullnames,$username){
+function cardProfileRoot($id, $title,$firstname, $lastname, $Email, $cardNumbers, $tell, $age, $sex, $photo, $statusx,$fullnames,$username,$passwd){
     $listProfile = "
     <div class=\"container rounded bg-white mt-5\">
         <div class=\"row\">
@@ -185,7 +184,8 @@ function cardProfileRoot($id, $title,$firstname, $lastname, $Email, $cardNumbers
                     </div>
                     
                     <div class=\"mt-5 text-right\">
-                    <button class=\"btn btn-warning\" type=\"button\" data-toggle=\"modal\" data-target=\"#modalEditProfile\"
+                    <button type=\"button\" id=\"btnResetPass\" data-id=\"$id\" data-password=\"$passwd\" class=\"text-primary mr-2\">เปลียนรหัสผ่าน <i class=\"fas fa-key\"></i></button>
+                    <button class=\"btn btn-sm btn-warning ml-3\" type=\"button\" data-toggle=\"modal\" data-target=\"#modalEditProfile\"
                         id=\"btnEditProfile\" data-id=\"$id\" data-title=\"$title\" data-firstname=\"$firstname\" data-lastname=\"$lastname\"
                         data-age=\"$age\" data-sex=\"$sex\" data-username=\"$username\" data-cardid=$cardNumbers data-photo=$photo
                         data-tell=$tell data-stete=\"admin\"

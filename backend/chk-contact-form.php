@@ -20,12 +20,26 @@
           text:Texts,
           confirmButtonText:"OK"
       }).then((result)=>{
-           window.location = '../contact.php'
+           window.location = '../appel.php'
       })
   }
 </script>
   <?php
         date_default_timezone_set("Asia/Bangkok");
+        function setImgpath($nameImg){
+            $ext = pathinfo(basename($_FILES[$nameImg]["name"]), PATHINFO_EXTENSION);
+              if($ext !=""){
+                  $new_img_name = "img_".uniqid().".".$ext;
+                  
+                  $uploadPath = '../data/appel-orphan/'.$new_img_name;
+                  move_uploaded_file($_FILES[$nameImg]["tmp_name"],$uploadPath);
+                  $newImage = $new_img_name;
+                  
+              }else{
+                  $newImage = $new_img_name;
+              }
+              return $newImage;
+          }
         $title = $_POST['title'];
         $f_name = $_POST['f_name'];
         $l_name = $_POST['l_name'];
@@ -37,7 +51,13 @@
         $heading = $_POST['heading'];
         $content = $_POST['content'];
         $post_datenow = date("Y-m-d");
-            $insertData = "INSERT INTO appeal(full_name,phone,date_new,email,address,header_appeal,content_appeal,post_datenow)VALUES('$fullname','$tell','$date','$email','$address','$heading','$content','$post_datenow')"; 
+        if($_FILES['img_orphan']['tmp_name']== ""){
+            echo "<script type=\"text/javascript\">
+                    MySetSweetAlert(\"warning\",\"ไม่สำเร็จ\",\"กรุณาอัปโหลดรูปภาพด้วยครับ\")
+                </script>
+            ";
+        }else{
+            $insertData = "INSERT INTO appeal(full_name,phone,date_new,email,address,header_appeal,content_appeal,appel_image,post_datenow)VALUES('$fullname','$tell','$date','$email','$address','$heading','$content','".setImgpath("img_orphan")."','$post_datenow')"; 
                 $query_contact = mysqli_query($conn,$insertData)or die(mysqli_error());
                     if($query_contact){
                         echo "<script type=\"text/javascript\">
@@ -50,6 +70,7 @@
                             </script>
                         ";
                     }
+        }
   ?>
 </body>
 </html>

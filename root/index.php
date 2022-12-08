@@ -46,6 +46,12 @@ if(!isset($_SESSION['users'])){
             $news = mysqli_query($conn,"SELECT * FROM topnews");
             $setnumnews = mysqli_num_rows($news);
             setData("ข่าวสาร",$setnumnews,'fas fa-newspaper');
+            $board = mysqli_query($conn,"SELECT bord_id FROM board_users");
+            $setnumboard = mysqli_num_rows($board);
+            setData("คณะกรรมการ",$setnumboard,'fas fa-newspaper');
+            $fundation = mysqli_query($conn,"SELECT id_fundation FROM fundation");
+            $setnumfundation = mysqli_num_rows($board);
+            setData("อาสาสมัค(ทั่วไป)",$setnumfundation,'fas fa-newspaper');
         echo"</div>";
     ?>
     <div class="row">

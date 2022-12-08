@@ -132,3 +132,42 @@ button.btn-card {
     text-overflow: ellipsis;
 }
 
+.card {
+    background-size: cover;
+    width: 380px;
+    height: 160px;
+    border-radius: 20px;
+    box-shadow: 0px 8px 16px 4px #9E9E9E;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.pattani {
+    background-color: #96ee58;
+}
+.yala {
+    background-color: rgba(54, 162, 235, 0.2);
+
+}
+.nrathiwat {
+    background-color: #f5ed0c;
+}
+
+.time-font {
+    font-size: 20px;
+    color: #fff;
+}
+
+.sm-font {
+    font-size: 15px;
+    color: #fff
+}
+
+.med-font {
+    font-size: 18px;
+    color: rgb(1, 1, 1)
+}
+
+.large-font {
+    font-size: 30px;
+    color: rgb(14, 14, 14)
+}

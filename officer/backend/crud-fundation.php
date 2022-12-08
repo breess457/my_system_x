@@ -56,22 +56,30 @@
             $province = $_POST['province'];
             $zipcode = $_POST['zipcode'];
             //echo $_FILES['photo_fundation']['name'];
-              $setQl = "INSERT INTO fundation SET title_fundation='$title_fundation',firstname_fundation='$firstname_fundation',
-                lastname_fundation='$lastname_fundation',age_fundation='$age_fundation',sex_fundation='$sex_fundation',
-                email='$email_fundation',tell_fundation='$tell_fundation',cardnumber='$cardnumber_fundation',
-                occupation='$occupation_fundation',workplace='$workplace_fundation',image_fundation='".setImgpath("photo_fundation")."',
-                homeadress='$home_id',district='$district',amphoe='$amphoe',province='$province',zipcode='$zipcode'
-              ";
-                $queryFundation = mysqli_query($conn,$setQl)or die(mysqli_error());
-                  if($queryFundation){
-                        echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลกรรมการเรียบร้อยแล้ว\")
+             $chkQl = mysqli_query($conn,"SELECT * FROM fundation WHERE cardnumber='$cardnumber_fundation'");
+                $chkRow = mysqli_num_rows($chkQl);
+                  if($chkRow==1){
+                    echo "<script type=\"text/javascript\">
+                            MySetSweetAlert(\"warning\",\"ข้อมูลซำ้\",\"ข้อมูลบัตรประชนซำ้ กรุณากรอกข้อมูลใหม่\")
                         </script>";
                   }else{
-                        echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"error\",\"ล้มเหลว\",\"มีข้อผิดพลาดบางอย่างไม่สามารถเพิ่มข้อมูลได้\")
-                        </script>";
-                  }
+                      $setQl = "INSERT INTO fundation SET title_fundation='$title_fundation',firstname_fundation='$firstname_fundation',
+                        lastname_fundation='$lastname_fundation',age_fundation='$age_fundation',sex_fundation='$sex_fundation',
+                        email='$email_fundation',tell_fundation='$tell_fundation',cardnumber='$cardnumber_fundation',
+                        occupation='$occupation_fundation',workplace='$workplace_fundation',image_fundation='".setImgpath("photo_fundation")."',
+                        homeadress='$home_id',district='$district',amphoe='$amphoe',province='$province',zipcode='$zipcode'
+                      ";
+                        $queryFundation = mysqli_query($conn,$setQl)or die(mysqli_error());
+                          if($queryFundation){
+                                echo "<script type=\"text/javascript\">
+                                    MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลอาสาสมัคเรียบร้อยแล้ว\")
+                                </script>";
+                          }else{
+                                echo "<script type=\"text/javascript\">
+                                    MySetSweetAlert(\"error\",\"ล้มเหลว\",\"มีข้อผิดพลาดบางอย่างไม่สามารถเพิ่มข้อมูลได้\")
+                                </script>";
+                          }
+                }
         }else if($_POST['status_form']=="formedit"){
             $edit_title_fundation = $_POST['edit_title_fundation'];
             $edit_firstname_fundation = $_POST['edit_firstname_fundation'];
@@ -106,16 +114,25 @@
                 unlink("data/fundation/".$_POST['get_image_name']);
                 //echo $_POST['get_image_name'];
             }
-                $queryEdit = mysqli_query($conn,$editQl);
-                    if($queryEdit){
-                        echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"success\",\"เรียบร้อย\",\"แก้ไขข้อมูลกรรมการเรียบร้อยแล้ว\")
-                        </script>";
-                    }else{
-                        echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"error\",\"ไม่สำเร็จ\",\"มีข้อผิดพลาด ล้มเหลวในการแก้ไข ติดต่อเจ้าหน้าที่\")
-                        </script>";
-                    }
+                $chkQLEdit = mysqli_query($conn,"SELECT cardnumber FROM fundation WHERE cardnumber='$edit_cardnumber_fundation'");
+                  $rowEdit = mysqli_num_rows($chkQLEdit);
+                   if($rowEdit === 1){
+                    echo "<script type=\"text/javascript\">
+                        MySetSweetAlert(\"warning\",\"ข้อมูลซำ้\",\"ข้อมูลบัตรประชนซำ้ กรุณากรอกข้อมูลใหม่\")
+                    </script>";
+                   }else{
+                        $queryEdit = mysqli_query($conn,$editQl);
+                        if($queryEdit){
+                            echo "<script type=\"text/javascript\">
+                                MySetSweetAlert(\"success\",\"เรียบร้อย\",\"แก้ไขข้อมูลอาสาสมัคเรียบร้อยแล้ว\")
+                            </script>";
+                        }else{
+                            echo "<script type=\"text/javascript\">
+                                MySetSweetAlert(\"error\",\"ไม่สำเร็จ\",\"มีข้อผิดพลาด ล้มเหลวในการแก้ไข ติดต่อเจ้าหน้าที่\")
+                            </script>";
+                        }
+                   }
+                
         }
     }else if($_SERVER['REQUEST_METHOD'] === "GET"){
         if($_GET['status'] == "delete"){
@@ -126,7 +143,7 @@
                 if($Qldelete){
                     unlink("data/fundation/".$_GET['image_fundation']);
                     echo "<script type=\"text/javascript\">
-                            MySetSweetAlert(\"success\",\"ลบ เรียบร้อย\",\"ลบข้อมูลกรรมการเรียบร้อยแล้ว\")
+                            MySetSweetAlert(\"success\",\"ลบ เรียบร้อย\",\"ลบข้อมูลอาสาสมัคเรียบร้อยแล้ว\")
                         </script>";
                 }else{
                     echo "<script type=\"text/javascript\">

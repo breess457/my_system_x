@@ -33,31 +33,31 @@
     <div class="page-wrapper chiller-theme toggled">
         <?php   navigationOfiicer($status); ?>
         <main class="page-content mt-0">
-            <?php navbarOfficer("Patrons") ?>
+            <?php navbarOfficer("การได้รับทุน") ?>
             <div class="container-fluid">
                 <div class="col-md-12">
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 mydataTablexs">
                             <thead>
                                 <tr>
                                     <th>ลำดับ</th>
+                                    <th>ภาพ</th>
                                     <th>ชื่อ สกุล</th>
-                                    <th>ที่อยู่</th>
-                                    <th>เบอร์โทรศัพท์</th>
-                                    <th>อาชีพ</th>
-                                    <th>สลิปเงินทุน</th>
+                                    <th>จำนวนเงินทุน</th>
+                                    <th>จำนวนผู้รับทุน</th>
+                                    <th>วันที่ให้ทุน</th> 
                                     <th>จัดการ</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    $selectPatron = mysqli_query($conn, "SELECT * FROM patron")or die(mysqli_error());
+                                    $selectPatron = mysqli_query($conn, "SELECT * FROM set_patrons LEFT JOIN patron ON set_patrons.patron_id = patron.id")or die(mysqli_error());
                                       foreach($selectPatron as $key => $res){
                                           $setFullname = join(array($res['title']," ",$res['f_name'],"   ",$res['l_name']));
                                           $setAddress = join(array($res['number_home']," ",$res['district_t']," ",$res['district_a']," ",$res['district_j']," ",$res['zip_code']));
                                           tablelistPatrons(
-                                              ($key+1), $res['id'],$setFullname, $res['id_card'],$setAddress,$res['tell'],$res['career'],
-                                              $res['workplace'],$res['new_date'],$res['end_date'],$res['munny'],$res['all_munny'],$res['img_slip_patron']
+                                              ($key+1), $res['id'],$setFullname, $res['date_capital'],$setAddress,$res['total_money'],$res['patron_day'],
+                                              $res['person_number'],$res['img_slip_patron'],$res['setidpatron']
                                             );
                                       }
                                 ?>
@@ -68,6 +68,13 @@
             </div>
         </main>
     </div>
+    <script>
+         $('.mydataTablexs').DataTable({
+            scrollY:400,
+            scrollX:false,
+            scrollCollapse:true
+        })
+    </script>
 </body>
 </html>
 <?php } ?>

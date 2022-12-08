@@ -31,7 +31,39 @@ include_once("../function/link.php");
     <link rel="stylesheet" href="../assets/scss/revenue.scss">
     <script src="../assets/scripts/script-bash.js"></script>
     <title>Nusantara Patani</title>
- 
+    <style>
+        #custom-search-input{
+          padding: 3px;
+          border: solid 1px #E4E4E4;
+          border-radius: 6px;
+          background-color: #fff;
+        }
+
+        #custom-search-input input{
+          border: 0;
+          box-shadow: none;
+        }
+
+        #custom-search-input button{
+          margin: 2px 0 0 0;
+          background: none;
+          box-shadow: none;
+          border: 0;
+          color: #666666;
+          padding: 0 8px 0 10px;
+        }
+
+        #custom-search-input button:hover{
+          border: 0;
+          box-shadow: none;
+          color: rgb(253, 15, 47);
+        }
+
+        #custom-search-input i{
+          font-size: 23px;
+          margin-top: 5px;
+        }
+    </style>
 </head>
 <body class="">
     <div class="page-wrapper chiller-theme toggled">
@@ -40,15 +72,13 @@ include_once("../function/link.php");
         ?>
         <main class="page-content mt-0">
             <?php
-                navbarSize("จัดการข้อมูลเด็กกำพร้า",$fullname,$profile)
+                navbarSize("ข้อมูลเด็กกำพร้า",$fullname,$profile)
             ?>
             <div class="container-fluid row">
-                <div class="ml-auto">
-  
-                </div> 
+              
                 <div class="col-md-12">
                     <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
+                        <table class="table table-data2 mydataTable" id="myTableData">
                             <thead>
                                 <tr>
                                     <th>ลำดับ</th>
@@ -60,7 +90,7 @@ include_once("../function/link.php");
                                     <th>จัดการ</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="">
                                 <?php
                                     $sql_orphan1 = "SELECT * FROM formone_orphan_record";
                                     $get_data_orphans_1 = mysqli_query($conn,$sql_orphan1)or die(mysqli_error());
@@ -79,7 +109,14 @@ include_once("../function/link.php");
             
         </main>
     </div>
-
+    <script>
+       
+        $('.mydataTable').DataTable({
+            scrollY:400,
+            scrollX:true,
+            scrollCollapse:true
+        })
+    </script>
 </body>
 </html>
 <?php

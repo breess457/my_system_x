@@ -1,255 +1,362 @@
+<?php
+  include_once("function/link.php");
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html> 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Bootstrap-select Tests (Bootstrap 4)</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/dist/css/bootstrap-select.css">
+
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Heebo:400,700|Open+Sans:400,700');
-
-:root {
-  --color: #3c3163;
-  --transition-time: 0.5s;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Open Sans';
-  background: #fafafa;
-}
-
-a {
-  color: inherit;
-}
-
-.cards-wrapper {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 4rem;
-  padding: 4rem;
-  margin: 0 auto;
-  width: max-content;
-}
-
-.card {
-  font-family: 'Heebo';
-  --bg-filter-opacity: 0.5;
-  background-image: linear-gradient(rgba(0,0,0,var(--bg-filter-opacity)),rgba(0,0,0,var(--bg-filter-opacity))), var(--bg-img);
-  height: 20em;
-  width: 15em;
-  font-size: 1.5em;
-  color: white;
-  border-radius: 1em;
-  padding: 1em;
-  /*margin: 2em;*/
-  display: flex;
-  align-items: flex-end;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 0 5em -1em black;
-  transition: all, var(--transition-time);
-  position: relative;
-  overflow: hidden;
-  border: 10px solid #ccc;
-  text-decoration: none;
-}
-
-.card:hover {
-  transform: rotate(0);
-}
-
-.card h1 {
-  margin: 0;
-  font-size: 1.5em;
-  line-height: 1.2em;
-}
-
-.card p {
-  font-size: 0.75em;
-  font-family: 'Open Sans';
-  margin-top: 0.5em;
-  line-height: 2em;
-}
-
-.card .tags {
-  display: flex;
-}
-
-.card .tags .tag {
-  font-size: 0.75em;
-  background: rgba(255,255,255,0.5);
-  border-radius: 0.3rem;
-  padding: 0 0.5em;
-  margin-right: 0.5em;
-  line-height: 1.5em;
-  transition: all, var(--transition-time);
-}
-
-.card:hover .tags .tag {
-  background: var(--color);
-  color: white;
-}
-
-.card .date {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 0.75em;
-  padding: 1em;
-  line-height: 1em;
-  opacity: .8;
-}
-
-.card:before, .card:after {
-  content: '';
-  transform: scale(0);
-  transform-origin: top left;
-  border-radius: 50%;
-  position: absolute;
-  left: -50%;
-  top: -50%;
-  z-index: -5;
-  transition: all, var(--transition-time);
-  transition-timing-function: ease-in-out;
-}
-
-.card:before {
-  background: #ddd;
-  width: 250%;
-  height: 250%;
-}
-
-.card:after {
-  background: white;
-  width: 200%;
-  height: 200%;
-}
-
-.card:hover {
-  color: var(--color);
-}
-
-.card:hover:before, .card:hover:after {
-  transform: scale(1);
-}
-
-.card-grid-space .num {
-  font-size: 3em;
-  margin-bottom: 1.2rem;
-  margin-left: 1rem;
-}
-
-.info {
-  font-size: 1.2em;
-  display: flex;
-  padding: 1em 3em;
-  height: 3em;
-}
-
-.info img {
-  height: 3em;
-  margin-right: 0.5em;
-}
-
-.info h1 {
-  font-size: 1em;
-  font-weight: normal;
-}
-
-/* MEDIA QUERIES */
-@media screen and (max-width: 1285px) {
-  .cards-wrapper {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .cards-wrapper {
-    grid-template-columns: 1fr;
-  }
-  .info {
-    justify-content: center;
-  }
-  .card-grid-space .num {
-    /margin-left: 0;
-    /text-align: center;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .cards-wrapper {
-    padding: 4rem 2rem;
-  }
-  .card {
-    max-width: calc(100vw - 4rem);
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .info {
-    display: block;
-    text-align: center;
-  }
-  .info h1 {
-    margin: 0;
-  }
-}
+    body {
+      padding-top: 70px;
+    }
   </style>
 </head>
 <body>
-<section class="info">
-  <img src="https://codetheweb.blog/assets/img/icon2.png">
-  <h1>Learn HTML &mdash; <a href="https://codetheweb.blog/" target="_blank">Code The Web</a></h1>
-</section>
-<section class="cards-wrapper">
-  <div class="card-grid-space">
-    <div class="num">01</div>
-    <a class="card" href="https://codetheweb.blog/2017/10/06/html-syntax/" style="--bg-img: url(https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/html-syntax/cover.jpg)">
-      <div>
-        <h1>HTML Syntax</h1>
-        <p>The syntax of a language is how it works. How to actually write it. Learn HTML syntax…</p>
-        <div class="date">6 Oct 2017</div>
-        <div class="tags">
-          <div class="tag">HTML</div>
-        </div>
-      </div>
-    </a>
+<nav class="navbar navbar-light bg-light fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Bootstrap-select usability tests</a>
+    </div>
   </div>
-  <div class="card-grid-space">
-    <div class="num">02</div>
-    <a class="card" href="https://codetheweb.blog/2017/10/09/basic-types-of-html-tags/" style="--bg-img: url('https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/basic-types-of-html-tags/cover.jpg')">
-      <div>
-        <h1>Basic types of HTML tags</h1>
-        <p>Learn about some of the most common HTML tags…</p>
-        <div class="date">9 Oct 2017</div>
-        <div class="tags">
-          <div class="tag">HTML</div>
-        </div>
+</nav>
+
+<div class="container">
+  <form role="form">
+    <div class="form-group row">
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch enabled, container: 'body')</label>
+
+      <div class="col-lg-5">
+        <label>Standard xxx</label>
+        <select class="selectpicker form-control" id="number" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true"></select>
       </div>
-    </a>
-  </div>
-  <div class="card-grid-space">
-    <div class="num">03</div>
-    <a class="card" href="https://codetheweb.blog/2017/10/14/links-images-about-file-paths/" style="--bg-img: url('https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/links-images-about-file-paths/cover.jpg')">
-      <div>
-        <h1>Links, images and about file paths</h1>
-        <p>Learn how to use links and images along with file paths…</p>
-        <div class="date">14 Oct 2017</div>
-        <div class="tags">
-          <div class="tag">HTML</div>
-        </div>
+
+      <div class="col-lg-5">
+        <label>Multiple (no virtualScroll)</label>
+        <select multiple class="selectpicker form-control" id="number-multiple" data-container="body" data-live-search="true" title="Select a number" data-hide-disabled="true" data-actions-box="true" data-virtual-scroll="false"></select>
       </div>
-    </a>
+    </div>
+  </form>
+
+  <form role="form">
+    <div class="form-group row">
+      <label for="basic" class="col-lg-2 control-label">Large Select (liveSearch disabled)</label>
+
+      <div class="col-lg-5">
+        <label>Standard</label>
+        <select class="selectpicker form-control" id="number2" title="Select a number" data-hide-disabled="true"></select>
+      </div>
+
+      <div class="col-lg-5">
+        <label>Multiple</label>
+        <select class="selectpicker form-control" id="number2-multiple" title="Select a number" data-hide-disabled="true" multiple data-actions-box="true"></select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+
+  <form role="form">
+    <div class="form-group row">
+      <label for="basic" class="col-lg-2 control-label">"Basic" (liveSearch disabled)</label>
+
+      <div class="col-lg-10">
+        <select id="basic" class="selectpicker show-tick form-control">
+          <option>cow</option>
+          <option data-subtext="option subtext">bull</option>
+          <option class="get-class" disabled>ox</option>
+          <optgroup label="test" data-subtext="optgroup subtext">
+            <option>ASD</option>
+            <option selected>Bla</option>
+            <option>Ble</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+
+  <form role="form">
+    <div class="form-group row">
+      <label for="basic" class="col-lg-2 control-label">"Basic" (liveSearch enabled)</label>
+
+      <div class="col-lg-10">
+        <select id="basic" class="selectpicker show-tick form-control" data-live-search="true">
+          <option>cow</option>
+          <option data-subtext="option subtext">bull</option>
+          <option class="get-class" disabled>ox</option>
+          <optgroup label="test" data-subtext="optgroup subtext">
+            <option>ASD</option>
+            <option selected>Bla</option>
+            <option>Ble</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+  <form role="form">
+    <div class="form-group row">
+      <label for="basic2" class="col-lg-2 control-label">"Basic" (multiple, maxOptions=1)</label>
+
+      <div class="col-lg-10">
+        <select id="basic2" class="show-tick form-control" multiple>
+          <option>cow</option>
+          <option>bull</option>
+          <option class="get-class" disabled>ox</option>
+          <optgroup label="test" data-subtext="another test">
+            <option>ASD</option>
+            <option selected>Bla</option>
+            <option>Ble</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+  <form role="form">
+    <div class="form-group row">
+      <label for="maxOption2" class="col-lg-2 control-label">multiple, show-menu-arrow, maxOptions=2</label>
+
+      <div class="col-lg-10">
+        <select id="maxOption2" class="selectpicker show-menu-arrow form-control" multiple data-max-options="2">
+          <option>chicken</option>
+          <option>turkey</option>
+          <option disabled>duck</option>
+          <option>goose</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+  <form role="form">
+    <div class="form-group row">
+      <label for="error" class="col-lg-2 control-label">is-invalid class</label>
+
+      <div class="col-lg-10">
+        <select id="error" class="selectpicker show-tick form-control is-invalid form-control-lg" required>
+          <option>pen</option>
+          <option>pencil</option>
+          <option selected>brush</option>
+        </select>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+  <form role="form" class="was-validated">
+    <div class="form-group row">
+      <label class="control-label col-lg-2" for="country">:invalid/:valid pseudoclass</label>
+
+      <div class="col-lg-10">
+        <select id="country" name="country" class="form-control selectpicker form-control-sm" required multiple>
+          <option>Argentina</option>
+          <option>United States</option>
+          <option>Mexico</option>
+        </select>
+
+        <p class="help-block">Selecting an option changes to the :valid pseudoclass</p>
+      </div>
+    </div>
+  </form>
+
+  <hr>
+  <nav class="navbar navbar-light bg-light" role="navigation">
+    <div class="container">
+      <a class="navbar-brand" href="#">Navbar</a>
+
+      <form class="form-inline" role="search">
+        <div class="form-group">
+          <select class="selectpicker" multiple data-live-search="true" data-live-search-placeholder="Search" data-actions-box="true">
+            <optgroup label="filter1">
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+            </optgroup>
+            <optgroup label="filter2">
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+            </optgroup>
+            <optgroup label="filter3">
+              <option>option1</option>
+              <option>option2</option>
+              <option>option3</option>
+              <option>option4</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search" name="q">
+
+          <div class="input-group-btn">
+            <button class="btn btn-dark" type="submit"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Search</button>
+      </form>
+
+    </div>
+    <!-- .container-fluid -->
+  </nav>
+
+  <hr>
+  <select id="first-disabled" class="selectpicker" data-hide-disabled="true" data-live-search="true">
+    <optgroup disabled="disabled" label="disabled">
+      <option>Hidden</option>
+    </optgroup>
+    <optgroup label="Fruit">
+      <option>Apple</option>
+      <option>Orange</option>
+    </optgroup>
+    <optgroup label="Vegetable">
+      <option>Corn</option>
+      <option>Carrot</option>
+    </optgroup>
+  </select>
+
+  <hr>
+  <select id="first-disabled2" class="selectpicker" multiple data-hide-disabled="true" data-size="5">
+    <option>Apple</option>
+    <option>Banana</option>
+    <option>Orange</option>
+    <option>Pineapple</option>
+    <option>Apple2</option>
+    <option>Banana2</option>
+    <option>Orange2</option>
+    <option>Pineapple2</option>
+    <option>Apple2</option>
+    <option>Banana2</option>
+    <option>Orange2</option>
+    <option>Pineapple2</option>
+  </select>
+  <button id="special" class="btn btn-light">Hide selected by disabling</button>
+  <button id="special2" class="btn btn-light">Reset</button>
+  <p>Just select 1st element, click button and check list again</p>
+
+  <hr>
+  <div class="input-group">
+    <select class="form-control selectpicker">
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+    </select>
+    <div class="input-group-append">
+      <span class="input-group-text">@</span>
+    </div>
   </div>
-  <!-- https://images.unsplash.com/photo-1520839090488-4a6c211e2f94?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=38951b8650067840307cba514b554ba5&auto=format&fit=crop&w=1350&q=80 -->
-</section>
+
+  <hr>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">@</span>
+    </div>
+    <select class="form-control selectpicker" data-mobile="true">
+      <option>One</option>
+      <option>Two</option>
+      <option>Three</option>
+    </select>
+  </div>
+  <p>With <code>data-mobile="true"</code> option.</p>
+
+  <hr>
+  <select id="done" class="selectpicker" multiple data-done-button="true">
+    <option>Apple</option>
+    <option>Banana</option>
+    <option>Orange</option>
+    <option>Pineapple</option>
+    <option>Apple2</option>
+    <option>Banana2</option>
+    <option>Orange2</option>
+    <option>Pineapple2</option>
+    <option>Apple2</option>
+    <option>Banana2</option>
+    <option>Orange2</option>
+    <option>Pineapple2</option>
+  </select>
+
+  <hr>
+
+  <div class="form-group">
+    <label for="tokens">Key words (data-tokens)</label>
+    <select id="tokens" class="selectpicker form-control" multiple data-live-search="true">
+      <option data-tokens="first">I actually am called "one"</option>
+      <option data-tokens="second">And me "two"</option>
+      <option data-tokens="last">I am "three"</option>
+    </select>
+  </div>
+
+  <hr>
+  <form>
+    <div class="form-group row">
+      <label class="col-lg-2 control-label" for="lunchBegins">searchStyle: 'begins'</label>
+      <div class="col-lg-10">
+        <select id="lunchBegins" class="selectpicker" data-live-search="true" data-live-search-style="begins" title="Please select a lunch ...">
+          <option>Hot Dog, Fries and a Soda</option>
+          <option>Burger, Shake and a Smile</option>
+          <option>Sugar, Spice and all things nice</option>
+          <option>Baby Back Ribs</option>
+          <option>A really really long option made to illustrate an issue with the live search in an inline form</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="assets/dist/js/bootstrap-select.js"></script>
+
+<script>
+function createOptions(number) {
+  var options = [], _options;
+
+  for (var i = 0; i < number; i++) {
+    var option = '<option value="' + i + '">Option ' + i + '</option>';
+    options.push(option);
+  }
+
+  _options = options.join('');
+  
+  $('#number')[0].innerHTML = _options;
+  $('#number-multiple')[0].innerHTML = _options;
+
+  $('#number2')[0].innerHTML = _options;
+  $('#number2-multiple')[0].innerHTML = _options;
+}
+
+var mySelect = $('#first-disabled2');
+
+createOptions(100);
+
+$('#special').on('click', function () {
+  mySelect.find('option:selected').prop('disabled', true);
+  mySelect.selectpicker('refresh');
+});
+
+$('#special2').on('click', function () {
+  mySelect.find('option:disabled').prop('disabled', false);
+  mySelect.selectpicker('refresh');
+});
+
+$('#basic2').selectpicker({
+  liveSearch: true,
+  maxOptions: 1
+});
+</script>
 </body>
 </html>

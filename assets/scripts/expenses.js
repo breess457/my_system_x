@@ -17,15 +17,15 @@ class modalShowExpenses extends HTMLElement {
           <div class="modal-body row">
               <div class="col-md-8 mt-0">
                   <div class="form-group mb-2">
-                    <label class="mb-0 text-primary" for="reName">หัวข้อ</label>
+                    <label class="mb-0 text-dark" for="reName">หัวข้อ</label>
                     <input type="text" class="form-control" name="Erevenue_name" id="showHeader" placeholder="หัวข้อ" disabled>
                   </div>
                   <div class="form-group mb-2">
-                      <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                      <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด</label>
                       <textarea class="form-control" rows="3" name="Edetail" id="showDetail" disabled></textarea>
                   </div>
                   <div class="form-group mb-2">
-                    <label for="reAmount" class="mb-0 text-danger">จำนวนเงิน</label>
+                    <label for="reAmount" class="mb-0 text-dark">จำนวนเงิน</label>
                     <input type="number" class="form-control" name="Eamount" id="showAmount" placeholder="จำนวนเงิน" disabled>
                   </div>
               </div>
@@ -172,15 +172,15 @@ class AddImage extends HTMLElement {
                       <div class="modal-body row">
                           <div class="col-md-8 mt-0">
                               <div class="form-group mb-2">
-                                <label class="mb-0 text-primary" for="Fullname">หัวข้อ</label>
+                                <label class="mb-0 text-dark" for="Fullname">หัวข้อ</label>
                                 <input type="text" class="form-control" name="expenses_name" id="Fullname" placeholder="หัวข้อ" required>
                               </div>
                               <div class="form-group mb-2">
-                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด</label>
                                   <textarea class="form-control" rows="3" name="detail" id="Detail" required></textarea>
                               </div>
                               <div class="form-group mb-2">
-                                <label for="Amount" class="mb-0 text-danger">จำนวนเงิน</label>
+                                <label for="Amount" class="mb-0 text-dark">จำนวนเงิน</label>
                                 <input type="number" class="form-control" name="amount" id="Amount" placeholder="จำนวนเงิน" required>
                               </div>
                           </div>
@@ -287,15 +287,15 @@ class AddImage extends HTMLElement {
                       <div class="modal-body row">
                           <div class="col-md-8 mt-0">
                               <div class="form-group mb-2">
-                                <label class="mb-0 text-primary" for="reName">หัวข้อ</label>
+                                <label class="mb-0 text-dark" for="reName">หัวข้อ</label>
                                 <input type="text" class="form-control" name="Expenses_name" id="exName" placeholder="หัวข้อ" required>
                               </div>
                               <div class="form-group mb-2">
-                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-success">รายละเอียด</label>
+                                  <label class="ml-1 mt-0 mb-0 font-weight-bold text-dark">รายละเอียด</label>
                                   <textarea class="form-control" rows="3" name="Edetail" id="exDetail" required></textarea>
                               </div>
                               <div class="form-group mb-2">
-                                <label for="reAmount" class="mb-0 text-danger">จำนวนเงิน</label>
+                                <label for="reAmount" class="mb-0 text-dark">จำนวนเงิน</label>
                                 <input type="number" class="form-control" name="Eamount" id="exAmount" placeholder="จำนวนเงิน" required>
                               </div>
                           </div>
@@ -364,3 +364,33 @@ class AddImage extends HTMLElement {
     $(".eimgname").html(revenueSlip)
     evt.preventDefault()
   });
+
+  $(document).on('click','#confirmTrash', function(e){
+    let getID=$(this).data('id'),getImg=$(this).data('image')
+    Swal.fire({
+      title: 'คุณแน่ใจไหม ?',
+      text: "คุณจะไม่สามารถย้อนกลับได้!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'ยกเลิก',
+      confirmButtonText: 'ยืนยัน'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location = `backend/add-expenses.php?ex_id=${getID}&status=$del&img_slip=${getImg}`
+      }
+    })
+    e.preventDefault()
+  })
+
+  $(document).on('click',".btnfalseDate",function(esen){
+    let datese = $(this).data('datese')
+    Swal.fire({
+      icon: 'warning',
+      title: 'ไม่อนุญาตจัดการข้อมูลได้',
+      text: 'เนื่องจากเลยเวลาที่กำหนด5วันแต่นี้เกิน' + datese +'วันแล้ว',
+      showConfirmButton: false,
+    })
+    esen.preventDefault()
+  })

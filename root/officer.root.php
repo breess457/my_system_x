@@ -49,9 +49,9 @@ if(!isset($_SESSION['users'])){
                 เพิ่มข้อมูล
           </button>
       </div> 
-      <div class="col-md-12">
+      <div class="col-md-12 mt-4">
           <div class="table-responsive table-responsive-data2">
-              <table class="table table-data2">
+              <table class="table table-data2 datatableroot">
                   <thead> 
                       <tr>
                           <th>ลำดับ</th>
@@ -83,6 +83,13 @@ if(!isset($_SESSION['users'])){
       <main-edit-users></main-edit-users>
       <main-get-users></main-get-users>
     </div>
+    <script>
+         $('.datatableroot').DataTable({
+            scrollY:400,
+            scrollX:true,
+            scrollCollapse:true
+        }) 
+    </script>
   <script src="../assets/scripts/officer.js"></script>
 </body>
 </html>

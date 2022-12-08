@@ -30,6 +30,9 @@ include_once('../../function/config.php');
         date_default_timezone_set("Asia/Bangkok");
 
         if($_SERVER['REQUEST_METHOD'] === "POST"){
+            $patronIdfalse = $_POST['patronId'];
+            $get_personnumber = $_POST['get_personnumber'];
+            $datetical = $_POST['dateticals'];
             if(isset($_POST['checkboxIdgrantee'])){
                 if(!empty($_POST['checkboxIdgrantee'])){
                     foreach($_POST['checkboxIdgrantee'] as $checkedId){
@@ -41,11 +44,11 @@ include_once('../../function/config.php');
                         $querysql = mysqli_query($conn, $insertQl)or die(mysqli_error());
                             if($querysql){
                                 $slide = "<script type=\"text/javascript\">
-                                    MySetSweetAlert(\"success\",\"insert to success\",\"insert data orphan to success\",\"../getting_a_scholarship.php?id_patron=$patronId\")
+                                    MySetSweetAlert(\"success\",\"เรียบร้อย\",\"เพิ่มข้อมูลตามที่เลือกเรียบร้อยแล้ว\",\"../getting_a_scholarship.php?patron_setid=$patronId&person_numbers=$get_personnumber&datemy=$datetical\")
                                 </script>";
                             }else{
                                 $slide = "<script type=\"text/javascript\">
-                                    MySetSweetAlert(\"error\",\"insert to error\",\"false to! not insert data orphan\",\"../getting_a_scholarship.php?id_patron=$patronId\")
+                                    MySetSweetAlert(\"error\",\"ล้มเหลว\",\"ไม่สามารถเพิ่มข้อมูลตามที่เลือกได้\",\"../getting_a_scholarship.php?patron_setid=$patronId&person_numbers=$get_personnumber&datemy=$datetical\")
                                 </script>";
                             }
 
@@ -56,6 +59,10 @@ include_once('../../function/config.php');
                 }
 
                 echo $slide;
+            }else{
+                echo "<script type=\"text/javascript\">
+                      MySetSweetAlert(\"warning\",\"ล้มเหลว!\",\"ไม่มีข้อมูลอะไรให้เพิ่มเลย!\",\"../getting_a_scholarship.php?patron_setid=$patronIdfalse&person_numbers=$get_personnumber&datemy=$datetical\")
+                    </script>";
             }
         }else if($_SERVER['REQUEST_METHOD'] === "GET"){
             

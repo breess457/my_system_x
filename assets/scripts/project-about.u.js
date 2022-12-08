@@ -22,7 +22,7 @@ const listComponent=(getdata)=>{
 
         image.src = `officer/backend/data/orphan-information/${data.profile_orphan}`
         tagname.innerHTML = data.title_me + data.first_name_me + "&nbsp;" + data.last_name_me
-        smallOne.innerHTML = `age: ${data.age_me}   กรุปเลือด:${data.blood_group_me}`
+        smallOne.innerHTML = `age: ${data.age_me}   กรุ๊ปเลือด:${data.blood_group_me}`
         smallTrue.innerHTML = `<i class="bx bx-map"></i>  ${data.entry_date}`
 
         appendEl(elementId, li)
@@ -67,11 +67,11 @@ class modalListComboData extends HTMLElement{
                                     <div class="col-sm-7">
                                       <div class="card-block">
                                         <h4 class="text-h"></h4>
-                                        <textarea class="form-control txt-body mb-4" rows="3" required></textarea>
+                                        <textarea class="form-control txt-body mb-4" rows="3" disabled></textarea>
                                         <small class="txt-area"></small>
                                         <div class="row mt-2">
-                                            <small id="txt-start" class="text-success"></small>
-                                            <small id="txt-end" class="text-danger ml-3"></small>
+                                            <small id="txt-start" class="text-dark"></small>
+                                            <small id="txt-end" class="text-dark ml-3"></small>
                                         </div>
                                         <div class="row">
                                             <small class="adminname mt-4 mb-0 ml-auto"></small>
